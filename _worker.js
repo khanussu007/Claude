@@ -29,7 +29,7 @@ function fromB64url(s) {
 async function sha256(textValue) {
   return b64url(new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(textValue))));
 }
-async function hashPassword(password, saltBytes=crypto.getRandomValues(new Uint8Array(16)), iterations=310000) {
+async function hashPassword(password, saltBytes=crypto.getRandomValues(new Uint8Array(16)), iterations=100000) {
   const key = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]);
   const bits = await crypto.subtle.deriveBits({name:"PBKDF2", salt:saltBytes, iterations, hash:"SHA-256"}, key, 256);
   return `pbkdf2$${iterations}$${b64url(saltBytes)}$${b64url(new Uint8Array(bits))}`;
