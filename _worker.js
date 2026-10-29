@@ -191,14 +191,13 @@ export default {
       const url=new URL(request.url), pathname=url.pathname.replace(/\/$/,"")||"/";
       if(pathname.startsWith("/api/")) return await handleApi(request,env,pathname);
     
+      
       if (pathname.startsWith("/assets/uploads/")) {
         if (env.UPLOADS) {
           const key = pathname.slice(1);
-
-          // Check KV storage first
           const value = await env.UPLOADS.get(key);
 
-          if (value && typeof value === "string") {
+          if (value) {
             try {
               const saved = JSON.parse(value);
               const binary = atob(saved.data);
@@ -220,8 +219,13 @@ export default {
               );
             } catch (error) {
               console.error("KV upload read error:", error);
+              return text("Invalid uploaded image data", 500);
             }
           }
+        }
+
+        return text("Upload not found", 404);
+      }
 
           // Check R2 storage
           const object = await env.UPLOADS.get(key);
