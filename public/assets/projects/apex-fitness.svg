@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Apex Fitness concept website</title>
+  <desc id="desc">A bold fitness landing page concept with training programme cards and energetic orange accents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#20201f"/><stop offset="1" stop-color="#0d0f11"/></linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffad4d"/><stop offset="1" stop-color="#ff5a1f"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#ff7433" stop-opacity=".42"/><stop offset="1" stop-color="#ff7433" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#000" flood-opacity=".4"/></filter>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#08090a"/>
+  <g clip-path="url(#screen)">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <circle cx="905" cy="388" r="330" fill="url(#glow)"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#0c0e10"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#191c1f"/>
+    <text x="600" y="49" text-anchor="middle" fill="#7e8588" font-family="Arial,Helvetica,sans-serif" font-size="11">apexfitness.com</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <path d="M79 142 98 98l12 27 10-18 17 35Z" fill="url(#orange)"/>
+      <text x="151" y="132" fill="#f7f7f4" font-size="24" font-weight="800" letter-spacing="2">APEX</text>
+      <text x="717" y="130" fill="#a6a7a4" font-size="12">TRAINING</text><text x="812" y="130" fill="#a6a7a4" font-size="12">COACHES</text><text x="903" y="130" fill="#a6a7a4" font-size="12">MEMBERSHIP</text>
+      <rect x="1021" y="105" width="97" height="43" rx="7" fill="#ff762e"/>
+      <text x="1069" y="132" text-anchor="middle" fill="#1b0f08" font-size="11" font-weight="800">JOIN NOW</text>
+      <text x="80" y="231" fill="#ff9455" font-size="12" font-weight="800" letter-spacing="3">YOUR GOALS. YOUR NEXT LEVEL.</text>
+      <text x="74" y="319" fill="#f6f5f1" font-size="76" font-weight="800" letter-spacing="-4">TRAIN WITH</text>
+      <text x="74" y="398" fill="#f6f5f1" font-size="76" font-weight="800" letter-spacing="-4">PURPOSE.</text>
+      <text x="80" y="450" fill="#aaa9a5" font-size="17">Expert coaching. Focused programmes.</text>
+      <text x="80" y="476" fill="#aaa9a5" font-size="17">A community that keeps you moving.</text>
+      <rect x="80" y="517" width="174" height="55" rx="8" fill="url(#orange)"/>
+      <text x="167" y="551" text-anchor="middle" fill="#211007" font-size="13" font-weight="800">START TRAINING</text>
+      <rect x="270" y="517" width="144" height="55" rx="8" fill="none" stroke="#4d4d49"/>
+      <text x="342" y="551" text-anchor="middle" fill="#e1e0dc" font-size="13">VIEW PLANS</text>
+    </g>
+    <g filter="url(#shadow)">
+      <circle cx="912" cy="382" r="185" fill="#191b1c" stroke="#ff8138" stroke-opacity=".16" stroke-width="2"/>
+      <circle cx="912" cy="382" r="142" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="28"/>
+      <path d="M912 240a142 142 0 0 1 137 104" fill="none" stroke="url(#orange)" stroke-width="28" stroke-linecap="round"/>
+      <text x="912" y="378" text-anchor="middle" fill="#f8f6f2" font-family="Arial,Helvetica,sans-serif" font-size="62" font-weight="800">86%</text>
+      <text x="912" y="412" text-anchor="middle" fill="#a9a8a4" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="2">WEEKLY GOAL</text>
+      <rect x="754" y="505" width="364" height="93" rx="16" fill="#1c1e20" stroke="#fff" stroke-opacity=".09"/>
+      <circle cx="794" cy="551" r="24" fill="#ff762e" opacity=".13"/>
+      <path d="M781 551h26m-22-8v16m18-16v16m-25-12v8m32-8v8" stroke="#ff9254" stroke-width="4" stroke-linecap="round"/>
+      <text x="834" y="545" fill="#f0efec" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700">Strength &amp; Conditioning</text>
+      <text x="834" y="569" fill="#8f9292" font-family="Arial,Helvetica,sans-serif" font-size="11">Next session · 6:30 PM</text>
+      <circle cx="1080" cy="551" r="16" fill="#ff762e"/><path d="m1075 551 4 4 7-9" fill="none" stroke="#1d1008" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="640" width="1038" height="1" fill="#fff" opacity=".09"/>
+      <text x="80" y="685" fill="#838784" font-size="11" letter-spacing="2">FIND THE PROGRAMME THAT MOVES YOU</text>
+      <rect x="80" y="709" width="319" height="55" rx="9" fill="#fff" opacity=".045"/>
+      <rect x="415" y="709" width="319" height="55" rx="9" fill="#fff" opacity=".045"/>
+      <rect x="750" y="709" width="368" height="55" rx="9" fill="#fff" opacity=".045"/>
+      <text x="105" y="743" fill="#d0d0cb" font-size="13"><tspan fill="#ff8542">01</tspan><tspan dx="17">Personal coaching</tspan></text>
+      <text x="440" y="743" fill="#d0d0cb" font-size="13"><tspan fill="#ff8542">02</tspan><tspan dx="17">Group training</tspan></text>
+      <text x="775" y="743" fill="#d0d0cb" font-size="13"><tspan fill="#ff8542">03</tspan><tspan dx="17">Nutrition support</tspan></text>
+    </g>
+  </g>
+</svg>

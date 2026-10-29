@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Atlas Legal concept website</title><desc id="desc">A refined professional services website with clear legal service pathways.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f2eb"/><stop offset="1" stop-color="#e8e5df"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#213d4c"/><stop offset="1" stop-color="#102631"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#152b37" flood-opacity=".18"/></filter>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#0b0e11"/>
+  <g clip-path="url(#screen)">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#11171b"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#20272b"/><text x="600" y="49" text-anchor="middle" fill="#849097" font-family="Arial,Helvetica,sans-serif" font-size="11">atlaslegal.com</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="101" width="40" height="40" rx="20" fill="#173441"/><path d="M92 130v-18m12 18v-18m12 18v-18M88 112h32M87 132h34" stroke="#d49a61" stroke-width="2"/>
+      <text x="135" y="123" fill="#17303c" font-size="21" font-weight="700" letter-spacing="2">ATLAS</text><text x="136" y="140" fill="#7a817f" font-size="8" letter-spacing="4">LEGAL</text>
+      <text x="694" y="130" fill="#5e6a6e" font-size="12">EXPERTISE</text><text x="790" y="130" fill="#5e6a6e" font-size="12">OUR FIRM</text><text x="881" y="130" fill="#5e6a6e" font-size="12">INSIGHTS</text>
+      <rect x="984" y="105" width="134" height="43" rx="4" fill="#173441"/><text x="1051" y="132" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">REQUEST A CALL</text>
+      <text x="80" y="238" fill="#a66c35" font-size="12" font-weight="700" letter-spacing="3">CLEAR COUNSEL. CONFIDENT DECISIONS.</text>
+      <text x="76" y="324" fill="#17303c" font-size="68" font-weight="700" letter-spacing="-3">COUNSEL WITH</text>
+      <text x="76" y="398" fill="#17303c" font-size="68" font-weight="700" letter-spacing="-3">CLARITY.</text>
+      <text x="80" y="450" fill="#647176" font-size="17">Practical legal expertise for businesses and individuals.</text>
+      <text x="80" y="476" fill="#647176" font-size="17">Straightforward guidance when the next step matters.</text>
+      <rect x="80" y="517" width="177" height="54" rx="4" fill="#b8783f"/><text x="168" y="550" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">DISCUSS YOUR NEEDS</text>
+      <text x="282" y="550" fill="#334d58" font-size="13">Explore our expertise  →</text>
+    </g>
+    <rect x="731" y="192" width="387" height="400" rx="8" fill="url(#panel)" filter="url(#shadow)"/>
+    <circle cx="925" cy="356" r="128" fill="none" stroke="#d5a068" stroke-opacity=".15" stroke-width="1"/>
+    <circle cx="925" cy="356" r="94" fill="none" stroke="#d5a068" stroke-opacity=".12" stroke-width="1"/>
+    <path d="M925 248v199m-82-150h164M858 297l-40 83h80l-40-83Zm134 0-40 83h80l-40-83ZM869 455h112" fill="none" stroke="#d5a068" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M813 383c0 21 17 34 45 34s45-13 45-34m44 0c0 21 17 34 45 34s45-13 45-34" fill="none" stroke="#d5a068" stroke-width="4"/>
+    <text x="925" y="511" text-anchor="middle" fill="#e9e5dc" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" letter-spacing="2">EXPERIENCE YOU CAN RELY ON</text>
+    <text x="925" y="541" text-anchor="middle" fill="#92a4ab" font-family="Arial,Helvetica,sans-serif" font-size="12">Business · Property · Private Client</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="642" width="1038" height="1" fill="#17303c" opacity=".12"/>
+      <text x="80" y="687" fill="#7c8585" font-size="11" letter-spacing="2">HOW WE CAN HELP</text>
+      <rect x="80" y="709" width="319" height="55" rx="5" fill="#fff" opacity=".55"/>
+      <rect x="415" y="709" width="319" height="55" rx="5" fill="#fff" opacity=".55"/>
+      <rect x="750" y="709" width="368" height="55" rx="5" fill="#fff" opacity=".55"/>
+      <text x="104" y="743" fill="#3c535c" font-size="13"><tspan fill="#b8783f">01</tspan><tspan dx="17">Business &amp; Commercial</tspan></text>
+      <text x="439" y="743" fill="#3c535c" font-size="13"><tspan fill="#b8783f">02</tspan><tspan dx="17">Property &amp; Real Estate</tspan></text>
+      <text x="774" y="743" fill="#3c535c" font-size="13"><tspan fill="#b8783f">03</tspan><tspan dx="17">Private Client Services</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Signal digital marketing concept</title><desc id="desc">A premium digital growth dashboard connecting traffic, enquiries and lead quality.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17152a"/><stop offset="1" stop-color="#0b0e17"/></linearGradient>
+    <linearGradient id="area" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#806fff" stop-opacity="0"/><stop offset="1" stop-color="#806fff" stop-opacity=".35"/></linearGradient>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#08090d"/>
+  <g clip-path="url(#screen)" font-family="Arial,Helvetica,sans-serif">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <circle cx="1030" cy="150" r="310" fill="#6957dd" opacity=".08"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#0c0d15"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#1a1b28"/><text x="600" y="49" text-anchor="middle" fill="#7b7c91" font-size="11">signal growth / overview</text>
+    <path d="m55 140 15-37 15 37-15-8Z" fill="#9385ff"/><text x="103" y="134" fill="#f4f3fa" font-size="22" font-weight="700">signal</text><text x="176" y="134" fill="#77758e" font-size="11">GROWTH</text>
+    <text x="708" y="130" fill="#9693a9" font-size="12">Overview</text><text x="790" y="130" fill="#9693a9" font-size="12">Channels</text><text x="876" y="130" fill="#9693a9" font-size="12">Leads</text><text x="940" y="130" fill="#9693a9" font-size="12">Reports</text>
+    <rect x="1020" y="105" width="98" height="43" rx="10" fill="#ff7a1a"/><text x="1069" y="132" text-anchor="middle" fill="#211208" font-size="11" font-weight="700">+ REPORT</text>
+    <text x="80" y="219" fill="#a39dbb" font-size="11" font-weight="700" letter-spacing="2">GROWTH OVERVIEW</text><text x="76" y="272" fill="#f4f3fa" font-size="37" font-weight="700">Traffic is useful. Enquiries matter.</text><text x="80" y="305" fill="#878499" font-size="13">A clear view of the activities moving your business forward.</text>
+    <rect x="80" y="348" width="255" height="126" rx="15" fill="#1b1b2a" stroke="#fff" stroke-opacity=".06"/><text x="103" y="380" fill="#878499" font-size="10" font-weight="700">TOTAL VISITORS</text><text x="103" y="430" fill="#f4f3fa" font-size="36" font-weight="700">18.4k</text><text x="254" y="427" fill="#64dab0" font-size="11" font-weight="700">↑ 22%</text>
+    <rect x="353" y="348" width="255" height="126" rx="15" fill="#1b1b2a" stroke="#fff" stroke-opacity=".06"/><text x="376" y="380" fill="#878499" font-size="10" font-weight="700">ENQUIRIES</text><text x="376" y="430" fill="#f4f3fa" font-size="36" font-weight="700">326</text><text x="494" y="427" fill="#64dab0" font-size="11" font-weight="700">↑ 16%</text>
+    <rect x="626" y="348" width="255" height="126" rx="15" fill="#1b1b2a" stroke="#fff" stroke-opacity=".06"/><text x="649" y="380" fill="#878499" font-size="10" font-weight="700">QUALIFIED LEADS</text><text x="649" y="430" fill="#f4f3fa" font-size="36" font-weight="700">142</text><text x="770" y="427" fill="#64dab0" font-size="11" font-weight="700">↑ 19%</text>
+    <rect x="899" y="348" width="219" height="126" rx="15" fill="#1b1b2a" stroke="#fff" stroke-opacity=".06"/><text x="922" y="380" fill="#878499" font-size="10" font-weight="700">LEAD RATE</text><text x="922" y="430" fill="#f4f3fa" font-size="36" font-weight="700">7.8%</text><circle cx="1064" cy="412" r="26" fill="#ff7a1a" opacity=".12"/><path d="m1053 415 9-9 7 6 12-15" fill="none" stroke="#ff9955" stroke-width="3" stroke-linecap="round"/>
+    <rect x="80" y="497" width="666" height="253" rx="16" fill="#171724" stroke="#fff" stroke-opacity=".06"/><text x="105" y="534" fill="#eceaf4" font-size="15" font-weight="700">Enquiry momentum</text><text x="625" y="534" fill="#928ba9" font-size="10">LAST 30 DAYS</text>
+    <path d="M109 701 164 673l54 11 58-69 55 23 57-78 57 32 59-69 96-22" fill="none" stroke="#9285ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M109 701 164 673l54 11 58-69 55 23 57-78 57 32 59-69 96-22v199H109Z" fill="url(#area)"/>
+    <path d="M109 701h601" stroke="#fff" stroke-opacity=".07"/>
+    <g fill="#9285ff"><circle cx="164" cy="673" r="4"/><circle cx="218" cy="684" r="4"/><circle cx="276" cy="615" r="4"/><circle cx="331" cy="638" r="4"/><circle cx="388" cy="560" r="4"/><circle cx="445" cy="592" r="4"/><circle cx="504" cy="523" r="4"/><circle cx="600" cy="501" r="5"/></g>
+    <rect x="770" y="497" width="348" height="253" rx="16" fill="#171724" stroke="#fff" stroke-opacity=".06"/><text x="795" y="534" fill="#eceaf4" font-size="15" font-weight="700">Channel quality</text>
+    <text x="795" y="577" fill="#858196" font-size="10">Organic search</text><text x="1088" y="577" text-anchor="end" fill="#dcd9e7" font-size="11" font-weight="700">8.4%</text><rect x="795" y="589" width="293" height="6" rx="3" fill="#242434"/><rect x="795" y="589" width="246" height="6" rx="3" fill="#9285ff"/>
+    <text x="795" y="629" fill="#858196" font-size="10">Paid search</text><text x="1088" y="629" text-anchor="end" fill="#dcd9e7" font-size="11" font-weight="700">7.9%</text><rect x="795" y="641" width="293" height="6" rx="3" fill="#242434"/><rect x="795" y="641" width="231" height="6" rx="3" fill="#ff7a1a"/>
+    <text x="795" y="681" fill="#858196" font-size="10">Direct &amp; referral</text><text x="1088" y="681" text-anchor="end" fill="#dcd9e7" font-size="11" font-weight="700">6.2%</text><rect x="795" y="693" width="293" height="6" rx="3" fill="#242434"/><rect x="795" y="693" width="182" height="6" rx="3" fill="#4bb9e9"/>
+    <text x="795" y="729" fill="#625e74" font-size="9">Measured by qualified enquiry rate</text>
+  </g>
+</svg>

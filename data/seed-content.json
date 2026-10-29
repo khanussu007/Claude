@@ -1,0 +1,1124 @@
+{
+  "meta": {
+    "version": 1,
+    "updatedAt": "2026-10-27T00:00:00.000Z"
+  },
+  "global": {
+    "websiteName": "Usman Khan",
+    "logoText": "UK",
+    "logoAccent": ".",
+    "brandSubtitle": "Design & Growth",
+    "positioning": "Website Design | Lead Generation",
+    "defaultCtaText": "Let’s Work Together",
+    "footerText": "Better websites. Qualified leads.\nPractical digital growth.",
+    "footerBottom": "Website Design · Lead Generation · Digital Growth",
+    "profilePhoto": "assets/images/usman-headshot-placeholder.webp",
+    "theme": "premium-navy-gold",
+    "defaultCtaLink": "contact.html",
+    "heroBadgeText": "",
+    "heroBadgeIcon": "spark",
+    "heroOverlayText": "",
+    "heroSecondaryCtaText": "",
+    "heroSecondaryCtaLink": "contact.html",
+    "headerCtaText": "Let’s Work Together",
+    "headerCtaLink": "contact.html",
+    "navigationItems": [
+      {
+        "id": "nav-home",
+        "label": "Home",
+        "destination": "index.html",
+        "visible": true,
+        "order": 1,
+        "newTab": false
+      },
+      {
+        "id": "nav-portfolio",
+        "label": "Portfolio",
+        "destination": "portfolio.html",
+        "visible": true,
+        "order": 2,
+        "newTab": false
+      },
+      {
+        "id": "nav-about",
+        "label": "About",
+        "destination": "about.html",
+        "visible": true,
+        "order": 3,
+        "newTab": false
+      },
+      {
+        "id": "nav-services",
+        "label": "Services",
+        "destination": "services.html",
+        "visible": true,
+        "order": 4,
+        "newTab": false
+      },
+      {
+        "id": "nav-achievements",
+        "label": "Achievements",
+        "destination": "achievements.html",
+        "visible": true,
+        "order": 5,
+        "newTab": false
+      },
+      {
+        "id": "nav-contact",
+        "label": "Contact",
+        "destination": "contact.html",
+        "visible": true,
+        "order": 6,
+        "newTab": false
+      }
+    ],
+    "siteTitle": "Usman Khan",
+    "browserTitle": "Usman Khan",
+    "favicon": "assets/images/favicon.svg",
+    "ogImage": "assets/images/usman-headshot-placeholder.webp",
+    "footerSocialTitle": "Let’s connect",
+    "footerSocialDescription": "Follow along or start a conversation.",
+    "logoImage": ""
+  },
+  "home": {
+    "name": "Usman Khan",
+    "title": "Website Design | Lead Generation",
+    "eyebrow": "Digital Growth Specialist",
+    "mainTagline": "Helping businesses build better websites and generate qualified leads.",
+    "heroDescription": "I work on website design, Google Ads, lead generation and conversion-focused digital marketing to help businesses turn online traffic into real enquiries.",
+    "heroCtaText": "View My Work",
+    "heroCtaLink": "portfolio.html",
+    "stats": [
+      {
+        "id": "stat-websites",
+        "number": "5+",
+        "label": "Website Projects Done",
+        "prefix": "",
+        "suffix": "",
+        "icon": "",
+        "enabled": true,
+        "order": 1
+      },
+      {
+        "id": "stat-clients",
+        "number": "10+",
+        "label": "Clients",
+        "prefix": "",
+        "suffix": "",
+        "icon": "",
+        "enabled": true,
+        "order": 2
+      },
+      {
+        "id": "stat-experience",
+        "number": "5+",
+        "label": "Years in Sales & Digital Marketing",
+        "prefix": "",
+        "suffix": "",
+        "icon": "",
+        "enabled": true,
+        "order": 3
+      }
+    ],
+    "serviceTeaserIds": [
+      "website-design",
+      "google-ads",
+      "lead-generation",
+      "digital-marketing"
+    ],
+    "serviceTeaserOverrides": {
+      "website-design": "Modern, conversion-focused websites designed to turn visitors into enquiries.",
+      "google-ads": "Search campaigns focused on reaching people actively looking for your services.",
+      "lead-generation": "Helping businesses find and generate qualified leads.",
+      "digital-marketing": "Practical marketing strategies focused on traffic, enquiries and business growth."
+    },
+    "sections": {
+      "servicesEyebrow": "What I do",
+      "servicesTitle": "Specialist skills.\nOne growth focus.",
+      "servicesIntro": "From the first click to the first enquiry, every touchpoint is designed to move your business forward.",
+      "workEyebrow": "Featured work",
+      "workTitle": "Built to look sharp.\nDesigned to perform.",
+      "workIntro": "A preview of conversion-focused website concepts across service and growth-driven businesses.",
+      "testimonialsEyebrow": "Client feedback",
+      "testimonialsTitle": "Good work earns\ngood words.",
+      "testimonialsIntro": "Sample testimonials are shown below as content placeholders.",
+      "contactEyebrow": "Have a project in mind?",
+      "contactTitle": "Let’s turn your online traffic into\nreal enquiries.",
+      "contactIntro": "Whether you need a sharper website, a focused campaign or a better lead-generation system, let’s build something that works for your business.",
+      "brandsEyebrow": "Brands & collaborations",
+      "brandsTitle": "Built for businesses that need results.",
+      "brandsIntro": "Selected collaborations and brand work.",
+      "brandsDescription": "Selected collaborations and brand work.",
+      "ctaText": "Start a Conversation",
+      "ctaLink": "contact.html",
+      "servicesCtaText": "Explore All Services",
+      "servicesCtaLink": "services.html",
+      "workCtaText": "View Full Portfolio",
+      "workCtaLink": "portfolio.html"
+    },
+    "heroBadges": [
+      {
+        "id": "hero-badge-1",
+        "text": "Conversion Focused",
+        "icon": "chart",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "id": "hero-badge-2",
+        "text": "Design × Marketing",
+        "icon": "spark",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "id": "hero-badge-3",
+        "text": "Supported by Google Ads",
+        "icon": "search",
+        "visible": true,
+        "order": 3
+      }
+    ],
+    "secondaryCtaText": "Let’s Talk",
+    "secondaryCtaLink": "contact.html",
+    "heroImageOverlay": "",
+    "featuredBadge": "Featured",
+    "featuredCtaText": "View Project",
+    "testimonials": [],
+    "brands": [],
+    "heroImageOverlayLabel": "Focused on",
+    "heroSupportPrefix": "Supported by",
+    "experienceStatId": "stat-experience"
+  },
+  "pageContent": {
+    "portfolio": {
+      "heroTitle": "Design that converts.\nMarketing that performs.",
+      "heroCopy": "I help businesses build better websites and generate qualified leads through website design, Google Ads, lead generation and conversion-focused digital marketing.",
+      "heroEyebrow": "Usman Khan · Selected Work",
+      "libraryEyebrow": "Project library",
+      "libraryTitle": "Browse selected work.",
+      "ctaEyebrow": "Have a project in mind?",
+      "ctaTitle": "Let’s make your next click count.",
+      "ctaDescription": "",
+      "ctaText": "Start a Conversation",
+      "ctaLink": "contact.html",
+      "heroTags": [
+        "Conversion-focused websites",
+        "High-intent campaigns",
+        "Qualified enquiries"
+      ],
+      "libraryIntro": "Explore concept projects by discipline. Select any project for a closer look at the thinking behind it."
+    },
+    "services": {
+      "heroTitle": "Practical digital services.\nBuilt around real enquiries.",
+      "heroCopy": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "approachTitle": "One connected system.\nNot isolated tactics.",
+      "approachText": "I focus on building practical digital systems that help businesses attract the right visitors, convert them into enquiries and create a repeatable lead-generation process.",
+      "heroEyebrow": "Usman Khan · Services",
+      "approachEyebrow": "My approach",
+      "catalogEyebrow": "How I can help",
+      "catalogTitle": "Choose the support your business needs.",
+      "catalogIntro": "Focused services that can work independently or together as part of a connected website and lead-generation system.",
+      "ctaEyebrow": "Let’s talk about your next step",
+      "ctaTitle": "Ready to Improve Your Online Presence?",
+      "ctaDescription": "Tell me about your business, website or lead-generation challenge and let’s discuss how I can help.",
+      "ctaText": "Let’s Work Together",
+      "ctaLink": "contact.html",
+      "approachSteps": [
+        "Attract the right visitors",
+        "Make the offer clear",
+        "Turn visits into enquiries"
+      ],
+      "heroTags": [
+        "Websites & landing pages",
+        "High-intent advertising",
+        "Leads & automation"
+      ]
+    },
+    "achievements": {
+      "heroTitle": "From Sales to\nDigital Growth.",
+      "heroCopy": "My career started in sales, where I learned how businesses attract customers, handle enquiries, understand customer needs and close deals. I later moved into digital marketing, combining that sales experience with website design, lead generation, Google Ads and automation. Today, I focus on helping businesses build a stronger online presence and generate qualified leads.",
+      "heroEyebrow": "Usman Khan · Awards & Achievements",
+      "journeyEyebrow": "Career progression",
+      "journeyTitle": "One journey. Five connected stages.",
+      "ctaEyebrow": "Sales understanding. Digital execution.",
+      "ctaTitle": "Let’s turn experience into practical digital growth.",
+      "ctaDescription": "",
+      "ctaText": "Let’s Work Together",
+      "ctaLink": "contact.html",
+      "awardsEyebrow": "Awards & milestones",
+      "awardsTitle": "Experience that builds. Progress with purpose.",
+      "awardsIntro": "Each milestone adds to the same professional journey—from understanding customers to building practical digital lead-generation systems.",
+      "heroTags": [
+        "Sales & customer handling",
+        "Business development",
+        "Digital marketing"
+      ],
+      "secondaryCtaText": "Explore Services",
+      "secondaryCtaLink": "services.html"
+    },
+    "contact": {
+      "heroTitle": "Let’s talk about\nyour next project.",
+      "heroCopy": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "formTitle": "Tell me what you’re working on.",
+      "formIntro": "Tell me about your business, website or lead-generation requirements and let's discuss how I can help.",
+      "heroEyebrow": "Usman Khan · Contact",
+      "methodsEyebrow": "Direct contact",
+      "methodsTitle": "Choose your preferred way to connect.",
+      "ctaText": "Start a Conversation",
+      "ctaLink": "contact.html",
+      "visitorJourney": [
+        "Discover",
+        "View Work",
+        "Understand Services",
+        "Learn About Me",
+        "Contact Me"
+      ],
+      "heroTags": [
+        "Discover",
+        "View Work",
+        "Understand Services",
+        "Learn About Me",
+        "Contact Me"
+      ],
+      "methodsDescription": "For websites, lead generation, Google Ads or digital marketing projects, reach out directly or send the project brief.",
+      "emailCardTitle": "Email",
+      "emailCardDescription": "Send a direct email",
+      "websiteCardTitle": "Website",
+      "websiteCardDescription": "Visit the website",
+      "whatsappCardTitle": "WhatsApp · Primary CTA",
+      "whatsappCardDescription": "Start a conversation",
+      "socialCardTitle": "Social",
+      "socialCardDescription": "Follow or start a conversation",
+      "heroWhatsappText": "Start a WhatsApp Conversation",
+      "heroWhatsappLink": "#contact-methods",
+      "heroBriefText": "Send a Project Brief",
+      "heroBriefLink": "#contact-form"
+    },
+    "about": {
+      "heroEyebrow": "About me",
+      "storyHeading": "The story behind the work.",
+      "timelineHeading": "Professional journey",
+      "skillsHeading": "Skills & capability",
+      "focusHeading": "What I focus on",
+      "ctaText": "Let’s Work Together",
+      "ctaLink": "contact.html",
+      "storyEyebrow": "My story",
+      "storyIntro": "A practical professional journey shaped by sales, customer insight and a growing digital skill set.",
+      "timelineEyebrow": "Professional timeline",
+      "timelineIntro": "Each step added a new layer to how I understand customers, websites and lead generation.",
+      "skillsEyebrow": "Core skills",
+      "skillsIntro": "A grounded view of the skills I use across client work, campaigns and lead-generation systems.",
+      "focusEyebrow": "What I Focus On",
+      "focusIntro": "Clear priorities that connect the website, the marketing and the customer journey.",
+      "heroLead": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "heroTags": [
+        "Sales experience",
+        "Customer understanding",
+        "Digital growth"
+      ],
+      "perspectiveEyebrow": "My perspective",
+      "perspectiveTags": [
+        "Customer journey focused",
+        "Sales",
+        "Digital"
+      ],
+      "journeyEyebrow": "My goal",
+      "journeyTitle": "Help businesses build a stronger online presence and create a practical system for generating and converting leads.",
+      "perspectivePrefix": "Look at marketing from both sides: the",
+      "perspectiveStrong": "business side",
+      "perspectiveMiddle": "and the",
+      "perspectiveAccent": "customer side."
+    }
+  },
+  "projects": [
+    {
+      "id": "nexa-properties",
+      "title": "Nexa Properties",
+      "category": "website",
+      "type": "Real Estate Website",
+      "shortDescription": "Business website designed with a clean structure and conversion-focused property enquiry journey.",
+      "description": "A premium real estate website concept designed to make properties easy to discover and enquiries easy to complete. The structure combines clear property pathways, trust-building content and prominent enquiry points without overwhelming the visitor.",
+      "focus": "Website structure · Conversion design",
+      "image": "assets/projects/nexa-properties.svg",
+      "alt": "Nexa Properties real estate website concept",
+      "featured": true,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 1
+    },
+    {
+      "id": "northstar-solar",
+      "title": "Northstar Solar",
+      "category": "landing",
+      "type": "Solar Enquiry Landing Page",
+      "shortDescription": "Landing page designed to turn paid traffic into quote requests and qualified enquiries.",
+      "description": "A focused solar enquiry page built around a clear savings proposition and a simple quote journey. Benefit-led content, trust signals and a prominent savings calculator help move high-intent visitors toward the next step.",
+      "focus": "Paid traffic · Quote enquiries",
+      "image": "assets/projects/northstar-solar.svg",
+      "alt": "Northstar Solar enquiry landing page concept",
+      "featured": true,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 2
+    },
+    {
+      "id": "searchwave-google-ads",
+      "title": "Searchwave Google Ads",
+      "category": "marketing",
+      "type": "High-Intent Search Campaign",
+      "shortDescription": "Search campaign setup focused on reaching high-intent potential customers.",
+      "description": "A Google Ads campaign concept structured around high-intent search terms, relevant ad groups and measurable enquiry actions. The approach prioritises search relevance, budget clarity and a direct path from each ad to a focused landing experience.",
+      "focus": "Google Ads · High-intent traffic",
+      "image": "assets/projects/searchwave-ads.svg",
+      "alt": "Searchwave Google Ads campaign dashboard concept",
+      "featured": false,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 3
+    },
+    {
+      "id": "vertex-consulting",
+      "title": "Vertex Consulting",
+      "category": "website",
+      "type": "B2B Consulting Website",
+      "shortDescription": "Professional services website structured to build trust and guide visitors toward a consultation.",
+      "description": "A credible B2B website concept that turns a broad consulting offer into clear, easy-to-scan pathways. The page hierarchy balances expertise and business outcomes, with consultation prompts placed at natural decision points.",
+      "focus": "B2B positioning · Consultation leads",
+      "image": "assets/projects/vertex-consulting.svg",
+      "alt": "Vertex Consulting B2B website concept",
+      "featured": true,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 4
+    },
+    {
+      "id": "apex-fitness",
+      "title": "Apex Fitness",
+      "category": "landing",
+      "type": "Membership Landing Page",
+      "shortDescription": "High-energy landing page built to promote memberships and drive trial bookings.",
+      "description": "A membership acquisition page designed to communicate energy without sacrificing clarity. Programme benefits, coaching support and membership actions are organised around one goal: converting campaign visitors into trial bookings.",
+      "focus": "Membership growth · Trial bookings",
+      "image": "assets/projects/apex-fitness.svg",
+      "alt": "Apex Fitness membership landing page concept",
+      "featured": true,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 5
+    },
+    {
+      "id": "prospectflow-lead-generation",
+      "title": "ProspectFlow Lead Generation",
+      "category": "marketing",
+      "type": "B2B Prospecting System",
+      "shortDescription": "Lead generation system designed to identify, qualify and reach relevant prospects.",
+      "description": "A B2B lead-generation workflow concept covering audience definition, prospect research, qualification and outreach. The system is designed to create a more consistent prospect pipeline while keeping relevance and lead quality ahead of volume.",
+      "focus": "Prospecting · Lead qualification",
+      "image": "assets/projects/prospectflow-leads.svg",
+      "alt": "ProspectFlow B2B lead generation dashboard concept",
+      "featured": false,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 6
+    },
+    {
+      "id": "atlas-legal",
+      "title": "Atlas Legal",
+      "category": "website",
+      "type": "Professional Services Website",
+      "shortDescription": "Clean, credible business website with clear service pathways and focused enquiry points.",
+      "description": "A professional services website concept built to make complex legal services feel clear and approachable. Practice-area pathways, concise proof points and discreet enquiry prompts create a confident experience for potential clients.",
+      "focus": "Service clarity · Client enquiries",
+      "image": "assets/projects/atlas-legal.svg",
+      "alt": "Atlas Legal professional services website concept",
+      "featured": false,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 7
+    },
+    {
+      "id": "lumina-wellness",
+      "title": "Lumina Wellness",
+      "category": "landing",
+      "type": "Appointment Landing Page",
+      "shortDescription": "Focused campaign page with clear benefits, trust signals and a simple appointment enquiry flow.",
+      "description": "A calm, conversion-focused landing page concept for a wellness clinic. The design uses accessible service information, reassuring proof and a low-friction appointment form to help visitors move from interest to enquiry.",
+      "focus": "Campaign traffic · Appointment leads",
+      "image": "assets/projects/lumina-wellness.svg",
+      "alt": "Lumina Wellness appointment landing page concept",
+      "featured": false,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 8
+    },
+    {
+      "id": "signal-digital-marketing",
+      "title": "Signal Digital Marketing",
+      "category": "marketing",
+      "type": "Digital Growth Setup",
+      "shortDescription": "Marketing setup focused on generating traffic, enquiries and qualified leads.",
+      "description": "A practical digital marketing framework connecting campaign traffic, landing-page performance and lead tracking. The concept brings the most useful metrics into one view so decisions stay focused on enquiries and business growth rather than vanity metrics.",
+      "focus": "Digital strategy · Measurable enquiries",
+      "image": "assets/projects/signal-digital.svg",
+      "alt": "Signal digital marketing performance dashboard concept",
+      "featured": false,
+      "enabled": true,
+      "gallery": [],
+      "client": "",
+      "year": "",
+      "tools": [],
+      "projectUrl": "",
+      "cta": "View Project",
+      "ctaUrl": "",
+      "badge": "Concept Project",
+      "order": 9
+    }
+  ],
+  "services": [
+    {
+      "id": "website-design",
+      "name": "Website Design",
+      "shortDescription": "Modern, conversion-focused websites designed to turn visitors into enquiries.",
+      "description": "Modern, responsive and conversion-focused websites designed to turn visitors into enquiries.",
+      "icon": "monitor",
+      "pricing": "",
+      "ctaText": "Get a Quote",
+      "enabled": true,
+      "tags": [
+        "Responsive",
+        "Conversion focused"
+      ],
+      "formLabel": "Website Design",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "Responsive",
+        "Conversion focused"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 1,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#website-design"
+    },
+    {
+      "id": "landing-page-design",
+      "name": "Landing Page Design",
+      "shortDescription": "Focused landing pages designed for campaigns and paid traffic.",
+      "description": "Focused landing pages designed for specific services, campaigns and paid traffic.",
+      "icon": "layout",
+      "pricing": "",
+      "ctaText": "Discuss Your Project",
+      "enabled": true,
+      "tags": [
+        "Campaign specific",
+        "Clear CTA"
+      ],
+      "formLabel": "Landing Page",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "Campaign specific",
+        "Clear CTA"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 2,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#landing-page-design"
+    },
+    {
+      "id": "google-ads",
+      "name": "Google Ads",
+      "shortDescription": "Search campaigns focused on high-intent users and qualified enquiries.",
+      "description": "Search advertising focused on reaching high-intent users and generating qualified enquiries.",
+      "icon": "search",
+      "pricing": "",
+      "ctaText": "Get a Quote",
+      "enabled": true,
+      "tags": [
+        "High-intent search",
+        "Qualified enquiries"
+      ],
+      "formLabel": "Google Ads",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "High-intent search",
+        "Qualified enquiries"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 3,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#google-ads"
+    },
+    {
+      "id": "lead-generation",
+      "name": "Lead Generation",
+      "shortDescription": "Research-driven lead generation for relevant prospects and outreach opportunities.",
+      "description": "Research-driven lead generation to identify relevant prospects and create targeted outreach opportunities.",
+      "icon": "users",
+      "pricing": "",
+      "ctaText": "Discuss Your Project",
+      "enabled": true,
+      "tags": [
+        "Prospect research",
+        "Decision-makers"
+      ],
+      "formLabel": "Lead Generation",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "Prospect research",
+        "Decision-makers"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 4,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#lead-generation"
+    },
+    {
+      "id": "digital-marketing",
+      "name": "Conversion-Focused Digital Marketing",
+      "shortDescription": "Digital marketing focused on traffic, enquiries, conversion and customer acquisition.",
+      "description": "Digital marketing focused on traffic, enquiries, conversion and customer acquisition.",
+      "icon": "chart",
+      "pricing": "",
+      "ctaText": "Get a Quote",
+      "enabled": true,
+      "tags": [
+        "Traffic to enquiries",
+        "Customer acquisition"
+      ],
+      "formLabel": "Digital Marketing",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "Traffic to enquiries",
+        "Customer acquisition"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 5,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#digital-marketing"
+    },
+    {
+      "id": "marketing-automation",
+      "name": "AI & Marketing Automation",
+      "shortDescription": "Practical automation for lead capture, qualification and follow-up.",
+      "description": "Practical automation for lead capture, qualification, follow-up and repetitive marketing tasks.",
+      "icon": "automation",
+      "pricing": "",
+      "ctaText": "Discuss Your Project",
+      "enabled": true,
+      "tags": [
+        "Lead capture",
+        "Smart follow-up"
+      ],
+      "formLabel": "AI & Marketing Automation",
+      "image": "",
+      "price": "",
+      "priceSuffix": "",
+      "features": [
+        "Lead capture",
+        "Smart follow-up"
+      ],
+      "cta": "",
+      "ctaUrl": "",
+      "order": 6,
+      "badge": "",
+      "homeCta": "Learn more",
+      "homeCtaUrl": "services.html#marketing-automation"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "sales-award-2026",
+      "title": "Sales Award — 2026",
+      "recognition": "Sales Achievement Award",
+      "year": "2026",
+      "category": "Sales Performance",
+      "organization": "",
+      "description": "Recognized for strong sales performance and contribution to business growth during my professional sales career.",
+      "icon": "award",
+      "image": "",
+      "enabled": true,
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "sales-customer-acquisition",
+      "title": "3+ Years in Automotive Sales",
+      "recognition": "Sales & Customer Acquisition Experience",
+      "year": "3+ Years",
+      "category": "Customer Acquisition",
+      "organization": "",
+      "description": "Built hands-on experience in customer handling, product presentation, negotiation, follow-ups, lead management and closing deals while working in automotive sales.",
+      "icon": "users",
+      "image": "",
+      "enabled": true,
+      "featured": false,
+      "order": 2
+    },
+    {
+      "id": "digital-marketing-transition",
+      "title": "Transition From Sales to Digital Marketing",
+      "recognition": "Transition Into Digital Marketing",
+      "year": "Career Transition",
+      "category": "Digital Marketing",
+      "organization": "",
+      "description": "Used my sales and customer understanding as a foundation to move into digital marketing, focusing on lead generation, websites, Google Ads and customer acquisition.",
+      "icon": "chart",
+      "image": "",
+      "enabled": true,
+      "featured": false,
+      "order": 3
+    },
+    {
+      "id": "lead-generation-systems",
+      "title": "Website & Lead Generation Experience",
+      "recognition": "Started Building Digital Lead-Generation Systems",
+      "year": "Digital Growth",
+      "category": "Website & Lead Generation",
+      "organization": "",
+      "description": "Developed practical experience in website design, landing pages, Google Ads, lead generation, conversion-focused marketing and marketing automation.",
+      "icon": "monitor",
+      "image": "",
+      "enabled": true,
+      "featured": false,
+      "order": 4
+    },
+    {
+      "id": "ai-marketing-development",
+      "title": "AI & Digital Marketing Development",
+      "recognition": "Expanding Into AI-Powered Marketing",
+      "year": "Ongoing Development",
+      "category": "AI & Automation",
+      "organization": "",
+      "description": "Continuing to develop skills in AI, automation, lead qualification and digital systems to help businesses generate and manage leads more efficiently.",
+      "icon": "automation",
+      "image": "",
+      "enabled": true,
+      "featured": false,
+      "order": 5
+    }
+  ],
+  "about": {
+    "heroTitle": "Sales roots.\nDigital focus.",
+    "introduction": "My background is a combination of sales, business development and digital marketing, with a strong focus on understanding customer requirements and turning them into practical marketing and lead-generation solutions.",
+    "storyLead": "I started my professional career in sales, where I learned how businesses find customers, understand their needs and convert enquiries into sales.",
+    "story": "Over time, I developed a strong interest in digital marketing and started building skills in website design, Google Ads, lead generation and marketing automation.\n\nToday, I combine my sales experience with digital marketing skills to help businesses improve their online presence and generate qualified enquiries.",
+    "careerJourney": [
+      "Sales",
+      "Customer Acquisition",
+      "Digital Marketing",
+      "Lead Generation",
+      "AI & Automation"
+    ],
+    "mission": "Help businesses build a stronger online presence and create a practical system for generating and converting leads.",
+    "differentiator": "Look at marketing from both sides: the business side and the customer side.",
+    "differentiatorDescription": "I focus on building websites and marketing systems that are designed around the customer’s journey, from the first click to the final enquiry.",
+    "timeline": [
+      {
+        "id": "about-sales",
+        "phase": "Foundation",
+        "title": "Started Professional Career in Sales",
+        "description": "Built a practical understanding of how businesses find customers, communicate value and convert enquiries into sales.",
+        "order": 1,
+        "label": "Foundation"
+      },
+      {
+        "id": "about-customers",
+        "phase": "Customer insight",
+        "title": "Built Experience in Customer Handling & Business Development",
+        "description": "Learned to listen carefully, identify requirements and build relationships around real customer needs.",
+        "order": 2,
+        "label": "Customer insight"
+      },
+      {
+        "id": "about-digital",
+        "phase": "Digital transition",
+        "title": "Moved Into Digital Marketing",
+        "description": "Developed a strong interest in how websites, search and digital channels could create new growth opportunities.",
+        "order": 3,
+        "label": "Digital transition"
+      },
+      {
+        "id": "about-leads",
+        "phase": "Specialisation",
+        "title": "Started Working With Website Design & Lead Generation",
+        "description": "Began combining customer insight with conversion-focused pages and practical enquiry-generation systems.",
+        "order": 4,
+        "label": "Specialisation"
+      },
+      {
+        "id": "about-performance",
+        "phase": "Performance",
+        "title": "Developed Skills in Google Ads & Conversion-Focused Marketing",
+        "description": "Built skills in reaching high-intent audiences and shaping journeys from the first click to the final enquiry.",
+        "order": 5,
+        "label": "Performance"
+      },
+      {
+        "id": "about-today",
+        "phase": "Today",
+        "title": "Building Integrated Website + Lead Generation Systems",
+        "description": "Today, I bring sales and digital marketing together to help businesses strengthen their online presence and generate qualified enquiries.",
+        "order": 6,
+        "label": "Today"
+      }
+    ],
+    "skills": [
+      {
+        "id": "skill-web",
+        "name": "Website Design",
+        "level": 88,
+        "label": "Core capability",
+        "description": "",
+        "order": 1,
+        "enabled": true
+      },
+      {
+        "id": "skill-leads",
+        "name": "Lead Generation",
+        "level": 90,
+        "label": "Core capability",
+        "description": "",
+        "order": 2,
+        "enabled": true
+      },
+      {
+        "id": "skill-ads",
+        "name": "Google Ads",
+        "level": 82,
+        "label": "Practical experience",
+        "description": "",
+        "order": 3,
+        "enabled": true
+      },
+      {
+        "id": "skill-marketing",
+        "name": "Digital Marketing",
+        "level": 86,
+        "label": "Practical experience",
+        "description": "",
+        "order": 4,
+        "enabled": true
+      },
+      {
+        "id": "skill-sales",
+        "name": "Sales & Business Development",
+        "level": 92,
+        "label": "Professional foundation",
+        "description": "",
+        "order": 5,
+        "enabled": true
+      },
+      {
+        "id": "skill-conversion",
+        "name": "Conversion-Focused Marketing",
+        "level": 88,
+        "label": "Applied focus",
+        "description": "",
+        "order": 6,
+        "enabled": true
+      },
+      {
+        "id": "skill-automation",
+        "name": "Marketing Automation",
+        "level": 72,
+        "label": "Developing capability",
+        "description": "",
+        "order": 7,
+        "enabled": true
+      },
+      {
+        "id": "skill-acquisition",
+        "name": "Customer Acquisition",
+        "level": 85,
+        "label": "Practical experience",
+        "description": "",
+        "order": 8,
+        "enabled": true
+      }
+    ],
+    "focusCards": [
+      {
+        "id": "focus-websites",
+        "title": "Build Better Websites",
+        "description": "Websites designed to clearly communicate the business and guide visitors toward taking action.",
+        "icon": "monitor",
+        "label": "",
+        "order": 1,
+        "enabled": true
+      },
+      {
+        "id": "focus-leads",
+        "title": "Generate Qualified Leads",
+        "description": "Finding the right prospects and creating systems that generate relevant enquiries.",
+        "icon": "users",
+        "label": "",
+        "order": 2,
+        "enabled": true
+      },
+      {
+        "id": "focus-conversion",
+        "title": "Improve Conversion",
+        "description": "Using customer research, landing pages, advertising and funnel thinking to turn traffic into leads.",
+        "icon": "chart",
+        "label": "",
+        "order": 3,
+        "enabled": true
+      },
+      {
+        "id": "focus-automation",
+        "title": "Automate Repetitive Work",
+        "description": "Using practical automation to improve lead capture, qualification and follow-up.",
+        "icon": "automation",
+        "label": "",
+        "order": 4,
+        "enabled": true
+      }
+    ]
+  },
+  "contact": {
+    "email": "contact@khanusman.in",
+    "whatsappNumber": "",
+    "website": "http://khanusman.in",
+    "phone": "",
+    "socialLinks": [],
+    "defaultEmailSubject": "Project enquiry",
+    "defaultEmailMessage": "Hello Usman, I’d like to discuss a project.",
+    "whatsappTemplate": "Hello Usman, I’d like to discuss a project.",
+    "form": {
+      "heading": "Tell me what you’re working on.",
+      "description": "Tell me about your business, website or lead-generation requirements and let's discuss how I can help.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "projectLabel": "Project Type",
+      "budgetLabel": "Budget",
+      "messageLabel": "Message",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "you@example.com",
+      "messagePlaceholder": "Tell me about your project",
+      "submitText": "Send via WhatsApp",
+      "successMessage": "Thanks. Your enquiry is ready to send on WhatsApp.",
+      "errorMessage": "Please complete the required fields before continuing.",
+      "nameRequired": true,
+      "emailRequired": true,
+      "projectRequired": true,
+      "budgetRequired": false,
+      "messageRequired": true,
+      "submitNote": "Submitting opens WhatsApp with a pre-filled message for review before sending.",
+      "budgetOptions": [
+        "Under ₹25,000",
+        "₹25,000 – ₹50,000",
+        "₹50,000 – ₹1,00,000",
+        "₹1,00,000+",
+        "Not Sure Yet"
+      ]
+    }
+  },
+  "media": [
+    {
+      "id": "media-profile",
+      "name": "Profile photo",
+      "url": "assets/images/usman-headshot-placeholder.webp",
+      "kind": "profile"
+    },
+    {
+      "id": "media-nexa",
+      "name": "Nexa Properties thumbnail",
+      "url": "assets/projects/nexa-properties.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-northstar",
+      "name": "Northstar Solar thumbnail",
+      "url": "assets/projects/northstar-solar.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-searchwave",
+      "name": "Searchwave Google Ads thumbnail",
+      "url": "assets/projects/searchwave-ads.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-vertex",
+      "name": "Vertex Consulting thumbnail",
+      "url": "assets/projects/vertex-consulting.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-apex",
+      "name": "Apex Fitness thumbnail",
+      "url": "assets/projects/apex-fitness.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-prospectflow",
+      "name": "ProspectFlow thumbnail",
+      "url": "assets/projects/prospectflow-leads.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-atlas",
+      "name": "Atlas Legal thumbnail",
+      "url": "assets/projects/atlas-legal.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-lumina",
+      "name": "Lumina Wellness thumbnail",
+      "url": "assets/projects/lumina-wellness.svg",
+      "kind": "portfolio"
+    },
+    {
+      "id": "media-signal",
+      "name": "Signal Digital Marketing thumbnail",
+      "url": "assets/projects/signal-digital.svg",
+      "kind": "portfolio"
+    }
+  ],
+  "seo": {
+    "home": {
+      "title": "Usman Khan",
+      "description": "Website Design, Lead Generation, Google Ads and conversion-focused digital marketing by Usman Khan.",
+      "ogTitle": "Usman Khan — Website Design & Lead Generation",
+      "ogDescription": "Helping businesses build better websites and generate qualified leads.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    },
+    "portfolio": {
+      "title": "Portfolio — Usman Khan",
+      "description": "I help businesses build better websites and generate qualified leads through website design, Google Ads, lead generation and conversion-focused digital marketing.",
+      "ogTitle": "Portfolio — Usman Khan",
+      "ogDescription": "I help businesses build better websites and generate qualified leads through website design, Google Ads, lead generation and conversion-focused digital marketing.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    },
+    "about": {
+      "title": "About — Usman Khan",
+      "description": "My background is a combination of sales, business development and digital marketing, with a strong focus on understanding customer requirements and turning them into practical marketing and lead-generation solutions.",
+      "ogTitle": "About — Usman Khan",
+      "ogDescription": "My background is a combination of sales, business development and digital marketing, with a strong focus on understanding customer requirements and turning them into practical marketing and lead-generation solutions.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    },
+    "services": {
+      "title": "Services — Usman Khan",
+      "description": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "ogTitle": "Services — Usman Khan",
+      "ogDescription": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    },
+    "achievements": {
+      "title": "Achievements — Usman Khan",
+      "description": "My career started in sales, where I learned how businesses attract customers, handle enquiries, understand customer needs and close deals. I later moved into digital marketing, combining that sales experience with website design, lead generation, Google Ads and automation. Today, I focus on helping businesses build a stronger online presence and generate qualified leads.",
+      "ogTitle": "Achievements — Usman Khan",
+      "ogDescription": "My career started in sales, where I learned how businesses attract customers, handle enquiries, understand customer needs and close deals. I later moved into digital marketing, combining that sales experience with website design, lead generation, Google Ads and automation. Today, I focus on helping businesses build a stronger online presence and generate qualified leads.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    },
+    "contact": {
+      "title": "Contact — Usman Khan",
+      "description": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "ogTitle": "Contact — Usman Khan",
+      "ogDescription": "I help businesses build better websites and generate qualified leads through Website Design, Google Ads, Lead Generation and conversion-focused digital marketing.",
+      "ogImage": "assets/images/usman-headshot-placeholder.webp",
+      "canonical": ""
+    }
+  },
+  "portfolioCategories": [
+    {
+      "id": "website",
+      "label": "Website Design",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "landing",
+      "label": "Landing Pages",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "marketing",
+      "label": "Digital Marketing & Lead Generation",
+      "visible": true,
+      "order": 3
+    }
+  ]
+}

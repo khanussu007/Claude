@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Vertex Consulting concept website</title>
+  <desc id="desc">A premium navy B2B consulting landing page concept with performance dashboard graphics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111d37"/><stop offset="1" stop-color="#080e1d"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d3154"/><stop offset="1" stop-color="#111c31"/></linearGradient>
+    <linearGradient id="chart" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#2c9fff" stop-opacity="0"/><stop offset="1" stop-color="#2c9fff" stop-opacity=".38"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#000" flood-opacity=".35"/></filter>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#070b12"/>
+  <g clip-path="url(#screen)">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <circle cx="1050" cy="215" r="310" fill="#245cc6" opacity=".09"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#090e18"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#141c2a"/>
+    <text x="600" y="49" text-anchor="middle" fill="#6e7d96" font-family="Arial,Helvetica,sans-serif" font-size="11">vertexconsulting.com</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <path d="m80 143 23-47 23 47-23-11Z" fill="none" stroke="#5bb5ff" stroke-width="4" stroke-linejoin="round"/>
+      <text x="143" y="132" fill="#f1f5fb" font-size="22" font-weight="700" letter-spacing="2">VERTEX</text>
+      <text x="700" y="130" fill="#94a2b8" font-size="12">EXPERTISE</text><text x="798" y="130" fill="#94a2b8" font-size="12">INSIGHTS</text><text x="889" y="130" fill="#94a2b8" font-size="12">COMPANY</text>
+      <rect x="995" y="105" width="123" height="43" rx="7" fill="#f3f6fa"/>
+      <text x="1056" y="132" text-anchor="middle" fill="#101b30" font-size="11" font-weight="700">BOOK A SESSION</text>
+      <text x="80" y="234" fill="#66b8ff" font-size="12" font-weight="700" letter-spacing="3">CLARITY FOR AMBITIOUS BUSINESS</text>
+      <text x="76" y="316" fill="#f5f7fb" font-size="65" font-weight="700" letter-spacing="-3">MAKE YOUR</text>
+      <text x="76" y="386" fill="#f5f7fb" font-size="65" font-weight="700" letter-spacing="-3">NEXT MOVE COUNT.</text>
+      <text x="80" y="439" fill="#98a7ba" font-size="17">Strategy, performance and practical expertise</text>
+      <text x="80" y="465" fill="#98a7ba" font-size="17">for businesses ready to move forward.</text>
+      <rect x="80" y="505" width="170" height="54" rx="8" fill="#2c9fff"/>
+      <text x="165" y="538" text-anchor="middle" fill="#071526" font-size="13" font-weight="700">START A DIALOGUE</text>
+      <text x="278" y="538" fill="#d0d8e4" font-size="13">Explore our expertise  →</text>
+    </g>
+    <g filter="url(#shadow)" font-family="Arial,Helvetica,sans-serif">
+      <rect x="720" y="197" width="398" height="381" rx="18" fill="url(#card)" stroke="#fff" stroke-opacity=".1"/>
+      <text x="750" y="237" fill="#94a5bd" font-size="10" font-weight="700" letter-spacing="1.5">PERFORMANCE OVERVIEW</text>
+      <rect x="964" y="218" width="122" height="30" rx="15" fill="#fff" opacity=".055"/>
+      <text x="1025" y="238" text-anchor="middle" fill="#a9b7ca" font-size="10">LAST 12 MONTHS</text>
+      <text x="750" y="299" fill="#f4f7fb" font-size="41" font-weight="700">+38.4%</text>
+      <rect x="923" y="271" width="74" height="28" rx="14" fill="#3ed5a0" opacity=".12"/>
+      <text x="960" y="290" text-anchor="middle" fill="#65ddb2" font-size="11" font-weight="700">↑ 12.8%</text>
+      <text x="750" y="326" fill="#8395ad" font-size="12">Growth across key activities</text>
+      <path d="M750 511 796 469l48 12 55-82 51 27 58-90 77-35v210H750Z" fill="url(#chart)"/>
+      <path d="m750 511 46-42 48 12 55-82 51 27 58-90 77-35" fill="none" stroke="#54b2ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#54b2ff"><circle cx="796" cy="469" r="5"/><circle cx="844" cy="481" r="5"/><circle cx="899" cy="399" r="5"/><circle cx="950" cy="426" r="5"/><circle cx="1008" cy="336" r="5"/><circle cx="1085" cy="301" r="5"/></g>
+      <path d="M750 525h335" stroke="#fff" stroke-opacity=".09"/>
+      <text x="750" y="551" fill="#6f829c" font-size="9">JAN</text><text x="851" y="551" fill="#6f829c" font-size="9">APR</text><text x="954" y="551" fill="#6f829c" font-size="9">AUG</text><text x="1057" y="551" fill="#6f829c" font-size="9">DEC</text>
+    </g>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="641" width="1038" height="1" fill="#fff" opacity=".09"/>
+      <text x="80" y="687" fill="#71849e" font-size="11" letter-spacing="2">BUILT AROUND YOUR NEXT OPPORTUNITY</text>
+      <rect x="80" y="711" width="319" height="51" rx="9" fill="#fff" opacity=".04"/>
+      <rect x="415" y="711" width="319" height="51" rx="9" fill="#fff" opacity=".04"/>
+      <rect x="750" y="711" width="368" height="51" rx="9" fill="#fff" opacity=".04"/>
+      <text x="105" y="742" fill="#bac6d6" font-size="13"><tspan fill="#5bb5ff">01</tspan><tspan dx="16">Business strategy</tspan></text>
+      <text x="440" y="742" fill="#bac6d6" font-size="13"><tspan fill="#5bb5ff">02</tspan><tspan dx="16">Performance systems</tspan></text>
+      <text x="775" y="742" fill="#bac6d6" font-size="13"><tspan fill="#5bb5ff">03</tspan><tspan dx="16">Sustainable growth</tspan></text>
+    </g>
+  </g>
+</svg>

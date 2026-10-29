@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Northstar Solar concept website</title>
+  <desc id="desc">A bright renewable energy landing page concept with solar panels and a quote form.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f3ed"/><stop offset="1" stop-color="#e8eef0"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffbb65"/><stop offset="1" stop-color="#ff7d32"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#326681"/><stop offset="1" stop-color="#102c43"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#183140" flood-opacity=".18"/></filter>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#0a0d10"/>
+  <g clip-path="url(#screen)">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#11171b"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#20282d"/>
+    <text x="600" y="49" text-anchor="middle" fill="#82909a" font-family="Arial,Helvetica,sans-serif" font-size="11">northstarsolar.com</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <path d="m80 137 16-39 16 39-16-10Z" fill="#1479a0"/>
+      <text x="122" y="132" fill="#12242d" font-size="21" font-weight="700" letter-spacing="1">NORTHSTAR</text>
+      <text x="680" y="130" fill="#53666f" font-size="12">SOLAR SOLUTIONS</text><text x="820" y="130" fill="#53666f" font-size="12">HOW IT WORKS</text><text x="948" y="130" fill="#53666f" font-size="12">ABOUT</text>
+      <rect x="1032" y="105" width="86" height="43" rx="22" fill="#122b38"/>
+      <text x="1075" y="132" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">GET A QUOTE</text>
+      <text x="80" y="232" fill="#1479a0" font-size="12" font-weight="700" letter-spacing="3">CLEAN ENERGY. CLEAR SAVINGS.</text>
+      <text x="76" y="313" fill="#102731" font-size="64" font-weight="700" letter-spacing="-3">POWER YOUR</text>
+      <text x="76" y="382" fill="#102731" font-size="64" font-weight="700" letter-spacing="-3">NEXT CHAPTER.</text>
+      <text x="80" y="433" fill="#5b6b72" font-size="17">Smart solar solutions for homes and businesses.</text>
+      <text x="80" y="459" fill="#5b6b72" font-size="17">Lower overheads. A lighter footprint.</text>
+      <rect x="80" y="501" width="180" height="55" rx="27.5" fill="#ff8438"/>
+      <text x="170" y="535" text-anchor="middle" fill="#21150c" font-size="13" font-weight="700">CALCULATE SAVINGS</text>
+      <circle cx="297" cy="529" r="27" fill="#fff" stroke="#ccd5d7"/>
+      <path d="m291 529 5 5 9-11" fill="none" stroke="#1479a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="336" y="534" fill="#40545e" font-size="12">How solar works</text>
+    </g>
+    <circle cx="920" cy="340" r="196" fill="#d8e3e5"/>
+    <circle cx="1030" cy="231" r="72" fill="url(#sun)" opacity=".9"/>
+    <path d="M690 515 825 281l286 90-129 247Z" fill="url(#panel)" filter="url(#shadow)"/>
+    <g fill="none" stroke="#80b5ca" stroke-opacity=".55" stroke-width="3">
+      <path d="m721 467 287 91M754 420l287 91M787 373l287 91M821 326l286 91"/>
+      <path d="m825 281-129 247M880 298 751 545M935 316 806 563M990 333 861 581M1045 351 916 599M1100 368 971 616"/>
+    </g>
+    <path d="m837 614-8 65m169-69 21 69M773 679h296" stroke="#203b47" stroke-width="10" stroke-linecap="round"/>
+    <rect x="862" y="566" width="252" height="132" rx="17" fill="#fff" filter="url(#shadow)"/>
+    <text x="888" y="600" fill="#829198" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">ESTIMATED ANNUAL SAVINGS</text>
+    <text x="886" y="652" fill="#153140" font-family="Arial,Helvetica,sans-serif" font-size="39" font-weight="700">32%</text>
+    <path d="M1000 656v-31m25 31v-51m25 51v-75m25 75v-43" stroke="#ff8438" stroke-width="12" stroke-linecap="round"/>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="640" width="592" height="1" fill="#153140" opacity=".12"/>
+      <text x="80" y="686" fill="#73848c" font-size="11" letter-spacing="2">A SMARTER WAY TO POWER WHAT MATTERS</text>
+      <circle cx="91" cy="729" r="10" fill="#1479a0" opacity=".13"/><path d="m86 729 4 4 7-9" fill="none" stroke="#1479a0" stroke-width="2"/>
+      <text x="113" y="734" fill="#435a64" font-size="13">Expert installation</text>
+      <circle cx="285" cy="729" r="10" fill="#1479a0" opacity=".13"/><path d="m280 729 4 4 7-9" fill="none" stroke="#1479a0" stroke-width="2"/>
+      <text x="307" y="734" fill="#435a64" font-size="13">Transparent savings</text>
+      <circle cx="497" cy="729" r="10" fill="#1479a0" opacity=".13"/><path d="m492 729 4 4 7-9" fill="none" stroke="#1479a0" stroke-width="2"/>
+      <text x="519" y="734" fill="#435a64" font-size="13">Ongoing support</text>
+    </g>
+  </g>
+</svg>

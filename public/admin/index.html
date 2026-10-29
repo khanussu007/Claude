@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-theme="charcoal-orange">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0d10">
+  <title>Website Admin — Usman Khan</title>
+  <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body class="admin-page">
+  <div class="admin-shell">
+    <aside class="admin-sidebar" id="admin-sidebar" aria-label="Admin navigation">
+      <a class="admin-brand" href="/admin">
+        <span class="admin-brand-mark">UK<span>.</span></span>
+        <span><strong>Usman Khan</strong><small>Website Administration</small></span>
+      </a>
+      <nav class="admin-nav">
+        <button type="button" data-route="dashboard" class="is-active"><span>Overview</span>Dashboard</button>
+        <button type="button" data-route="global"><span>Site-wide</span>Global Settings</button>
+        <button type="button" data-route="home"><span>Homepage</span>Home Page</button>
+                <button type="button" data-route="portfolio"><span>Projects</span>Portfolio</button>
+        <button type="button" data-route="about"><span>Personal story</span>About</button>
+        <button type="button" data-route="services"><span>Offerings</span>Services</button>
+        <button type="button" data-route="achievements"><span>Career</span>Awards &amp; Achievements</button>
+        <button type="button" data-route="contact"><span>Enquiries</span>Contact</button>
+        <button type="button" data-route="media"><span>Library</span>Images / Media</button>
+        <button type="button" data-route="theme"><span>Appearance</span>Theme Settings</button>
+        <button type="button" data-route="settings"><span>Security</span>Admin Settings</button>
+      </nav>
+      <a class="sidebar-website-link" href="/index.html" target="_blank" rel="noopener noreferrer">View public website <span aria-hidden="true">↗</span></a>
+    </aside>
+    <button class="sidebar-overlay" id="sidebar-overlay" type="button" aria-label="Close Admin navigation" hidden></button>
+    <div class="admin-workspace">
+      <header class="admin-topbar">
+        <div class="topbar-title">
+          <button class="menu-button" id="admin-menu-button" type="button" aria-label="Open Admin navigation" aria-controls="admin-sidebar" aria-expanded="false"><span></span><span></span><span></span></button>
+          <div><p>Website Admin</p><h1 id="admin-route-title">Dashboard</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <span class="save-state" id="save-state" role="status">All changes saved</span>
+          <button class="admin-button admin-button--primary" type="button" data-save disabled>Save Changes</button>
+          <button class="admin-button admin-button--ghost" type="button" id="admin-logout">Logout</button>
+        </div>
+      </header>
+      <main class="admin-content" id="admin-content">
+        <div class="password-banner" id="default-password-banner" hidden>
+          <strong>Security reminder: change the default password.</strong>
+          <span>Open Admin Settings to set your own username and password before launch.</span>
+          <button type="button" data-go-settings>Open Admin Settings</button>
+        </div>
+        <div id="admin-app"><div class="admin-loading">Loading protected website content…</div></div>
+      </main>
+    </div>
+  </div>
+  <div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div>
+  <div class="media-modal" id="media-modal" hidden>
+    <button class="media-modal-backdrop" type="button" data-close-media aria-label="Close image preview"></button>
+    <div class="media-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="media-preview-title">
+      <div><h2 id="media-preview-title">Image preview</h2><button type="button" data-close-media aria-label="Close image preview">×</button></div>
+      <img id="media-preview-image" alt="Selected media preview">
+    </div>
+  </div>
+  <input type="file" id="admin-file-input" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+  <script src="/assets/js/admin.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "usman-khan-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Usman Khan portfolio website with a password-protected Admin Panel and persistent content management.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}

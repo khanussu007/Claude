@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Nexa Properties concept website</title>
+  <desc id="desc">A dark premium real estate landing page concept with a modern home illustration.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17232b"/><stop offset="1" stop-color="#0b1117"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d68951"/><stop offset=".55" stop-color="#6f6b68"/><stop offset="1" stop-color="#27343b"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8db2be" stop-opacity=".8"/><stop offset="1" stop-color="#17252d" stop-opacity=".9"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#000" flood-opacity=".35"/></filter>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+    <clipPath id="photo"><rect x="716" y="188" width="402" height="410" rx="20"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#080b0e"/>
+  <g clip-path="url(#screen)">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#0a0e12"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#151b21"/>
+    <circle cx="414" cy="44.5" r="5" fill="none" stroke="#64727c" stroke-width="2"/>
+    <text x="600" y="49" text-anchor="middle" fill="#73818c" font-family="Arial,Helvetica,sans-serif" font-size="11">nexaproperties.com</text>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <text x="80" y="132" fill="#fff" font-size="22" font-weight="700" letter-spacing="2">NEXA</text>
+      <rect x="80" y="143" width="27" height="3" rx="1.5" fill="#ff8a38"/>
+      <text x="703" y="130" fill="#a9b3b9" font-size="12">PROPERTIES</text><text x="815" y="130" fill="#a9b3b9" font-size="12">LOCATIONS</text><text x="918" y="130" fill="#a9b3b9" font-size="12">ABOUT</text>
+      <rect x="1000" y="105" width="118" height="43" rx="8" fill="#ff8130"/>
+      <text x="1059" y="132" text-anchor="middle" fill="#1b1109" font-size="11" font-weight="700">ENQUIRE NOW</text>
+      <text x="80" y="238" fill="#ff9a59" font-size="12" font-weight="700" letter-spacing="3">PROPERTY, REIMAGINED</text>
+      <text x="76" y="318" fill="#f7f8f8" font-size="66" font-weight="700" letter-spacing="-3">FIND YOUR</text>
+      <text x="76" y="388" fill="#f7f8f8" font-size="66" font-weight="700" letter-spacing="-3">NEXT SPACE.</text>
+      <text x="80" y="438" fill="#9aa8b0" font-size="17">Thoughtfully selected homes and investments,</text>
+      <text x="80" y="464" fill="#9aa8b0" font-size="17">matched to the way you want to live.</text>
+      <rect x="80" y="502" width="158" height="54" rx="9" fill="#ff8130"/>
+      <text x="159" y="535" text-anchor="middle" fill="#1b1109" font-size="13" font-weight="700">EXPLORE HOMES</text>
+      <rect x="253" y="502" width="130" height="54" rx="9" fill="none" stroke="#46535b"/>
+      <text x="318" y="535" text-anchor="middle" fill="#d6dcdf" font-size="13">OUR STORY</text>
+    </g>
+    <g clip-path="url(#photo)">
+      <rect x="716" y="188" width="402" height="410" fill="url(#sky)"/>
+      <circle cx="1028" cy="252" r="45" fill="#ffd0a0" opacity=".48"/>
+      <rect x="716" y="486" width="402" height="112" fill="#17251f"/>
+      <path d="M740 430 875 318l185 112v142H740Z" fill="#d5d1c7" filter="url(#shadow)"/>
+      <path d="m720 435 155-128 205 128-20 17-185-113-137 113Z" fill="#252c30"/>
+      <rect x="782" y="421" width="236" height="151" fill="#c5c3bb"/>
+      <rect x="807" y="438" width="82" height="111" fill="url(#glass)"/>
+      <rect x="910" y="438" width="79" height="111" fill="url(#glass)"/>
+      <path d="M807 477h182M848 438v111M949 438v111" stroke="#26343b" stroke-width="5"/>
+      <rect x="752" y="548" width="316" height="24" fill="#aaa79f"/>
+      <path d="M735 568h360M756 552l-32 46M1040 550l45 48" stroke="#6d766e" stroke-width="5"/>
+      <circle cx="743" cy="491" r="42" fill="#263f31"/><circle cx="1082" cy="480" r="52" fill="#2a4535"/>
+    </g>
+    <rect x="716" y="188" width="402" height="410" rx="20" fill="none" stroke="#ffffff" stroke-opacity=".15"/>
+    <g font-family="Arial,Helvetica,sans-serif">
+      <rect x="80" y="638" width="1038" height="1" fill="#fff" opacity=".09"/>
+      <text x="80" y="685" fill="#72818b" font-size="11" letter-spacing="2">FEATURED COLLECTION</text>
+      <rect x="80" y="708" width="318" height="56" rx="10" fill="#fff" opacity=".045"/>
+      <rect x="415" y="708" width="318" height="56" rx="10" fill="#fff" opacity=".045"/>
+      <rect x="750" y="708" width="368" height="56" rx="10" fill="#fff" opacity=".045"/>
+      <circle cx="108" cy="736" r="9" fill="#ff8130" opacity=".8"/><circle cx="443" cy="736" r="9" fill="#ff8130" opacity=".8"/><circle cx="778" cy="736" r="9" fill="#ff8130" opacity=".8"/>
+      <text x="130" y="741" fill="#c7d0d5" font-size="13">Modern Villas</text><text x="465" y="741" fill="#c7d0d5" font-size="13">City Apartments</text><text x="800" y="741" fill="#c7d0d5" font-size="13">Investment Opportunities</text>
+    </g>
+  </g>
+</svg>

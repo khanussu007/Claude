@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Searchwave Google Ads campaign concept</title><desc id="desc">A dark search advertising dashboard with high-intent keyword and enquiry metrics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#151b23"/><stop offset="1" stop-color="#090d12"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9a4b"/><stop offset="1" stop-color="#ff6d1b"/></linearGradient>
+    <clipPath id="screen"><rect x="10" y="10" width="1180" height="780" rx="28"/></clipPath>
+  </defs>
+  <rect width="1200" height="800" fill="#07090c"/>
+  <g clip-path="url(#screen)" font-family="Arial,Helvetica,sans-serif">
+    <rect x="10" y="10" width="1180" height="780" fill="url(#bg)"/>
+    <rect x="10" y="10" width="1180" height="70" fill="#0a0e13"/>
+    <circle cx="45" cy="45" r="6" fill="#ff725e"/><circle cx="65" cy="45" r="6" fill="#f7bf4f"/><circle cx="85" cy="45" r="6" fill="#62c454"/>
+    <rect x="390" y="29" width="420" height="31" rx="15.5" fill="#191f27"/><text x="600" y="49" text-anchor="middle" fill="#74828f" font-size="11">searchwave.app / campaigns</text>
+    <rect x="10" y="80" width="218" height="710" fill="#0d1218"/>
+    <circle cx="63" cy="130" r="19" fill="#ff7a1a" opacity=".13"/><circle cx="59" cy="126" r="8" fill="none" stroke="#ff9b57" stroke-width="2.5"/><path d="m65 132 7 7" stroke="#ff9b57" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="95" y="136" fill="#f3f5f7" font-size="18" font-weight="700">Searchwave</text>
+    <text x="43" y="192" fill="#596876" font-size="9" font-weight="700" letter-spacing="2">WORKSPACE</text>
+    <rect x="28" y="210" width="182" height="46" rx="9" fill="#2c9fff" opacity=".11"/><rect x="28" y="210" width="3" height="46" rx="1.5" fill="#2c9fff"/>
+    <circle cx="51" cy="233" r="7" fill="none" stroke="#69baff" stroke-width="2"/><path d="m56 238 5 5" stroke="#69baff" stroke-width="2"/>
+    <text x="74" y="238" fill="#b9ddff" font-size="12" font-weight="700">Search campaigns</text>
+    <text x="43" y="292" fill="#7f8d9a" font-size="12">Overview</text><text x="43" y="338" fill="#7f8d9a" font-size="12">Keywords</text><text x="43" y="384" fill="#7f8d9a" font-size="12">Audiences</text><text x="43" y="430" fill="#7f8d9a" font-size="12">Conversions</text><text x="43" y="476" fill="#7f8d9a" font-size="12">Reports</text>
+    <rect x="28" y="672" width="182" height="82" rx="12" fill="#fff" opacity=".035"/><text x="43" y="701" fill="#8a98a5" font-size="10">Campaign health</text><text x="43" y="731" fill="#63d8ad" font-size="20" font-weight="700">Excellent</text><circle cx="183" cy="719" r="15" fill="#63d8ad" opacity=".1"/><path d="m176 719 5 5 9-11" fill="none" stroke="#63d8ad" stroke-width="2"/>
+    <text x="265" y="132" fill="#f2f5f7" font-size="29" font-weight="700">Search campaigns</text>
+    <text x="265" y="160" fill="#748492" font-size="12">High-intent acquisition · Campaign overview</text>
+    <rect x="970" y="111" width="167" height="46" rx="9" fill="url(#accent)"/><text x="1053" y="140" text-anchor="middle" fill="#211208" font-size="12" font-weight="700">+ NEW CAMPAIGN</text>
+    <g>
+      <rect x="265" y="199" width="265" height="130" rx="15" fill="#171e26" stroke="#fff" stroke-opacity=".06"/>
+      <text x="289" y="231" fill="#82919e" font-size="10" font-weight="700" letter-spacing="1">QUALIFIED CLICKS</text><text x="289" y="282" fill="#f4f6f8" font-size="38" font-weight="700">2,846</text><text x="433" y="280" fill="#60d4a9" font-size="12" font-weight="700">↑ 18.2%</text>
+      <rect x="549" y="199" width="265" height="130" rx="15" fill="#171e26" stroke="#fff" stroke-opacity=".06"/>
+      <text x="573" y="231" fill="#82919e" font-size="10" font-weight="700" letter-spacing="1">ENQUIRIES</text><text x="573" y="282" fill="#f4f6f8" font-size="38" font-weight="700">184</text><text x="673" y="280" fill="#60d4a9" font-size="12" font-weight="700">↑ 12.4%</text>
+      <rect x="833" y="199" width="304" height="130" rx="15" fill="#171e26" stroke="#fff" stroke-opacity=".06"/>
+      <text x="857" y="231" fill="#82919e" font-size="10" font-weight="700" letter-spacing="1">CONVERSION RATE</text><text x="857" y="282" fill="#f4f6f8" font-size="38" font-weight="700">6.47%</text><circle cx="1080" cy="266" r="28" fill="#ff7a1a" opacity=".1"/><path d="m1068 270 10-10 8 7 14-18" fill="none" stroke="#ff9650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <rect x="265" y="353" width="548" height="374" rx="16" fill="#141b23" stroke="#fff" stroke-opacity=".06"/>
+    <text x="290" y="392" fill="#e9edf1" font-size="15" font-weight="700">High-intent keywords</text><text x="728" y="392" fill="#70bcff" font-size="11">View all →</text>
+    <text x="290" y="435" fill="#60707f" font-size="9" font-weight="700" letter-spacing="1">KEYWORD</text><text x="586" y="435" fill="#60707f" font-size="9" font-weight="700">CLICKS</text><text x="682" y="435" fill="#60707f" font-size="9" font-weight="700">ENQ.</text>
+    <path d="M290 452h496M290 514h496M290 576h496M290 638h496" stroke="#fff" stroke-opacity=".055"/>
+    <circle cx="300" cy="483" r="5" fill="#2c9fff"/><text x="317" y="488" fill="#c3cdd6" font-size="12">website design services</text><text x="590" y="488" fill="#9caab7" font-size="12">842</text><text x="688" y="488" fill="#f2f5f7" font-size="12" font-weight="700">58</text>
+    <circle cx="300" cy="545" r="5" fill="#ff7a1a"/><text x="317" y="550" fill="#c3cdd6" font-size="12">lead generation specialist</text><text x="590" y="550" fill="#9caab7" font-size="12">615</text><text x="688" y="550" fill="#f2f5f7" font-size="12" font-weight="700">47</text>
+    <circle cx="300" cy="607" r="5" fill="#2c9fff"/><text x="317" y="612" fill="#c3cdd6" font-size="12">google ads for business</text><text x="590" y="612" fill="#9caab7" font-size="12">498</text><text x="688" y="612" fill="#f2f5f7" font-size="12" font-weight="700">32</text>
+    <circle cx="300" cy="669" r="5" fill="#ff7a1a"/><text x="317" y="674" fill="#c3cdd6" font-size="12">conversion website designer</text><text x="590" y="674" fill="#9caab7" font-size="12">371</text><text x="688" y="674" fill="#f2f5f7" font-size="12" font-weight="700">26</text>
+    <rect x="833" y="353" width="304" height="374" rx="16" fill="#141b23" stroke="#fff" stroke-opacity=".06"/>
+    <text x="857" y="392" fill="#e9edf1" font-size="15" font-weight="700">Search intent</text><text x="857" y="416" fill="#6e7f8e" font-size="11">Clicks by intent group</text>
+    <path d="M875 650V471m0 179h225" stroke="#fff" stroke-opacity=".07"/>
+    <rect x="893" y="544" width="30" height="106" rx="6" fill="#2c9fff" opacity=".8"/><rect x="950" y="493" width="30" height="157" rx="6" fill="#2c9fff" opacity=".8"/><rect x="1007" y="450" width="30" height="200" rx="6" fill="#ff7a1a"/><rect x="1064" y="522" width="30" height="128" rx="6" fill="#2c9fff" opacity=".55"/>
+    <text x="908" y="678" text-anchor="middle" fill="#748492" font-size="9">INFO</text><text x="965" y="678" text-anchor="middle" fill="#748492" font-size="9">LOCAL</text><text x="1022" y="678" text-anchor="middle" fill="#748492" font-size="9">BUY</text><text x="1079" y="678" text-anchor="middle" fill="#748492" font-size="9">OTHER</text>
+  </g>
+</svg>

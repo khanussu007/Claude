@@ -1,0 +1,6 @@
+{
+  "username": "admin",
+  "passwordHash": "scrypt$3f11cfbd78ac9c6cde54eb8d86a90c07$3bd45e323f31023b942695993c188fb9eeb3a02193cfb002a08af9895a29153f37089825e715eb5fe13b74883e3da2382815b1a345a7f4c10607721962b857b4",
+  "defaultPassword": true,
+  "updatedAt": "2026-10-27T08:16:50.453Z"
+}
