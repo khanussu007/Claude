@@ -155,7 +155,10 @@ async function handleApi(request, env, pathname) {
       if(!bytes.length||bytes.length>7*1024*1024) return json({ok:false,error:"Optimized image must be smaller than 7 MB."},413);
       const ext=match[1]==="jpeg"?"jpg":match[1]==="svg+xml"?"svg":match[1], filename=`${Date.now()}-${b64url(crypto.getRandomValues(new Uint8Array(9))).replace(/[^a-zA-Z0-9]/g,"")}.${ext}`, key=`assets/uploads/${filename}`;
       const types={png:"image/png",jpg:"image/jpeg",webp:"image/webp",svg:"image/svg+xml"};
-      await env.UPLOADS.put(key,bytes,{httpMetadata:{contentType:types[ext]||"application/octet-stream",cacheControl:"public, max-age=31536000, immutable"}});
+      await env.UPLOADS.put(key, JSON.stringify({
+      type: types[ext] || "application/octet-stream",
+      data: match[2]
+       }));
       const media={id:`media-${filename.replace(/\.[^.]+$/,"")}`,name:String(body.name||"Uploaded image").trim().slice(0,120)||"Uploaded image",kind:"other",url:key,uploadedAt:new Date().toISOString()};
       return json({ok:true,url:key,media},201);
     }
@@ -187,7 +190,31 @@ export default {
       await init(env);
       const url=new URL(request.url), pathname=url.pathname.replace(/\/$/,"")||"/";
       if(pathname.startsWith("/api/")) return await handleApi(request,env,pathname);
-      if(pathname.startsWith("/assets/uploads/")) {
+      if (pathname.startsWith("/assets/uploads/")) {
+  if (env.UPLOADS) {
+    const value = await env.UPLOADS.get(pathname.slice(1));
+
+    if (value) {
+      const saved = JSON.parse(value);
+      const binary = atob(saved.data);
+      const bytes = Uint8Array.from(
+        binary,
+        c => c.charCodeAt(0)
+      );
+
+      return new Response(
+        request.method === "HEAD" ? null : bytes,
+        {
+          headers: {
+            ...headersBase(),
+            "Content-Type": saved.type,
+            "Cache-Control": "public, max-age=86400"
+          }
+        }
+      );
+    }
+  }
+}
         if(env.UPLOADS) {
           const object=await env.UPLOADS.get(pathname.slice(1));
           if(object) { const h=new Headers(headersBase()); object.writeHttpMetadata(h); h.set("etag",object.httpEtag); h.set("Cache-Control","public, max-age=31536000, immutable"); return new Response(request.method==="HEAD"?null:object.body,{headers:h}); }
