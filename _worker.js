@@ -190,53 +190,138 @@ export default {
       await init(env);
       const url=new URL(request.url), pathname=url.pathname.replace(/\/$/,"")||"/";
       if(pathname.startsWith("/api/")) return await handleApi(request,env,pathname);
+    
       if (pathname.startsWith("/assets/uploads/")) {
-  if (env.UPLOADS) {
-    const value = await env.UPLOADS.get(pathname.slice(1));
+        if (env.UPLOADS) {
+          const key = pathname.slice(1);
 
-    if (value) {
-      const saved = JSON.parse(value);
-      const binary = atob(saved.data);
-      const bytes = Uint8Array.from(
-        binary,
-        c => c.charCodeAt(0)
-      );
+          // Check KV storage first
+          const value = await env.UPLOADS.get(key);
 
-      return new Response(
-        request.method === "HEAD" ? null : bytes,
-        {
-          headers: {
-            ...headersBase(),
-            "Content-Type": saved.type,
-            "Cache-Control": "public, max-age=86400"
+          if (value && typeof value === "string") {
+            try {
+              const saved = JSON.parse(value);
+              const binary = atob(saved.data);
+              const bytes = Uint8Array.from(
+                binary,
+                c => c.charCodeAt(0)
+              );
+
+              return new Response(
+                request.method === "HEAD" ? null : bytes,
+                {
+                  headers: {
+                    ...headersBase(),
+                    "Content-Type":
+                      saved.type || "application/octet-stream",
+                    "Cache-Control": "public, max-age=86400"
+                  }
+                }
+              );
+            } catch (error) {
+              console.error("KV upload read error:", error);
+            }
+          }
+
+          // Check R2 storage
+          const object = await env.UPLOADS.get(key);
+
+          if (object && typeof object !== "string") {
+            const headers = new Headers(headersBase());
+            object.writeHttpMetadata(headers);
+            headers.set("ETag", object.httpEtag);
+            headers.set(
+              "Cache-Control",
+              "public, max-age=31536000, immutable"
+            );
+
+            return new Response(
+              request.method === "HEAD" ? null : object.body,
+              { headers }
+            );
           }
         }
-      );
-    }
-  }
-}
-        if(env.UPLOADS) {
-          const object=await env.UPLOADS.get(pathname.slice(1));
-          if(object) { const h=new Headers(headersBase()); object.writeHttpMetadata(h); h.set("etag",object.httpEtag); h.set("Cache-Control","public, max-age=31536000, immutable"); return new Response(request.method==="HEAD"?null:object.body,{headers:h}); }
+
+        return text("Upload not found", 404);
+      }
+
+      if (
+        pathname === "/admin/login" ||
+        pathname === "/admin/login.html"
+      ) {
+        if (await getSession(request, env)) {
+          return Response.redirect(
+            new URL("/admin", request.url),
+            302
+          );
         }
+
+        return await serveStatic(
+          request,
+          env,
+          "/admin/login.html"
+        );
       }
-      if(pathname==="/admin/login"||pathname==="/admin/login.html") {
-        if(await getSession(request,env)) return Response.redirect(new URL("/admin",request.url),302);
-        return await serveStatic(request,env,"/admin/login.html");
+
+      if (
+        pathname === "/admin" ||
+        pathname === "/admin/index.html" ||
+        pathname.startsWith("/admin/")
+      ) {
+        const session = await getSession(request, env);
+
+        if (!session) {
+          return Response.redirect(
+            new URL("/admin/login", request.url),
+            302
+          );
+        }
+
+        if (
+          pathname === "/admin" ||
+          pathname === "/admin/index.html" ||
+          !pathname.split("/").pop().includes(".")
+        ) {
+          return await serveStatic(
+            request,
+            env,
+            "/admin/index.html"
+          );
+        }
+
+        return text("Not found", 404);
       }
-      if(pathname==="/admin"||pathname==="/admin/index.html"||pathname.startsWith("/admin/")) {
-        const session=await getSession(request,env);
-        if(!session) return Response.redirect(new URL("/admin/login",request.url),302);
-        if(pathname==="/admin"||pathname==="/admin/index.html"||!pathname.split("/").pop().includes(".")) return await serveStatic(request,env,"/admin/index.html");
-        return text("Not found",404);
+
+      if (pathname === "/admin-login") {
+        return Response.redirect(
+          new URL("/admin/login", request.url),
+          302
+        );
       }
-      if(pathname==="/admin-login") return Response.redirect(new URL("/admin/login",request.url),302);
-      if(PUBLIC_PAGES.has(pathname)) return await serveStatic(request,env,pathname,await getContent(env));
-      if(pathname.startsWith("/assets/")) return await serveStatic(request,env,pathname);
-      return text("Page not found",404);
-    } catch(error) {
+
+      if (PUBLIC_PAGES.has(pathname)) {
+        return await serveStatic(
+          request,
+          env,
+          pathname,
+          await getContent(env)
+        );
+      }
+
+      if (pathname.startsWith("/assets/")) {
+        return await serveStatic(request, env, pathname);
+      }
+
+      return text("Page not found", 404);
+    } catch (error) {
       console.error(error);
-      return json({ok:false,error:error?.message||"Server error. Please try again."},500);
+      return json(
+        {
+          ok: false,
+          error: error?.message || "Server error. Please try again."
+        },
+        500
+      );
     }
   }
 };
