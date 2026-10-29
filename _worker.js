@@ -224,27 +224,6 @@ export default {
           }
         }
 
-        return text("Upload not found", 404);
-      }
-
-          // Check R2 storage
-          const object = await env.UPLOADS.get(key);
-
-          if (object && typeof object !== "string") {
-            const headers = new Headers(headersBase());
-            object.writeHttpMetadata(headers);
-            headers.set("ETag", object.httpEtag);
-            headers.set(
-              "Cache-Control",
-              "public, max-age=31536000, immutable"
-            );
-
-            return new Response(
-              request.method === "HEAD" ? null : object.body,
-              { headers }
-            );
-          }
-        }
 
         return text("Upload not found", 404);
       }
