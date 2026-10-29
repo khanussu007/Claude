@@ -224,9 +224,27 @@ export default {
           }
         }
 
-
         return text("Upload not found", 404);
       }
+
+      if (
+        pathname === "/admin/login" ||
+        pathname === "/admin/login.html"
+      ) {
+        if (await getSession(request, env)) {
+          return Response.redirect(
+            new URL("/admin", request.url),
+            302
+          );
+        }
+
+        return await serveStatic(
+          request,
+          env,
+          "/admin/login.html"
+        );
+      }
+
 
       if (
         pathname === "/admin/login" ||
