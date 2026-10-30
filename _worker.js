@@ -1,4 +1,3 @@
-
 import initialContent from "./data/content.json";
 
 const PUBLIC_PAGES = new Set([
@@ -377,9 +376,11 @@ export default {
       const url = new URL(request.url);
       const pathname = url.pathname.replace(/\/$/, "") || "/";
 
-      if (pathname.startsWith("/api/")) return await handleApi(request, env, pathname);
+      if (pathname.startsWith("/api/")) {
+        return await handleApi(request, env, pathname);
+      }
 
-           if (pathname.startsWith("/assets/uploads/")) {
+      if (pathname.startsWith("/assets/uploads/")) {
         if (env.UPLOADS) {
           const key = pathname.slice(1);
           const value = await env.UPLOADS.get(key);
@@ -388,22 +389,15 @@ export default {
             try {
               const saved = JSON.parse(value);
               const binary = atob(saved.data);
-              const bytes = Uint8Array.from(
-                binary,
-                c => c.charCodeAt(0)
-              );
+              const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
 
-              return new Response(
-                request.method === "HEAD" ? null : bytes,
-                {
-                  headers: {
-                    ...headersBase(),
-                    "Content-Type":
-                      saved.type || "application/octet-stream",
-                    "Cache-Control": "public, max-age=86400"
-                  }
+              return new Response(request.method === "HEAD" ? null : bytes, {
+                headers: {
+                  ...headersBase(),
+                  "Content-Type": saved.type || "application/octet-stream",
+                  "Cache-Control": "public, max-age=86400"
                 }
-              );
+              });
             } catch (error) {
               console.error("KV upload read error:", error);
               return text("Invalid uploaded image data", 500);
@@ -414,43 +408,41 @@ export default {
         return text("Upload not found", 404);
       }
 
-      if (
-        pathname === "/admin/login" ||
-        pathname === "/admin/login.html"
-      ) {
-        if (await getSession(request, env)) {
-          return Response.redirect(
-            new URL("/admin", request.url),
-            302
-          );
-        }
-
-        return await serveStatic(
-          request,
-          env,
-          "/admin/login.html"
-        );
-      }
       if (pathname === "/admin/login" || pathname === "/admin/login.html") {
-        if (await getSession(request, env)) return Response.redirect(new URL("/admin", request.url), 302);
+        if (await getSession(request, env)) {
+          return Response.redirect(new URL("/admin", request.url), 302);
+        }
         return await serveStatic(request, env, "/admin/login.html");
       }
 
       if (pathname === "/admin" || pathname === "/admin/index.html" || pathname.startsWith("/admin/")) {
         const session = await getSession(request, env);
-        if (!session) return Response.redirect(new URL("/admin/login", request.url), 302);
+        if (!session) {
+          return Response.redirect(new URL("/admin/login", request.url), 302);
+        }
 
-        if (pathname === "/admin" || pathname === "/admin/index.html" || !pathname.split("/").pop().includes(".")) {
+        if (
+          pathname === "/admin" ||
+          pathname === "/admin/index.html" ||
+          !pathname.split("/").pop().includes(".")
+        ) {
           return await serveStatic(request, env, "/admin/index.html");
         }
 
         return text("Not found", 404);
       }
 
-      if (pathname === "/admin-login") return Response.redirect(new URL("/admin/login", request.url), 302);
+      if (pathname === "/admin-login") {
+        return Response.redirect(new URL("/admin/login", request.url), 302);
+      }
 
-      if (PUBLIC_PAGES.has(pathname)) return await serveStatic(request, env, pathname, await getContent(env));
-      if (pathname.startsWith("/assets/")) return await serveStatic(request, env, pathname);
+      if (PUBLIC_PAGES.has(pathname)) {
+        return await serveStatic(request, env, pathname, await getContent(env));
+      }
+
+      if (pathname.startsWith("/assets/")) {
+        return await serveStatic(request, env, pathname);
+      }
 
       return text("Page not found", 404);
     } catch (error) {
