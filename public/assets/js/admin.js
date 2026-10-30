@@ -342,14 +342,40 @@
     saveState.textContent = saving ? "Saving to persistent storage…" : dirty ? "Unsaved changes" : "All changes saved";
   }
   function markDirty() { dirty = true; updateDirtyUI(); }
-  function render() {
-    categoryOptions = (content.portfolioCategories || []).filter((item) => item.visible !== false).sort((a,b) => (Number(a.order)||0)-(Number(b.order)||0)).map((item) => [item.id, item.label]);
+function render() {
+  try {
+    categoryOptions = (content.portfolioCategories || [])
+      .filter((item) => item.visible !== false)
+      .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+      .map((item) => [item.id, item.label]);
+
     routeTitle.textContent = routes[route];
-    document.querySelectorAll("[data-route]").forEach((button) => button.classList.toggle("is-active", button.dataset.route === route));
+
+    document.querySelectorAll("[data-route]").forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.route === route);
+    });
+
     app.innerHTML = `<div class="route-enter">${views[route]()}</div>`;
+
     document.querySelector("#default-password-banner").hidden = !session.defaultPassword;
+
     updateDirtyUI();
+
+  } catch (error) {
+    console.error("Admin rendering error:", error);
+
+    app.innerHTML = `
+      <div class="empty-admin">
+        <h2>Section Loading Error</h2>
+        <p>${escapeHTML(error.message)}</p>
+        <p>Section: ${escapeHTML(route)}</p>
+        <button class="admin-button" onclick="location.reload()">
+          Reload Admin Panel
+        </button>
+      </div>
+    `;
   }
+}
   function navigate(target) {
     if (!views[target]) return;
     route = target;
