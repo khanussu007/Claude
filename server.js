@@ -14,11 +14,12 @@ const { promisify } = require("node:util");
 
 const scrypt = promisify(crypto.scrypt);
 const ROOT = __dirname;
+const PUBLIC_DIR = path.join(ROOT, "public");
 const DATA_DIR = path.join(ROOT, "data");
 const CONTENT_FILE = path.join(DATA_DIR, "content.json");
 const SEED_FILE = path.join(DATA_DIR, "seed-content.json");
 const ADMIN_FILE = path.join(DATA_DIR, "admin.json");
-const UPLOAD_DIR = path.join(ROOT, "assets", "uploads");
+const UPLOAD_DIR = path.join(PUBLIC_DIR, "assets", "uploads");
 const PORT = Number(process.env.PORT || 8000);
 const HOST = process.env.HOST || "0.0.0.0";
 const SESSION_MS = Math.max(1, Number(process.env.SESSION_HOURS || 12)) * 60 * 60 * 1000;
@@ -364,7 +365,7 @@ async function handleApi(req, res, pathname) {
     if (!/^assets\/uploads\/[a-zA-Z0-9.-]+\.(png|jpe?g|webp|svg)$/.test(url)) {
       return json(res, 400, { ok: false, error: "Only uploaded image files can be deleted from storage." });
     }
-    const file = path.join(ROOT, url);
+    const file = path.join(PUBLIC_DIR, url);
     if (!file.startsWith(UPLOAD_DIR + path.sep)) return json(res, 403, { ok: false, error: "Invalid file path." });
     try { await fsp.unlink(file); } catch (error) { if (error.code !== "ENOENT") throw error; }
     return json(res, 200, { ok: true });
@@ -428,8 +429,8 @@ async function serveHtml(res, file, inject = false, head = false) {
 async function serveAsset(res, pathname, head = false) {
   const decoded = decodeURIComponent(pathname);
   if (decoded.includes("..") || decoded.includes("\\") || decoded.includes("\0")) return text(res, 403, "Forbidden");
-  const file = path.join(ROOT, decoded);
-  if (!file.startsWith(path.join(ROOT, "assets") + path.sep)) return text(res, 403, "Forbidden");
+  const file = path.join(PUBLIC_DIR, decoded);
+  if (!file.startsWith(path.join(PUBLIC_DIR, "assets") + path.sep)) return text(res, 403, "Forbidden");
   const extension = path.extname(file).toLowerCase();
   if (!MIME[extension] || extension === ".html") return text(res, 404, "Not found");
   try {
@@ -456,11 +457,11 @@ async function requestHandler(req, res) {
     noStore(res);
     if (pathname === "/admin/login" || pathname === "/admin/login.html") {
       if (getSession(req)) return redirect(res, "/admin");
-      return serveHtml(res, path.join(ROOT, "admin", "login.html"), false, req.method === "HEAD");
+      return serveHtml(res, path.join(PUBLIC_DIR, "admin", "login.html"), false, req.method === "HEAD");
     }
     if (!getSession(req)) return redirect(res, "/admin/login");
     if (pathname === "/admin" || pathname === "/admin/index.html" || !path.extname(pathname)) {
-      return serveHtml(res, path.join(ROOT, "admin", "index.html"), false, req.method === "HEAD");
+      return serveHtml(res, path.join(PUBLIC_DIR, "admin", "index.html"), false, req.method === "HEAD");
     }
     return text(res, 404, "Not found");
   }
@@ -470,7 +471,7 @@ async function requestHandler(req, res) {
   if (PUBLIC_PAGES.has(pathname)) {
     noStore(res);
     if (pathname === "/" && ADMIN_PREVIEW) return redirect(res, "/admin");
-    return serveHtml(res, path.join(ROOT, PUBLIC_PAGES.get(pathname)), true, req.method === "HEAD");
+    return serveHtml(res, path.join(PUBLIC_DIR, PUBLIC_PAGES.get(pathname)), true, req.method === "HEAD");
   }
 
   if (pathname.startsWith("/assets/")) return serveAsset(res, pathname, req.method === "HEAD");
