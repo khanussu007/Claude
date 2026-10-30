@@ -1,6 +1,6 @@
 name = "usman-portfolio"
 main = "_worker.js"
-compatibility_date = "2026-10-01"
+compatibility_date = "2026-10-29"
 
 [assets]
 directory = "./public"
@@ -11,8 +11,8 @@ html_handling = "none"
 [[d1_databases]]
 binding = "DB"
 database_name = "usman-portfolio-db"
-database_id = "YAHAN_D1_KA_ID"
+database_id = "ce26ab8f-dee7-470e-ad6a-f6d121f5564e"
 
 [[kv_namespaces]]
 binding = "UPLOADS"
-id = "YAHAN_KV_KA_ID"
+id = "aa48ee38a7904e91b69f892e3095d4f1"
