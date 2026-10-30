@@ -20,13 +20,13 @@
 
   Site.safeHref = (value, fallback = "#") => {
     const href = String(value || "").trim();
-    if (/^(https?:\/\/|mailto:|tel:|#|[a-z0-9-]+\.html(?:[?#]|$)|assets\/)/i.test(href)) return href;
+    if (/^(https?:\/\/|mailto:|tel:|#|[a-z0-9-]+\.html(?:[?#]|$)|\/?assets\/|\/(?!\/))/i.test(href)) return href;
     return fallback;
   };
 
   Site.safeImage = (value, fallback = "assets/images/usman-headshot-placeholder.webp") => {
     const url = String(value || "").trim();
-    return /^assets\/[a-zA-Z0-9_/.-]+\.(?:svg|png|jpe?g|webp|gif)$/i.test(url) ? url : fallback;
+    return /^\/?assets\/[a-zA-Z0-9_/.-]+\.(?:svg|png|jpe?g|webp|gif)$/i.test(url) ? url : fallback;
   };
 
   Site.setHeading = (element, value) => {
