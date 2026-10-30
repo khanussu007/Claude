@@ -27,6 +27,7 @@ function headersBase() {
   return {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
+    "Strict-Transport-Security": "max-age=31536000",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
   };
@@ -93,6 +94,26 @@ async function verifyPassword(password, stored) {
   }
 }
 
+let initPromise = null;
+function ensureInit(env) {
+  if (!initPromise) initPromise = init(env).catch((error) => { initPromise = null; throw error; });
+  return initPromise;
+}
+
+// Repair tag lists that were saved as a single string by older admin builds.
+function normalizeContent(content) {
+  const pages = content && content.pageContent;
+  if (!pages || typeof pages !== "object") return content;
+  for (const page of Object.values(pages)) {
+    if (!page || typeof page !== "object") continue;
+    for (const key of ["heroTags", "perspectiveTags"]) {
+      if (typeof page[key] === "string") page[key] = page[key].split(/\r?\n/).map((t) => t.trim()).filter(Boolean);
+      else if (page[key] !== undefined && !Array.isArray(page[key])) page[key] = [];
+    }
+  }
+  return content;
+}
+
 async function init(env) {
   if (!env.DB) throw new Error("Missing D1 binding DB. Add it in Worker Settings → Bindings.");
 
@@ -109,15 +130,17 @@ async function init(env) {
 
   const admin = await env.DB.prepare("SELECT id FROM admin_account WHERE id=1").first();
   if (!admin) {
-    const passwordHash = await hashPassword("Admin@123");
-    await env.DB.prepare("INSERT INTO admin_account (id, username, password_hash, default_password, updated_at) VALUES (1, ?, ?, 1, ?)")
-      .bind("admin", passwordHash, new Date().toISOString()).run();
+    // Set ADMIN_USERNAME / ADMIN_PASSWORD as Worker secrets before the first request to avoid the public default.
+    const fromSecret = Boolean(env.ADMIN_PASSWORD);
+    const passwordHash = await hashPassword(fromSecret ? String(env.ADMIN_PASSWORD) : "Admin@123");
+    await env.DB.prepare("INSERT INTO admin_account (id, username, password_hash, default_password, updated_at) VALUES (1, ?, ?, ?, ?)")
+      .bind(String(env.ADMIN_USERNAME || "admin"), passwordHash, fromSecret ? 0 : 1, new Date().toISOString()).run();
   }
 }
 
 async function getContent(env) {
   const row = await env.DB.prepare("SELECT content_json FROM site_content WHERE id=1").first();
-  return row ? JSON.parse(row.content_json) : initialContent;
+  return normalizeContent(row ? JSON.parse(row.content_json) : structuredClone(initialContent));
 }
 
 async function getAdmin(env) {
@@ -146,8 +169,11 @@ async function getSession(request, env) {
     return null;
   }
 
-  const expires = now + SESSION_MS;
-  await env.DB.prepare("UPDATE admin_sessions SET expires_at=? WHERE token_hash=?").bind(expires, tokenHash).run();
+  let expires = row.expires_at;
+  if (expires - now < SESSION_MS / 2) {
+    expires = now + SESSION_MS;
+    await env.DB.prepare("UPDATE admin_sessions SET expires_at=? WHERE token_hash=?").bind(expires, tokenHash).run();
+  }
   return { token, tokenHash, username: row.username, expiresAt: expires };
 }
 
@@ -178,8 +204,9 @@ function injectContent(html, content) {
     .replace(/\u2029/g, "\\u2029");
 
   const theme = String(content.global?.theme || "charcoal-orange").replace(/[^a-z-]/g, "");
-  return html.replace("<!-- SITE_CONTENT -->", `<script>window.__SITE_CONTENT__=${safe};</script>`)
-    .replace('data-theme="charcoal-orange"', `data-theme="${theme}"`);
+  const script = `<script>window.__SITE_CONTENT__=${safe};</script>`;
+  return html.replace("<!-- SITE_CONTENT -->", () => script)
+    .replace('data-theme="charcoal-orange"', () => `data-theme="${theme}"`);
 }
 
 async function serveStatic(request, env, pathname, content = null) {
@@ -202,7 +229,9 @@ async function serveStatic(request, env, pathname, content = null) {
 
   const headers = new Headers(response.headers);
   Object.entries(headersBase()).forEach(([k, v]) => headers.set(k, v));
-  if (pathname.startsWith("/assets/")) headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  if (pathname.startsWith("/assets/")) {
+    headers.set("Cache-Control", /\.(css|js)$/.test(pathname) ? "public, max-age=0, must-revalidate" : "public, max-age=604800");
+  }
 
   return new Response(request.method === "HEAD" ? null : response.body, {
     status: response.status,
@@ -289,6 +318,7 @@ async function handleApi(request, env, pathname) {
         if (incoming[key] === undefined) return json({ ok: false, error: `Missing content section: ${key}` }, 400);
         next[key] = incoming[key];
       }
+      normalizeContent(next);
 
       if (!Array.isArray(next.projects) || !Array.isArray(next.services) || !Array.isArray(next.achievements) || !Array.isArray(next.media) || !next.home || !Array.isArray(next.home.brands) || !Array.isArray(next.home.testimonials)) {
         return json({ ok: false, error: "Invalid content structure." }, 400);
@@ -304,8 +334,8 @@ async function handleApi(request, env, pathname) {
       if (!env.UPLOADS) return json({ ok: false, error: "Missing KV binding UPLOADS. Add it under Worker Settings → Bindings." }, 500);
 
       const body = await readJson(request, 12 * 1024 * 1024);
-      const match = String(body.data || body.dataUrl || "").match(/^data:image\/(png|jpeg|webp|svg\+xml);base64,([A-Za-z0-9+/=]+)$/);
-      if (!match) return json({ ok: false, error: "Upload a PNG, JPEG, WebP or SVG image." }, 400);
+      const match = String(body.data || body.dataUrl || "").match(/^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/);
+      if (!match) return json({ ok: false, error: "Upload a PNG, JPEG or WebP image." }, 400);
 
       const binary = atob(match[2]);
       const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
@@ -382,9 +412,12 @@ async function handleApi(request, env, pathname) {
 export default {
   async fetch(request, env) {
     try {
-      await init(env);
+      await ensureInit(env);
       const url = new URL(request.url);
       const pathname = url.pathname.replace(/\/$/, "") || "/";
+      if (url.pathname.length > 1 && url.pathname.endsWith("/") && !pathname.startsWith("/api/")) {
+        return Response.redirect(`${url.origin}${pathname}${url.search}`, 301);
+      }
 
       if (pathname.startsWith("/api/")) {
         return await handleApi(request, env, pathname);
@@ -405,6 +438,7 @@ export default {
                 headers: {
                   ...headersBase(),
                   "Content-Type": saved.type || "application/octet-stream",
+                  "Content-Security-Policy": "default-src 'none'; sandbox",
                   "Cache-Control": "public, max-age=86400"
                 }
               });
