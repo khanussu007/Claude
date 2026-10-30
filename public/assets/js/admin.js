@@ -604,6 +604,7 @@ function render() {
       let value = input.type === "checkbox" ? input.checked : input.value;
       if (input.type === "number") value = Number(value);
       if (/\.tags$/.test(input.dataset.path)) value = input.value.split(",").map((tag) => tag.trim()).filter(Boolean);
+      if (/(heroTags|perspectiveTags)$/.test(input.dataset.path)) value = input.value.split("\n").map((tag) => tag.trim()).filter(Boolean);
       if (["about.careerJourney","contact.form.budgetOptions","pageContent.services.approachSteps","pageContent.contact.visitorJourney"].includes(input.dataset.path)) value = input.value.split("\n").map((stage) => stage.trim()).filter(Boolean);
       set(input.dataset.path, value);
       markDirty();
@@ -714,12 +715,25 @@ function render() {
   });
   window.addEventListener("beforeunload", (event) => { if (dirty) { event.preventDefault(); event.returnValue = ""; } });
 
+  // Repair tag lists that older versions saved as one raw string (this crashed the About editor).
+  function normalizeTagFields(data) {
+    const pages = data && data.pageContent;
+    if (!pages) return;
+    for (const page of Object.values(pages)) {
+      if (!page || typeof page !== "object") continue;
+      for (const key of ["heroTags", "perspectiveTags"]) {
+        if (typeof page[key] === "string") page[key] = page[key].split(/\r?\n/).map((tag) => tag.trim()).filter(Boolean);
+        else if (page[key] !== undefined && !Array.isArray(page[key])) page[key] = [];
+      }
+    }
+  }
   async function initialize() {
     try {
       const [sessionResult, contentResult] = await Promise.all([api("/api/admin/session"), api("/api/admin/content")]);
       if (!sessionResult.ok && !sessionResult.authenticated) { location.replace("/admin/login.html"); return; }
       session = { ...sessionResult, username: sessionResult.user?.username || sessionResult.username };
       content = contentResult;
+      normalizeTagFields(content);
       const requestedRoute = location.hash.slice(1);
       if (views[requestedRoute]) route = requestedRoute;
       render();
