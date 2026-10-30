@@ -1,5 +1,7 @@
 # Usman Khan Portfolio — Production Website + CMS
 
+> **Cloudflare version:** see `CLOUDFLARE-SETUP-HINDI.md` (D1 + KV via `_worker.js`). The Node instructions below apply only to the legacy `server.js`, which now serves files from `public/`.
+
 Six-page personal portfolio with a password-protected Admin Panel and persistent JSON-based CMS.
 
 ## Stack
