@@ -10,6 +10,16 @@ const PUBLIC_PAGES = new Set([
   "/contact.html"
 ]);
 
+const PAGE_ALIASES = {
+  "/": "/index.html",
+  "/index": "/index.html",
+  "/portfolio": "/portfolio.html",
+  "/about": "/about.html",
+  "/services": "/services.html",
+  "/achievements": "/achievements.html",
+  "/contact": "/contact.html"
+};
+
 const SESSION_MS = 12 * 60 * 60 * 1000;
 const encoder = new TextEncoder();
 
@@ -436,8 +446,9 @@ export default {
         return Response.redirect(new URL("/admin/login", request.url), 302);
       }
 
-      if (PUBLIC_PAGES.has(pathname)) {
-        return await serveStatic(request, env, pathname, await getContent(env));
+      const pageFile = PAGE_ALIASES[pathname] || (PUBLIC_PAGES.has(pathname) ? pathname : null);
+      if (pageFile) {
+        return await serveStatic(request, env, pageFile, await getContent(env));
       }
 
       if (pathname.startsWith("/assets/")) {
