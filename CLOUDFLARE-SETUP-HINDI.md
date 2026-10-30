@@ -2,14 +2,14 @@
 
 ## What changed
 - The existing public HTML/CSS/JS and admin screens are copied into `public/` without redesign.
-- `_worker.js` replaces the Node server at the edge and uses Cloudflare D1 for content/admin/session data and R2 for admin uploads.
+- `_worker.js` replaces the Node server at the edge and uses Cloudflare D1 for content/admin/session data and a Workers KV namespace for admin uploads.
 - `server.js` and the original `data/` files are retained as a backup/reference. Do not deploy the old Node server for the Cloudflare version.
 
 ## Required bindings
-Create a D1 database named `usman-portfolio-db` and an R2 bucket named `usman-portfolio-uploads` in the Cloudflare dashboard.
+Create a D1 database named `usman-portfolio-db` and a **KV namespace** (not R2) for uploads in the Cloudflare dashboard.
 Then open the deployed Worker → Settings → Bindings and add:
 1. D1 database binding: variable name `DB`, select `usman-portfolio-db`.
-2. R2 bucket binding: variable name `UPLOADS`, select `usman-portfolio-uploads`.
+2. KV namespace binding: variable name `UPLOADS` (already declared in `wrangler.toml`). Do NOT bind an R2 bucket named `UPLOADS` — the code uses the KV API and uploads would fail.
 3. Static Assets binding is configured by `wrangler.toml` as `ASSETS`.
 
 The Worker creates its D1 tables and imports the current `data/content.json` content on the first request. Do not delete the D1 database after editing content.
@@ -20,7 +20,7 @@ The Worker creates its D1 tables and imports the current `data/content.json` con
 3. In Cloudflare, create a Worker connected to that test repository. Build/deploy using Wrangler and `wrangler.toml`.
 4. Add the `DB` and `UPLOADS` bindings above, then open the `workers.dev` test URL.
 5. Test `/`, all six pages, `/admin/login`, login, save content, upload image, refresh, and confirm saved content persists.
-6. Initial login is username `admin`, password `Admin@123`. Change it immediately in Admin Settings before any public launch.
+6. **Before the first request**, add Worker secrets `ADMIN_USERNAME` and `ADMIN_PASSWORD` (`npx wrangler secret put ADMIN_PASSWORD`) so the public default password is never created. If you skip this, the login is `admin` / `Admin@123` — change it immediately in Admin Settings.
 
 ## Important
 - Do not attach your custom domain until all tests pass.
