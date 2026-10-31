@@ -102,6 +102,13 @@ function ensureInit(env) {
 
 // Repair tag lists that were saved as a single string by older admin builds.
 function normalizeContent(content) {
+  // Existing sites saved before the Tools strip existed get the default tools once (an empty list stays empty).
+  if (content && content.home && content.home.tools === undefined && Array.isArray(initialContent?.home?.tools)) {
+    content.home.tools = structuredClone(initialContent.home.tools);
+    content.home.sections = content.home.sections || {};
+    content.home.sections.toolsEyebrow ??= initialContent.home.sections?.toolsEyebrow;
+    content.home.sections.toolsDescription ??= initialContent.home.sections?.toolsDescription;
+  }
   const pages = content && content.pageContent;
   if (!pages || typeof pages !== "object") return content;
   for (const page of Object.values(pages)) {
