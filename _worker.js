@@ -102,6 +102,11 @@ function ensureInit(env) {
 
 // Repair tag lists that were saved as a single string by older admin builds.
 function normalizeContent(content) {
+  if (content && content.global) {
+    const t = content.global.tracking && typeof content.global.tracking === "object" ? content.global.tracking : {};
+    for (const key of TRACKING_FIELDS) t[key] = typeof t[key] === "string" ? t[key] : "";
+    content.global.tracking = t;
+  }
   // Existing sites saved before the Tools strip existed get the default tools once (an empty list stays empty).
   if (content && content.home && content.home.tools === undefined && Array.isArray(initialContent?.home?.tools)) {
     content.home.tools = structuredClone(initialContent.home.tools);
@@ -202,8 +207,19 @@ async function readJson(request, limit = 4 * 1024 * 1024) {
   }
 }
 
+const TRACKING_FIELDS = ["headCode", "bodyStartCode", "bodyEndCode"];
+const TRACKING_MAX = 20000;
+
+// Tracking code is injected server-side into the HTML; it is not needed in the public JSON.
+function publicView(content) {
+  if (!content || !content.global || !content.global.tracking) return content;
+  const { tracking, ...restGlobal } = content.global;
+  return { ...content, global: restGlobal };
+}
+
 function injectContent(html, content) {
-  const safe = JSON.stringify(content)
+  const tracking = (content.global && content.global.tracking) || {};
+  const safe = JSON.stringify(publicView(content))
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026")
@@ -212,8 +228,15 @@ function injectContent(html, content) {
 
   const theme = String(content.global?.theme || "charcoal-orange").replace(/[^a-z-]/g, "");
   const script = `<script>window.__SITE_CONTENT__=${safe};</script>`;
-  return html.replace("<!-- SITE_CONTENT -->", () => script)
+  let out = html.replace("<!-- SITE_CONTENT -->", () => script)
     .replace('data-theme="charcoal-orange"', () => `data-theme="${theme}"`);
+  const head = typeof tracking.headCode === "string" ? tracking.headCode.trim() : "";
+  const bodyStart = typeof tracking.bodyStartCode === "string" ? tracking.bodyStartCode.trim() : "";
+  const bodyEnd = typeof tracking.bodyEndCode === "string" ? tracking.bodyEndCode.trim() : "";
+  if (head) out = out.replace(/<\/head>/i, () => `${head}\n</head>`);
+  if (bodyStart) out = out.replace(/<body[^>]*>/i, (match) => `${match}\n${bodyStart}`);
+  if (bodyEnd) out = out.replace(/<\/body>/i, () => `${bodyEnd}\n</body>`);
+  return out;
 }
 
 async function serveStatic(request, env, pathname, content = null) {
@@ -247,7 +270,7 @@ async function serveStatic(request, env, pathname, content = null) {
 }
 
 async function handleApi(request, env, pathname) {
-  if (pathname === "/api/public/content" && request.method === "GET") return json(await getContent(env));
+  if (pathname === "/api/public/content" && request.method === "GET") return json(publicView(await getContent(env)));
 
   if (pathname === "/api/public/events" && request.method === "GET") {
     return new Response("retry: 60000\nevent: ready\ndata: {}\n\n", {
@@ -325,7 +348,14 @@ async function handleApi(request, env, pathname) {
         if (incoming[key] === undefined) return json({ ok: false, error: `Missing content section: ${key}` }, 400);
         next[key] = incoming[key];
       }
+      if (next.global && typeof next.global === "object" && next.global.tracking === undefined) {
+        const previous = await getContent(env);
+        if (previous.global && previous.global.tracking) next.global.tracking = previous.global.tracking;
+      }
       normalizeContent(next);
+      if (TRACKING_FIELDS.some((key) => next.global.tracking[key].length > TRACKING_MAX)) {
+        return json({ ok: false, error: `Tracking code is too long (max ${TRACKING_MAX} characters per box).` }, 400);
+      }
 
       if (!Array.isArray(next.projects) || !Array.isArray(next.services) || !Array.isArray(next.achievements) || !Array.isArray(next.media) || !next.home || !Array.isArray(next.home.brands) || !Array.isArray(next.home.testimonials)) {
         return json({ ok: false, error: "Invalid content structure." }, 400);
