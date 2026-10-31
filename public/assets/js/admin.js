@@ -9,7 +9,7 @@
   const routes = {
     dashboard: "Dashboard", global: "Global Settings", home: "Home Page", portfolio: "Portfolio",
     about: "About", services: "Services", achievements: "Awards & Achievements", contact: "Contact",
-    media: "Images / Media", seo: "SEO", theme: "Theme Settings", settings: "Admin Settings"
+    media: "Images / Media", seo: "SEO & Tracking", theme: "Theme Settings", settings: "Admin Settings"
   };
   const themeNames = { "charcoal-orange": "Charcoal Orange", "midnight-blue": "Midnight Blue", "slate-purple": "Slate Purple", "emerald-dark": "Emerald Dark", "premium-navy-gold": "Premium Navy & Gold" };
   let categoryOptions = [["website", "Website Design"], ["landing", "Landing Pages"], ["marketing", "Digital Marketing & Lead Generation"]];
@@ -293,7 +293,9 @@
   }
 
   function seoView() {
-    return `${heading("SEO", "Edit title, meta description, Open Graph fields and canonical URL for each public page.")}${Object.keys(content.seo||{}).map((page)=>panel(page[0].toUpperCase()+page.slice(1),"Search and social metadata.",`<div class="form-grid">${field("Page title",`seo.${page}.title`,content.seo[page].title)}${field("Meta description",`seo.${page}.description`,content.seo[page].description,{textarea:true,full:true})}${field("OG title",`seo.${page}.ogTitle`,content.seo[page].ogTitle)}${field("OG description",`seo.${page}.ogDescription`,content.seo[page].ogDescription,{textarea:true})}${imageField("OG image",`seo.${page}.ogImage`,content.seo[page].ogImage||"",`seo.${page}.ogImage`)}${field("Canonical URL",`seo.${page}.canonical`,content.seo[page].canonical||"")}</div>`)).join("")}`;
+    const tracking = content.global.tracking || {};
+    const trackingPanel = panel("Tracking & scripts", "Paste Google Analytics (GA4), Google Tag Manager, Meta Pixel or any other tracking code here. It goes live on every public page after you save. Leave a box empty to turn it off.", `<div class="form-grid">${field("Head code (GA4 / GTM script / Meta Pixel / site verification tag)", "global.tracking.headCode", tracking.headCode || "", { textarea: true, rows: 9, full: true, help: "Placed inside the <head> of every public page. Most tracking codes go here." })}${field("Body start code (e.g. Google Tag Manager noscript)", "global.tracking.bodyStartCode", tracking.bodyStartCode || "", { textarea: true, rows: 4, full: true, help: "Placed right after the opening <body> tag." })}${field("Body end code (optional)", "global.tracking.bodyEndCode", tracking.bodyEndCode || "", { textarea: true, rows: 4, full: true, help: "Placed just before the closing </body> tag." })}</div><div class="security-note"><strong>Careful:</strong> only paste code from a source you trust (Google, Meta etc.). Wrong or broken code can slow down or break the public site. The admin panel itself is never tracked.</div>`);
+    return `${heading("SEO & Tracking", "Add tracking code, then edit title, meta description, Open Graph fields and canonical URL for each public page.")}${trackingPanel}${Object.keys(content.seo||{}).map((page)=>panel(page[0].toUpperCase()+page.slice(1),"Search and social metadata.",`<div class="form-grid">${field("Page title",`seo.${page}.title`,content.seo[page].title)}${field("Meta description",`seo.${page}.description`,content.seo[page].description,{textarea:true,full:true})}${field("OG title",`seo.${page}.ogTitle`,content.seo[page].ogTitle)}${field("OG description",`seo.${page}.ogDescription`,content.seo[page].ogDescription,{textarea:true})}${imageField("OG image",`seo.${page}.ogImage`,content.seo[page].ogImage||"",`seo.${page}.ogImage`)}${field("Canonical URL",`seo.${page}.canonical`,content.seo[page].canonical||"")}</div>`)).join("")}`;
   }
 
   function mediaView() {
@@ -738,6 +740,7 @@ function render() {
       content = contentResult;
       normalizeTagFields(content);
       if (content.home && !Array.isArray(content.home.tools)) content.home.tools = [];
+      if (content.global && (!content.global.tracking || typeof content.global.tracking !== "object")) content.global.tracking = {};
       const requestedRoute = location.hash.slice(1);
       if (views[requestedRoute]) route = requestedRoute;
       render();
