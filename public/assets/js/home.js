@@ -5,10 +5,18 @@
 
   const arrow = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const diagonalArrow = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M8 7h9v9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // Show a section only when it has content; otherwise hide it completely on the live site.
+  function toggleSection(el, show) {
+    if (!el) return;
+    el.hidden = !show;
+    el.style.display = show ? "" : "none";
+  }
+
   function renderTestimonials(items) {
     const slider = document.querySelector("[data-slider]");
     if (!slider) return;
     const visible = (items || []).filter((item) => item.enabled !== false).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
+    toggleSection(document.querySelector("#testimonials"), visible.length > 0);
     const track = slider.querySelector("[data-slider-track]");
     const dots = slider.querySelector(".slider-dots");
     if (!track) return;
@@ -27,6 +35,7 @@
     const track = document.querySelector(".brand-track");
     if (!track) return;
     const visible = (items || []).filter((item) => item.visible !== false).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
+    toggleSection(document.querySelector(".brands-section"), visible.length > 0);
     const group = visible.map((item) => { const inner=`${item.logo ? `<img src="${Site.escapeHTML(Site.safeImage(item.logo, ""))}" alt="${Site.escapeHTML(item.name || "Brand")}" loading="lazy">` : `<i class="logo-symbol" aria-hidden="true">${Site.escapeHTML((item.name || "B").slice(0,1).toUpperCase())}</i>`}<span>${Site.escapeHTML(item.name || "Brand")}</span>`; const href=Site.safeHref(item.websiteUrl,""); return href ? `<a class="brand-logo" href="${Site.escapeHTML(href)}" title="${Site.escapeHTML(item.name || "Brand")}" target="_blank" rel="noopener noreferrer">${inner}</a>` : `<span class="brand-logo" title="${Site.escapeHTML(item.name || "Brand")}">${inner}</span>`; }).join("");
     track.innerHTML = visible.length ? `<div class="brand-group">${group}</div><div class="brand-group" aria-hidden="true">${group}</div>` : '<div class="public-empty">Brands and collaborations will appear here when added in the Admin Panel.</div>';
   }
@@ -69,7 +78,12 @@
     const caption = document.querySelector(".profile-caption");
     if (caption) { const small=caption.querySelector("small"); const value=caption.querySelector("span:last-child"); if(small) small.textContent=home.heroImageOverlayLabel || "Focused on"; if(value && home.heroImageOverlay) { value.replaceChildren(small || document.createElement("small"), document.createTextNode(home.heroImageOverlay)); } }
 
-    const experience = home.stats.find((stat) => stat.id === home.experienceStatId) || home.stats.find((stat) => stat.enabled !== false) || home.stats[0];
+    const activeStats = (home.stats || []).filter((stat) => stat.enabled !== false && String(stat.number ?? "").trim() !== "");
+    const experience = activeStats.find((stat) => stat.id === home.experienceStatId) || activeStats[0];
+    toggleSection(document.querySelector(".hero-experience"), Boolean(experience));
+    toggleSection(document.querySelector("#stats"), activeStats.length > 0);
+    const scrollCue = document.querySelector(".scroll-cue");
+    if (scrollCue && !activeStats.length) scrollCue.setAttribute("href", "#services");
     if (experience) {
       document.querySelector(".hero-experience strong").textContent = experience.number;
       document.querySelector(".hero-experience span").textContent = experience.label;
@@ -77,7 +91,7 @@
     }
 
     const statsPanel = document.querySelector(".stats-panel");
-    statsPanel.innerHTML = home.stats.map((stat) => {
+    statsPanel.innerHTML = activeStats.map((stat) => {
       const raw = String(stat.number ?? "0");
       const match = raw.match(/^\s*(\d+(?:\.\d+)?)(.*)$/);
       const value = match ? match[1] : raw;
