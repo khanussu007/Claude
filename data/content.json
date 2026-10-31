@@ -150,7 +150,9 @@
       "servicesCtaText": "Explore All Services",
       "servicesCtaLink": "services.html",
       "workCtaText": "View Full Portfolio",
-      "workCtaLink": "portfolio.html"
+      "workCtaLink": "portfolio.html",
+      "toolsEyebrow": "Tools I work with",
+      "toolsDescription": "Platforms I use every day to build, promote and automate."
     },
     "heroBadges": [
       {
@@ -184,7 +186,97 @@
     "brands": [],
     "heroImageOverlayLabel": "Focused on",
     "heroSupportPrefix": "Supported by",
-    "experienceStatId": "stat-experience"
+    "experienceStatId": "stat-experience",
+    "tools": [
+      {
+        "id": "tool-facebook",
+        "name": "Facebook",
+        "icon": "assets/images/tools/facebook.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "id": "tool-instagram",
+        "name": "Instagram",
+        "icon": "assets/images/tools/instagram.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "id": "tool-linkedin",
+        "name": "LinkedIn",
+        "icon": "assets/images/tools/linkedin.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 3
+      },
+      {
+        "id": "tool-wordpress",
+        "name": "WordPress",
+        "icon": "assets/images/tools/wordpress.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 4
+      },
+      {
+        "id": "tool-elementor",
+        "name": "Elementor",
+        "icon": "assets/images/tools/elementor.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 5
+      },
+      {
+        "id": "tool-google-ads",
+        "name": "Google Ads",
+        "icon": "assets/images/tools/google-ads.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 6
+      },
+      {
+        "id": "tool-google-analytics",
+        "name": "Google Analytics",
+        "icon": "assets/images/tools/google-analytics.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 7
+      },
+      {
+        "id": "tool-search-console",
+        "name": "Search Console",
+        "icon": "assets/images/tools/search-console.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 8
+      },
+      {
+        "id": "tool-n8n",
+        "name": "n8n",
+        "icon": "assets/images/tools/n8n.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 9
+      },
+      {
+        "id": "tool-whatsapp",
+        "name": "WhatsApp",
+        "icon": "assets/images/tools/whatsapp.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 10
+      },
+      {
+        "id": "tool-google-sheets",
+        "name": "Google Sheets",
+        "icon": "assets/images/tools/google-sheets.svg",
+        "websiteUrl": "",
+        "visible": true,
+        "order": 11
+      }
+    ]
   },
   "pageContent": {
     "portfolio": {
