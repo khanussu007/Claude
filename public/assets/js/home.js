@@ -31,6 +31,23 @@
     document.dispatchEvent(new CustomEvent("site:testimonials-rendered"));
   }
 
+  function renderTools(items) {
+    const section = document.querySelector("#tools");
+    const track = section && section.querySelector(".brand-track");
+    if (!track) return;
+    const visible = (items || []).filter((item) => item.visible !== false && String(item.name || "").trim()).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
+    toggleSection(section, visible.length > 0);
+    const group = visible.map((item) => {
+      const name = Site.escapeHTML(item.name);
+      const icon = item.icon ? Site.safeImage(item.icon, "") : "";
+      const symbol = icon ? `<img src="${Site.escapeHTML(icon)}" alt="" loading="lazy">` : `<i aria-hidden="true">${Site.escapeHTML(String(item.name).trim().slice(0,1).toUpperCase())}</i>`;
+      const inner = `<span class="tool-icon">${symbol}</span><span class="tool-name">${name}</span>`;
+      const href = Site.safeHref(item.websiteUrl, "");
+      return href ? `<a class="tool-chip" href="${Site.escapeHTML(href)}" title="${name}" target="_blank" rel="noopener noreferrer">${inner}</a>` : `<span class="tool-chip" title="${name}">${inner}</span>`;
+    }).join("");
+    track.innerHTML = visible.length ? `<div class="brand-group">${group}</div><div class="brand-group" aria-hidden="true">${group}</div>` : "";
+  }
+
   function renderBrands(items) {
     const track = document.querySelector(".brand-track");
     if (!track) return;
@@ -151,6 +168,11 @@
     if (brandIntro) brandIntro.textContent = sections.brandsDescription || sections.brandsIntro || "";
     renderTestimonials(Site.content.home.testimonials);
     renderBrands(Site.content.home.brands);
+    const toolsEyebrow = document.querySelector("#tools-title");
+    if (toolsEyebrow) setEyebrow(toolsEyebrow, sections.toolsEyebrow || "Tools I work with");
+    const toolsIntro = document.querySelector("#tools .section-intro");
+    if (toolsIntro) toolsIntro.textContent = sections.toolsDescription || "";
+    renderTools(Site.content.home.tools);
 
     if (update) {
       Site.forceVisible(document);
