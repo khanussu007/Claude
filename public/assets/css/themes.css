@@ -1000,3 +1000,47 @@
 
 /* Exception: chhota gol badge, isliye text thoda chhota rakha hai */
 :root .filter-count { font-size: 0.6875rem; }
+
+/* =====================================================================
+   TOOLS STRIP ("Tools I work with") - scrolling logo chips under the hero
+   Isko Admin Panel > Home Page > "Tools I work with" se control karo.
+   ===================================================================== */
+.tools-section { padding: 30px 0 6px; }
+.tool-marquee { margin-top: 20px; }
+.tool-marquee .brand-track { animation-duration: 40s; animation-direction: reverse; }
+.tool-marquee .brand-group { gap: 14px; padding-right: 14px; }
+.tool-chip {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  height: 58px;
+  padding: 0 24px 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(var(--surface-rgb), 0.64);
+  color: var(--text-soft);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.28s var(--ease), border-color 0.28s var(--ease), box-shadow 0.28s var(--ease);
+}
+a.tool-chip:hover, .tool-chip:hover { transform: translateY(-3px); border-color: var(--orange); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18); }
+.tool-icon {
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+}
+.tool-icon img { width: 20px; height: 20px; object-fit: contain; }
+.tool-icon i { color: #16100b; font-style: normal; font-weight: 800; }
+@media (max-width: 580px) {
+  .tools-section { padding-top: 22px; }
+  .tool-chip { height: 50px; padding-right: 18px; gap: 10px; }
+  .tool-icon { flex-basis: 32px; width: 32px; height: 32px; }
+  .tool-icon img { width: 18px; height: 18px; }
+}
