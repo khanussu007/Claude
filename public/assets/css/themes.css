@@ -794,3 +794,209 @@
 :root[data-theme="premium-navy-gold"] .visitor-journey li:not(:last-child)::after {
   color: #66707A;
 }
+
+
+/* =====================================================================
+   TYPOGRAPHY FIX  -  ek jagah se saari font settings control karo
+   ---------------------------------------------------------------------
+   FONT FAMILY RULE (sirf 2 fonts):
+     Sora    -> sirf bade headings (h1, h2, h3), quotes, stat numbers, logo
+     Manrope -> baaki sab (paragraph, label, tag, button, form, footer)
+   SIZE SCALE: neeche ke :root variables badlo, poori site ek saath badlegi.
+   ===================================================================== */
+:root {
+  /* Chhota text (labels, tags, badges, footer) */
+  --fs-xs:   0.75rem;    /* 12px  uppercase labels / tags            */
+  --fs-sm:   0.875rem;   /* 14px  chhota text, buttons, meta         */
+  --fs-body: 0.9375rem;  /* 15px  card paragraph / description       */
+  --fs-md:   1rem;       /* 16px  normal text                        */
+  --fs-lg:   1.125rem;   /* 18px  card title / bada text             */
+
+  /* Headings (har page par SAME) */
+  --fs-h1:   clamp(2.5rem, 5.6vw, 4.25rem);      /* hero title        */
+  --fs-h2:   clamp(1.75rem, 3.4vw, 2.5rem);      /* section heading   */
+  --fs-h3:   1.25rem;                            /* card heading      */
+  --fs-role: clamp(1.1rem, 2vw, 1.375rem);       /* hero role line    */
+  --fs-lead: clamp(1.0625rem, 1.6vw, 1.1875rem); /* hero lead / intro */
+  --fs-quote:clamp(1.125rem, 2vw, 1.375rem);     /* testimonial quote */
+  --fs-stat: clamp(2.5rem, 5vw, 3.5rem);         /* big numbers       */
+
+  --ls-label: 0.08em;    /* uppercase label letter-spacing */
+}
+@media (max-width: 960px) { :root { --fs-h1: clamp(2.4rem, 7.5vw, 3.5rem); } }
+@media (max-width: 760px) { :root { --fs-h1: clamp(2.2rem, 8.5vw, 3rem); --fs-stat: 2.75rem; } }
+@media (max-width: 580px) {
+  :root { --fs-h1: clamp(2rem, 9.5vw, 2.6rem); --fs-h2: 1.75rem; --fs-h3: 1.125rem;
+          --fs-role: 1.0625rem; --fs-lead: 1rem; --fs-quote: 1.0625rem; --fs-stat: 2.5rem; }
+}
+@media (max-width: 360px) { :root { --fs-h1: 2rem; } }
+
+/* Headings hamesha Sora, baaki sab Manrope */
+:root h1, :root h2, :root h3 { font-family: var(--font-display); }
+:root .brand-name small, :root .footer-main h2, :root .skill-heading h3 { font-family: var(--font-body); }
+:root body, :root button, :root input, :root select, :root textarea { font-family: var(--font-body); }
+
+/* --- Neeche ka hissa auto-generated hai: har selector ko upar ke variables se jodta hai --- */
+:root .skip-link { font-size: var(--fs-sm); }
+:root .brand-mark { font-size: var(--fs-md); }
+:root .brand-name { font-size: var(--fs-sm); font-weight: 600; }
+:root .brand-name small { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .nav-link { font-size: var(--fs-sm); }
+:root .button { font-size: var(--fs-sm); }
+:root .button--small { font-size: var(--fs-xs); }
+:root .eyebrow { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .section-heading h2, :root .contact-card h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .section-intro { font-size: var(--fs-body); }
+:root .hero h1 { font-size: var(--fs-h1); font-weight: 700; }
+:root .hero-role { font-size: var(--fs-role); font-weight: 400; }
+:root .hero-role > span { font-weight: 400; }
+:root .hero-tagline { font-size: var(--fs-lead); }
+:root .hero-description { font-size: var(--fs-body); }
+:root .hero-experience strong { font-weight: 600; }
+:root .hero-experience span { font-size: var(--fs-xs); font-weight: 600; }
+:root .hero-support { font-size: var(--fs-xs); font-weight: 600; }
+:root .hero-support span { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .profile-caption { font-size: var(--fs-xs); font-weight: 600; }
+:root .profile-caption small { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .profile-chip { font-size: var(--fs-xs); font-weight: 700; }
+:root .profile-chip b { font-size: var(--fs-sm); }
+:root .scroll-cue { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-label); }
+:root .stat-number { font-size: var(--fs-stat); font-weight: 600; }
+:root .stat p { font-size: var(--fs-body); }
+:root .card-index { font-size: var(--fs-xs); font-family: var(--font-body); }
+:root .service-card h3 { font-size: var(--fs-h3); }
+:root .service-card p { font-size: var(--fs-body); }
+:root .service-card-link { font-size: var(--fs-xs); font-weight: 700; }
+:root .service-card-link > span { font-size: var(--fs-sm); }
+:root .project-badge { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-label); }
+:root .project-info p { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .project-info h3 { font-size: var(--fs-h3); }
+:root .quote-mark { font-family: var(--font-display); }
+:root .placeholder-label { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .testimonial-card blockquote { font-size: var(--fs-quote); }
+:root .client-avatar { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 600; }
+:root .client-row strong { font-size: var(--fs-xs); font-weight: 700; }
+:root .client-row > div span { font-size: var(--fs-xs); }
+:root .client-stars { font-size: var(--fs-xs); }
+:root .brands-heading > span { font-size: var(--fs-xs); font-weight: 600; }
+:root .brand-logo { font-size: var(--fs-xs); }
+:root .logo-symbol--kinetic { font-size: var(--fs-sm); }
+:root .contact-card h2 { font-size: var(--fs-h2); }
+:root .contact-card p:not(.eyebrow) { font-size: var(--fs-body); }
+:root .footer-brand > p { font-size: var(--fs-body); }
+:root .footer-main h2 { font-size: var(--fs-h2); letter-spacing: var(--ls-label); }
+:root .footer-links a { font-size: var(--fs-xs); font-weight: 500; }
+:root .footer-social > p { font-size: var(--fs-xs); }
+:root .footer-bottom { font-size: var(--fs-xs); }
+:root .footer-contact-list a { font-size: var(--fs-xs); }
+:root .about-hero h1 { font-size: var(--fs-h1); font-weight: 700; }
+:root .about-role { font-size: var(--fs-role); font-weight: 400; }
+:root .about-role > span { font-weight: 400; }
+:root .about-hero-lead { font-size: var(--fs-lead); }
+:root .about-hero-copy { font-size: var(--fs-body); }
+:root .about-hero-copy strong { font-weight: 600; }
+:root .about-hero-tags span { font-size: var(--fs-xs); }
+:root .story-narrative .story-lead { font-size: var(--fs-lead); }
+:root .story-narrative p:not(.story-lead) { font-size: var(--fs-body); }
+:root .perspective-card blockquote { font-size: var(--fs-quote); }
+:root .perspective-card blockquote strong { font-weight: 500; }
+:root .perspective-card > p:not(.eyebrow) { font-size: var(--fs-body); }
+:root .journey-labels span { font-size: var(--fs-xs); }
+:root .journey-labels i { font-size: var(--fs-sm); }
+:root .story-goal > div > span { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .story-goal p { font-size: var(--fs-body); font-weight: 500; }
+:root .timeline-marker { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 600; }
+:root .timeline-phase { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .timeline-card h3 { font-size: var(--fs-h3); }
+:root .timeline-card > p:last-child { font-size: var(--fs-body); }
+:root .skill-heading h3 { font-size: var(--fs-sm); }
+:root .skill-heading > span { font-size: var(--fs-xs); font-weight: 600; }
+:root .skills-note { font-size: var(--fs-xs); }
+:root .focus-card h3 { font-size: var(--fs-h3); }
+:root .focus-card > p { font-size: var(--fs-body); }
+:root .portfolio-hero h1 { font-size: var(--fs-h1); }
+:root .portfolio-role { font-size: var(--fs-role); font-weight: 400; }
+:root .portfolio-role > span { font-weight: 400; }
+:root .portfolio-hero-copy { font-size: var(--fs-body); }
+:root .portfolio-hero-tags span { font-size: var(--fs-xs); }
+:root .portfolio-section-heading h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .portfolio-section-heading > p { font-size: var(--fs-body); }
+:root .filter-button { font-size: var(--fs-xs); font-weight: 700; }
+:root .filter-count { font-size: var(--fs-xs); }
+:root .filter-status { font-size: var(--fs-xs); font-weight: 600; }
+:root .portfolio-badge { font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-label); }
+:root .portfolio-card-category { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .portfolio-card-title { font-size: var(--fs-lg); }
+:root .portfolio-card-description { font-size: var(--fs-xs); }
+:root .portfolio-card-action { font-size: var(--fs-xs); font-weight: 700; }
+:root .portfolio-card-action > span { font-size: var(--fs-sm); }
+:root .lightbox-category { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .lightbox-placeholder { font-size: var(--fs-xs); }
+:root .lightbox-content h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .lightbox-type { font-size: var(--fs-xs); font-weight: 600; }
+:root .lightbox-description { font-size: var(--fs-body); }
+:root .lightbox-focus span { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .lightbox-focus strong { font-size: var(--fs-xs); font-weight: 600; }
+:root .services-hero h1 { font-size: var(--fs-h1); }
+:root .services-role { font-size: var(--fs-role); font-weight: 400; }
+:root .services-role > span { font-weight: 400; }
+:root .services-hero-copy { font-size: var(--fs-body); }
+:root .services-hero-tags span { font-size: var(--fs-xs); }
+:root .approach-heading h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .approach-copy > p { font-size: var(--fs-body); }
+:root .approach-steps span { font-size: var(--fs-xs); }
+:root .approach-steps b { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 600; }
+:root .service-detail-card h3 { font-size: var(--fs-h3); }
+:root .service-detail-card > p { font-size: var(--fs-body); }
+:root .service-tags span { font-size: var(--fs-xs); }
+:root .service-quote-link { font-size: var(--fs-xs); font-weight: 700; }
+:root .achievements-hero h1 { font-size: var(--fs-h1); font-weight: 700; }
+:root .achievements-role { font-size: var(--fs-role); font-weight: 400; }
+:root .achievements-role > span { font-weight: 400; }
+:root .achievements-hero-copy { font-size: var(--fs-body); }
+:root .achievements-hero-tags span { font-size: var(--fs-xs); }
+:root .journey-heading h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .journey-steps li:not(:last-child)::after { font-size: var(--fs-body); }
+:root .journey-steps li > span { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 600; }
+:root .journey-steps strong { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 500; }
+:root .achievement-marker { font-size: var(--fs-xs); font-family: var(--font-body); font-weight: 600; }
+:root .achievement-badge, :root .achievement-stage { font-size: var(--fs-xs); font-weight: 700; }
+:root .achievement-kicker { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .achievement-card h3 { font-size: var(--fs-h3); }
+:root .achievement-meta > span { font-size: var(--fs-xs); font-weight: 600; }
+:root .achievement-meta small { font-size: var(--fs-xs); font-weight: 700; }
+:root .achievement-description { font-size: var(--fs-body); }
+:root .contact-hero h1 { font-size: var(--fs-h1); font-weight: 700; }
+:root .contact-role { font-size: var(--fs-role); font-weight: 400; }
+:root .contact-role > span { font-weight: 400; }
+:root .contact-hero-copy { font-size: var(--fs-body); }
+:root .visitor-journey li { font-size: var(--fs-xs); }
+:root .visitor-journey li:not(:last-child)::after { font-size: var(--fs-xs); }
+:root .contact-form-heading h2, :root .contact-sidebar-heading h2 { font-size: var(--fs-h2); font-weight: 600; }
+:root .contact-form-heading > p:last-child, :root .contact-sidebar-heading > p:last-child { font-size: var(--fs-body); }
+:root .form-field label { font-size: var(--fs-xs); }
+:root .form-field label small { font-size: var(--fs-xs); font-weight: 500; }
+:root .form-field input, :root .form-field select, :root .form-field textarea { font-size: var(--fs-sm); }
+:root .form-note { font-size: var(--fs-xs); }
+:root .form-status { font-size: var(--fs-xs); }
+:root .contact-sidebar-heading h2 { font-size: var(--fs-h2); }
+:root .contact-method-copy small { font-size: var(--fs-xs); letter-spacing: var(--ls-label); }
+:root .contact-method-copy strong { font-size: var(--fs-body); font-family: var(--font-body); }
+:root .contact-method-copy > span { font-size: var(--fs-xs); }
+:root .editable-link-status { font-size: var(--fs-xs); }
+:root .footer-link-status { font-size: var(--fs-xs); }
+:root .service-price { font-size: var(--fs-sm); font-family: var(--font-body); font-weight: 600; }
+:root .achievement-certificate span { font-size: var(--fs-xs); }
+:root .public-empty { font-size: var(--fs-sm); }
+
+@media (max-width: 760px) {
+  :root .section-heading h2 { font-size: var(--fs-h2); }
+}
+
+@media (max-width: 580px) {
+  :root .section-heading h2 { font-size: var(--fs-h2); }
+  :root .contact-hero-actions .button { font-size: var(--fs-xs); }
+}
+
+/* Exception: chhota gol badge, isliye text thoda chhota rakha hai */
+:root .filter-count { font-size: 0.6875rem; }
