@@ -582,7 +582,9 @@ body.lightbox-open {
 
 @media (max-width: 960px) {
   .portfolio-hero {
-    min-height: 630px;
+    /* Header is sticky (in normal flow) at <=960px, so the fixed-header offset is no longer needed. */
+    min-height: 0;
+    padding-top: clamp(28px, 5vw, 48px);
   }
 
   .portfolio-grid {
@@ -626,7 +628,7 @@ body.lightbox-open {
 @media (max-width: 760px) {
   .portfolio-hero {
     min-height: auto;
-    padding: 145px 0 82px;
+    padding: clamp(28px, 5vw, 48px) 0 82px;
   }
 
   .portfolio-hero h1 {
@@ -687,7 +689,7 @@ body.lightbox-open {
 
 @media (max-width: 580px) {
   .portfolio-hero {
-    padding: 128px 0 72px;
+    padding: clamp(28px, 5vw, 48px) 0 72px;
   }
 
   .portfolio-hero .hero-eyebrow {
