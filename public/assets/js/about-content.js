@@ -53,7 +53,8 @@
       journey.appendChild(label);
     });
 
-    document.querySelector(".professional-timeline").innerHTML = about.timeline.map((item, index) => `
+    const timelineEl = document.querySelector(".professional-timeline");
+    if (timelineEl) timelineEl.innerHTML = about.timeline.map((item, index) => `
       <article class="timeline-item reveal">
         <span class="timeline-marker" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
         <div class="timeline-card">
@@ -64,7 +65,7 @@
       </article>`).join("");
 
     const skillPanel = document.querySelector("[data-skill-meters]");
-    skillPanel.innerHTML = about.skills.map((skill, index) => {
+    if (skillPanel) skillPanel.innerHTML = about.skills.map((skill, index) => {
       const level = Math.max(0, Math.min(100, Number(skill.level) || 0));
       return `
         <article class="skill-item" style="--skill-index: ${index}">
@@ -74,7 +75,8 @@
         </article>`;
     }).join("");
 
-    document.querySelector(".focus-grid").innerHTML = about.focusCards.map((card, index) => `
+    const focusGrid = document.querySelector(".focus-grid");
+    if (focusGrid) focusGrid.innerHTML = about.focusCards.map((card, index) => `
       <article class="focus-card reveal-child">
         <div class="focus-card-top">
           <span class="focus-icon ${index % 2 ? "focus-icon--blue" : "focus-icon--orange"}" aria-hidden="true">${Site.icon(card.icon)}</span>
@@ -88,7 +90,7 @@
     const aboutCta = document.querySelector(".about-page .button--primary[href='contact.html']");
     if (aboutCta) { Site.setButtonText(aboutCta, page.ctaText || "Let’s Work Together"); aboutCta.href = Site.safeHref(page.ctaLink, "contact.html"); }
     if (update) {
-      skillPanel.classList.add("skills-are-visible");
+      if (skillPanel) skillPanel.classList.add("skills-are-visible");
       Site.forceVisible(document);
     }
   }
