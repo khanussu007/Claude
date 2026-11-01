@@ -49,7 +49,7 @@
     });
     const data = await response.json().catch(() => ({}));
     if (response.status === 401 && data.error === "Authentication required.") {
-      location.replace("/admin/login.html");
+      location.replace(data.code === "session_expired" ? "/admin/login?expired=1" : "/admin/login.html");
       throw new Error("Your session has expired. Please sign in again.");
     }
     if (!response.ok) throw new Error(data.error || "The server could not complete the request.");
@@ -346,7 +346,28 @@
     saveState.textContent = saving ? "Saving to persistent storage…" : dirty ? "Unsaved changes" : "All changes saved";
   }
   function markDirty() { dirty = true; updateDirtyUI(); }
+function renderLogo(global = {}) {
+  const logo = document.querySelector("#admin-logo");
+  if (!logo) return;
+  const image = String(global.logoImage || "").trim();
+  logo.replaceChildren();
+  logo.classList.remove("is-image");
+  if (/^\/?assets\/[a-zA-Z0-9_/.-]+\.(?:svg|png|jpe?g|webp|gif)$/i.test(image)) {
+    const img = document.createElement("img");
+    img.src = image.startsWith("/") ? image : `/${image}`;
+    img.alt = global.websiteName || "Logo";
+    logo.classList.add("is-image");
+    logo.appendChild(img);
+  } else {
+    logo.appendChild(document.createTextNode(global.logoText || "UK"));
+    const accent = document.createElement("span");
+    accent.textContent = global.logoAccent || ".";
+    logo.appendChild(accent);
+  }
+  logo.classList.add("is-ready");
+}
 function render() {
+  renderLogo(content && content.global);
   try {
     categoryOptions = (content.portfolioCategories || [])
       .filter((item) => item.visible !== false)
@@ -737,6 +758,7 @@ function render() {
       const [sessionResult, contentResult] = await Promise.all([api("/api/admin/session"), api("/api/admin/content")]);
       if (!sessionResult.ok && !sessionResult.authenticated) { location.replace("/admin/login.html"); return; }
       session = { ...sessionResult, username: sessionResult.user?.username || sessionResult.username };
+      startIdleWatch(sessionResult);
       content = contentResult;
       normalizeTagFields(content);
       if (content.home && !Array.isArray(content.home.tools)) content.home.tools = [];
@@ -748,5 +770,86 @@ function render() {
       app.innerHTML = `<div class="empty-admin">${escapeHTML(error.message)} <a href="/admin/login.html">Return to login</a>.</div>`;
     }
   }
+  // ---- Inactivity timeout -------------------------------------------------
+  // The server is authoritative (it expires the session after 30 idle minutes). This only drives the
+  // warning and auto-logout UI. Only real user input resets it; background requests never do.
+  const idle = { timeout: 30 * 60 * 1000, last: Date.now(), synced: Date.now(), warned: false, ending: false };
+  const SYNC_MS = 20 * 1000;
+  const idleChannel = "BroadcastChannel" in window ? new BroadcastChannel("admin-activity") : null;
+  let idleModal = null;
+  const warnMs = () => Math.min(60 * 1000, Math.floor(idle.timeout / 3));
+
+  async function syncServer(force) {
+    const now = Date.now();
+    if (!force && (idle.warned || idle.last <= idle.synced || now - idle.synced < SYNC_MS)) return;
+    idle.synced = now;
+    try {
+      const result = await api("/api/admin/activity", { method: "POST", body: "{}" });
+      if (result.idleTimeoutMs) idle.timeout = result.idleTimeoutMs;
+    } catch (_) {}
+  }
+  function hideWarning() {
+    idle.warned = false;
+    if (idleModal) idleModal.hidden = true;
+  }
+  function showWarning(secondsLeft) {
+    if (!idleModal) {
+      idleModal = document.createElement("div");
+      idleModal.className = "idle-modal";
+      idleModal.innerHTML = '<div class="idle-dialog" role="alertdialog" aria-modal="true" aria-labelledby="idle-title"><h2 id="idle-title">Your session will expire soon due to inactivity.</h2><p>You will be logged out in <strong id="idle-count"></strong>.</p><button type="button" class="admin-button admin-button--primary" id="idle-continue">Continue Session</button></div>';
+      document.body.appendChild(idleModal);
+      idleModal.querySelector("#idle-continue").addEventListener("click", () => {
+        idle.last = Date.now();
+        hideWarning();
+        if (idleChannel) idleChannel.postMessage(idle.last);
+        syncServer(true);
+      });
+    }
+    idleModal.querySelector("#idle-count").textContent = `${secondsLeft} second${secondsLeft === 1 ? "" : "s"}`;
+    if (!idle.warned) {
+      idle.warned = true;
+      idleModal.hidden = false;
+      idleModal.querySelector("#idle-continue").focus();
+    }
+  }
+  async function expireSession() {
+    if (idle.ending) return;
+    idle.ending = true;
+    dirty = false; // an unsaved-changes prompt must not block the logout redirect
+    try {
+      await fetch("/api/admin/logout", { method: "POST", headers: { "Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest" }, body: "{}" });
+    } catch (_) {}
+    location.replace("/admin/login?expired=1");
+  }
+  function idleTick() {
+    if (idle.ending) return;
+    const idleFor = Date.now() - idle.last;
+    if (idleFor >= idle.timeout) { expireSession(); return; }
+    if (idleFor >= idle.timeout - warnMs()) showWarning(Math.ceil((idle.timeout - idleFor) / 1000));
+    else { hideWarning(); syncServer(false); }
+  }
+  function startIdleWatch(sessionInfo) {
+    if (sessionInfo && sessionInfo.idleTimeoutMs) {
+      idle.timeout = sessionInfo.idleTimeoutMs;
+      if (typeof sessionInfo.idleRemainingMs === "number") idle.last = Date.now() - (idle.timeout - sessionInfo.idleRemainingMs);
+    }
+    idle.synced = Date.now();
+    const onActivity = (event) => {
+      if (!event.isTrusted || idle.ending || idle.warned) return; // while the warning is open only "Continue Session" resets
+      const now = Date.now();
+      if (now - idle.last < 1000) return;
+      idle.last = now;
+      if (idleChannel) idleChannel.postMessage(now);
+    };
+    ["mousemove", "mousedown", "keydown", "scroll", "wheel", "touchstart", "pointerdown"].forEach((name) => document.addEventListener(name, onActivity, { capture: true, passive: true }));
+    if (idleChannel) idleChannel.onmessage = (event) => {
+      if (typeof event.data !== "number" || event.data <= idle.last) return;
+      idle.last = event.data; idle.synced = event.data; // another tab is active; it reports to the server
+      if (idle.warned) hideWarning();
+    };
+    document.addEventListener("visibilitychange", idleTick);
+    setInterval(idleTick, 1000);
+  }
+
   initialize();
 })();
