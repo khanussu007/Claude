@@ -80,12 +80,7 @@
 
     const heroTitle = document.querySelector(".hero-content h1");
     if (heroTitle) {
-      heroTitle.replaceChildren();
-      heroTitle.appendChild(document.createTextNode(home.name));
-      const dot = document.createElement("span");
-      dot.className = "accent-dot";
-      dot.textContent = ".";
-      heroTitle.appendChild(dot);
+      heroTitle.textContent = home.name;
     }
     setEyebrow(document.querySelector(".hero-eyebrow"), home.eyebrow);
     Site.renderPositioning(document.querySelector(".hero-role"), home.title);
