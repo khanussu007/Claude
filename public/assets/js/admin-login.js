@@ -14,6 +14,32 @@
     return data;
   }
 
+  // Same logo as the public site: uploaded logo image, otherwise the text mark.
+  const logo = document.querySelector("#admin-logo");
+  function renderLogo(global = {}) {
+    const image = String(global.logoImage || "").trim();
+    logo.replaceChildren();
+    if (/^\/?assets\/[a-zA-Z0-9_/.-]+\.(?:svg|png|jpe?g|webp|gif)$/i.test(image)) {
+      const img = document.createElement("img");
+      img.src = image.startsWith("/") ? image : `/${image}`;
+      img.alt = global.websiteName || "Logo";
+      logo.classList.add("is-image");
+      logo.appendChild(img);
+    } else {
+      logo.appendChild(document.createTextNode(global.logoText || "UK"));
+      const accent = document.createElement("span");
+      accent.textContent = global.logoAccent || ".";
+      logo.appendChild(accent);
+    }
+    logo.classList.add("is-ready");
+  }
+  request("/api/public/content").then((content) => renderLogo(content.global)).catch(() => renderLogo());
+
+  if (new URLSearchParams(location.search).get("expired")) {
+    document.querySelector("#login-notice").textContent = "Your session expired due to inactivity. Please log in again.";
+    history.replaceState(null, "", location.pathname);
+  }
+
   request("/api/admin/session").then((result) => {
     if (result.authenticated || result.ok) location.replace("/admin");
   }).catch(() => {});
