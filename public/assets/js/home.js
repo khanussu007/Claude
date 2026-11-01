@@ -24,7 +24,7 @@
       const initials = String(item.clientName || "Client").split(/\s+/).map((p) => p[0]).join("").slice(0,2).toUpperCase();
       const photo = item.clientPhoto ? `<img class="client-avatar-image" src="${Site.escapeHTML(Site.safeImage(item.clientPhoto, ""))}" alt="${Site.escapeHTML(item.clientName || "Client")}" loading="lazy">` : `<span class="client-avatar" aria-hidden="true">${Site.escapeHTML(initials)}</span>`;
       const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating)||0))) + "☆".repeat(5-Math.max(0,Math.min(5,Number(item.rating)||0)));
-      return `<article class="testimonial-slide" data-slide aria-label="Testimonial ${index+1} of ${visible.length}"${index ? ' aria-hidden="true"' : ""}><div class="testimonial-card"><div class="quote-mark" aria-hidden="true">“</div>${item.verified ? '<span class="placeholder-label">Verified</span>' : ''}<blockquote>${Site.escapeHTML(item.text || "")}</blockquote><div class="client-row">${photo}<div><strong>${Site.escapeHTML(item.clientName || "Client")}</strong><span>${Site.escapeHTML([item.designation,item.company].filter(Boolean).join(" · "))}</span>${item.projectService ? `<small>${Site.escapeHTML(item.projectService)}</small>` : ""}</div><span class="client-stars" aria-label="${Site.escapeHTML(String(item.rating||0))} out of 5">${stars}</span></div></div></article>`;
+      return `<article class="testimonial-slide" data-slide aria-label="Testimonial ${index+1} of ${visible.length}"${index ? ' aria-hidden="true"' : ""}><div class="testimonial-card"><div class="quote-mark" aria-hidden="true">“</div>${item.verified ? '<span class="placeholder-label">Verified</span>' : ''}${Site.clean(item.text) ? `<blockquote>${Site.escapeHTML(Site.clean(item.text))}</blockquote>` : ""}<div class="client-row">${photo}<div><strong>${Site.escapeHTML(item.clientName || "Client")}</strong>${[item.designation,item.company].map(Site.clean).filter(Boolean).length ? `<span>${Site.escapeHTML([item.designation,item.company].map(Site.clean).filter(Boolean).join(" · "))}</span>` : ""}${Site.clean(item.projectService) ? `<small>${Site.escapeHTML(Site.clean(item.projectService))}</small>` : ""}</div><span class="client-stars" aria-label="${Site.escapeHTML(String(item.rating||0))} out of 5">${stars}</span></div></div></article>`;
     }).join("") || '<div class="public-empty">Client testimonials will appear here when added in the Admin Panel.</div>';
     if (dots) dots.innerHTML = visible.map((_,i)=>`<button class="slider-dot${i===0?' is-active':''}" type="button" data-slider-dot="${i}" aria-label="Show testimonial ${i+1}" aria-current="${i===0}"></button>`).join("");
     slider.dataset.sliderVersion = String(Date.now());
@@ -46,10 +46,20 @@
       return href ? `<a class="tool-chip" href="${Site.escapeHTML(href)}" title="${name}" target="_blank" rel="noopener noreferrer">${inner}</a>` : `<span class="tool-chip" title="${name}">${inner}</span>`;
     }).join("");
     track.innerHTML = visible.length ? `<div class="brand-group">${group}</div><div class="brand-group" aria-hidden="true">${group}</div>` : "";
+    // Tool icon files can be missing or fail to load; swap a broken image for the tool's initial.
+    track.querySelectorAll(".tool-icon img").forEach((img) => {
+      img.addEventListener("error", () => {
+        const initial = document.createElement("i");
+        initial.setAttribute("aria-hidden", "true");
+        initial.textContent = (img.closest(".tool-chip")?.getAttribute("title") || "?").trim().slice(0, 1).toUpperCase();
+        img.replaceWith(initial);
+      }, { once: true });
+    });
   }
 
   function renderBrands(items) {
-    const track = document.querySelector(".brand-track");
+    // Scoped to the Brands section: the Tools strip above it also contains a .brand-track.
+    const track = document.querySelector(".brands-section .brand-track");
     if (!track) return;
     const visible = (items || []).filter((item) => item.visible !== false).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));
     toggleSection(document.querySelector(".brands-section"), visible.length > 0);
@@ -129,7 +139,7 @@
           <span class="service-icon ${index % 2 ? "service-icon--blue" : "service-icon--orange"}" aria-hidden="true">${Site.icon(service.icon)}</span>
           <span class="card-index">${String(index + 1).padStart(2, "0")}</span>
         </div>
-        ${service.badge ? `<span class="project-badge">${Site.escapeHTML(service.badge)}</span>` : ""}
+        ${Site.clean(service.badge) ? `<span class="project-badge">${Site.escapeHTML(Site.clean(service.badge))}</span>` : ""}
         <h3>${Site.escapeHTML(service.name)}</h3>
         <p>${Site.escapeHTML(home.serviceTeaserOverrides?.[service.id] || service.shortDescription || service.description)}</p>
         <span class="service-card-link">${Site.escapeHTML(service.homeCta || "Learn more")} <span aria-hidden="true">→</span></span>
@@ -144,10 +154,10 @@
       <article class="project-card reveal-child">
         <div class="project-media">
           <img src="${Site.escapeHTML(Site.safeImage(project.image, "assets/projects/nexa-properties.svg"))}" width="1200" height="800" loading="lazy" alt="${Site.escapeHTML(project.alt || project.title)}">
-          <span class="project-badge">${Site.escapeHTML(project.badge || home.featuredBadge || "Featured")}</span>
+          ${Site.clean(project.badge || home.featuredBadge) ? `<span class="project-badge">${Site.escapeHTML(Site.clean(project.badge || home.featuredBadge))}</span>` : ""}
         </div>
         <div class="project-info">
-          <div><p>${Site.escapeHTML(project.type)}</p><h3>${Site.escapeHTML(project.title)}</h3></div>
+          <div>${Site.clean(project.type) ? `<p>${Site.escapeHTML(Site.clean(project.type))}</p>` : ""}<h3>${Site.escapeHTML(project.title)}</h3></div>
           <span class="project-arrow" aria-hidden="true">${diagonalArrow}</span>
         </div>
       </article>`).join("") || '<p class="public-empty">Featured projects will appear here when selected in the Admin Panel.</p>';
