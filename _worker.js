@@ -20,7 +20,8 @@ const PAGE_ALIASES = {
   "/contact": "/contact.html"
 };
 
-const SESSION_MS = 12 * 60 * 60 * 1000;
+const SESSION_MS = 12 * 60 * 60 * 1000; // cookie lifetime cap
+const idleMs = (env) => Math.max(5, Number(env.ADMIN_IDLE_SECONDS || 1800)) * 1000; // 30 min inactivity; the var is for dev testing only
 const encoder = new TextEncoder();
 
 function headersBase() {
@@ -181,12 +182,20 @@ async function getSession(request, env) {
     return null;
   }
 
-  let expires = row.expires_at;
-  if (expires - now < SESSION_MS / 2) {
-    expires = now + SESSION_MS;
-    await env.DB.prepare("UPDATE admin_sessions SET expires_at=? WHERE token_hash=?").bind(expires, tokenHash).run();
-  }
-  return { token, tokenHash, username: row.username, expiresAt: expires };
+  return { token, tokenHash, username: row.username, expiresAt: row.expires_at };
+}
+
+// Only genuine admin actions call this; plain reads and background requests never extend a session.
+async function touchSession(env, session) {
+  session.expiresAt = Date.now() + idleMs(env);
+  await env.DB.prepare("UPDATE admin_sessions SET expires_at=? WHERE token_hash=?").bind(session.expiresAt, session.tokenHash).run();
+}
+
+function adminLoginRedirect(request, stale) {
+  return new Response(null, {
+    status: 302,
+    headers: { ...headersBase(), "Cache-Control": "no-store", Location: new URL(stale ? "/admin/login?expired=1" : "/admin/login", request.url).toString(), ...(stale ? { "Set-Cookie": cookie("", 0) } : {}) }
+  });
 }
 
 function cookie(token, maxAge) {
@@ -303,7 +312,8 @@ async function handleApi(request, env, pathname) {
     await env.DB.prepare("DELETE FROM login_attempts WHERE ip_hash=?").bind(ip).run();
     const token = b64url(crypto.getRandomValues(new Uint8Array(32)));
     const tokenHash = await sha256(token);
-    const expires = Date.now() + SESSION_MS;
+    const expires = Date.now() + idleMs(env);
+    await env.DB.prepare("DELETE FROM admin_sessions WHERE expires_at<=?").bind(Date.now()).run();
     await env.DB.prepare("INSERT INTO admin_sessions (token_hash,username,expires_at) VALUES (?,?,?)")
       .bind(tokenHash, username, expires).run();
 
@@ -320,7 +330,10 @@ async function handleApi(request, env, pathname) {
       return json({ ok: true }, 200, { "Set-Cookie": cookie("", 0) });
     }
 
-    if (!session) return json({ ok: false, error: "Authentication required." }, 401);
+    if (!session) {
+      const stale = Boolean(parseCookies(request).usman_admin);
+      return json({ ok: false, error: "Authentication required.", code: stale ? "session_expired" : "unauthenticated" }, 401, stale ? { "Set-Cookie": cookie("", 0) } : {});
+    }
 
     if (pathname === "/api/admin/session" && request.method === "GET") {
       const admin = await getAdmin(env);
@@ -328,12 +341,20 @@ async function handleApi(request, env, pathname) {
         ok: true,
         user: { username: session.username },
         defaultPassword: Boolean(admin.default_password),
-        expiresAt: new Date(session.expiresAt).toISOString()
+        expiresAt: new Date(session.expiresAt).toISOString(),
+        idleTimeoutMs: idleMs(env),
+        idleRemainingMs: Math.max(0, session.expiresAt - Date.now())
       });
     }
 
     if (request.headers.get("X-Requested-With") !== "XMLHttpRequest") {
       return json({ ok: false, error: "Write request protection failed." }, 403);
+    }
+
+    if (request.method !== "GET") await touchSession(env, session);
+
+    if (pathname === "/api/admin/activity" && request.method === "POST") {
+      return json({ ok: true, idleTimeoutMs: idleMs(env), idleRemainingMs: idleMs(env) });
     }
 
     if (pathname === "/api/admin/content" && request.method === "GET") return json(await getContent(env));
@@ -498,9 +519,7 @@ export default {
 
       if (pathname === "/admin" || pathname === "/admin/index.html" || pathname.startsWith("/admin/")) {
         const session = await getSession(request, env);
-        if (!session) {
-          return Response.redirect(new URL("/admin/login", request.url), 302);
-        }
+        if (!session) return adminLoginRedirect(request, Boolean(parseCookies(request).usman_admin));
 
         if (
           pathname === "/admin" ||
