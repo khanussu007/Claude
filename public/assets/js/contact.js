@@ -27,9 +27,12 @@
     const container = document.querySelector(".contact-social-links");
     if (!container) return;
     container.replaceChildren();
-    (Site.content.contact.socialLinks || []).filter((item) => item.visible !== false && item.label && item.url).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0)).forEach((social) => {
-      const link = document.createElement("a"); link.href = Site.safeHref(social.url, "#social"); link.target = "_blank"; link.rel = "noopener noreferrer"; link.setAttribute("aria-label", social.label); link.innerHTML = Site.socialIcon(social.icon || social.platform || "link"); container.appendChild(link);
+    (Site.content.contact.socialLinks || []).filter((item) => item && item.visible !== false && /^https?:\/\/\S+$/i.test(Site.clean(item.url))).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0)).forEach((social) => {
+      const key = Site.socialKey(social); const label = Site.clean(social.label) || Site.clean(social.platform) || key;
+      const link = document.createElement("a"); link.href = Site.clean(social.url); link.target = "_blank"; link.rel = "noopener noreferrer"; link.title = label; link.setAttribute("aria-label", label); link.innerHTML = Site.socialIcon(key); container.appendChild(link);
     });
+    const socialCard = container.closest(".contact-social-card");
+    if (socialCard) socialCard.hidden = !container.children.length;
   }
 
   function renderProjectOptions() {
@@ -100,8 +103,9 @@
     const body=[`Name: ${name}`,`Email: ${senderEmail}`,`Project Type: ${projectType}`,`Budget: ${budget}`,"","Message:",message].join("\n");
     const url=whatsappUrl(body);
     if(!url){ if(status) status.textContent="WhatsApp is not configured yet. Please use the email contact option."; return; }
-    const popup=window.open(url,"_blank","noopener,noreferrer");
-    if(!popup) window.location.href=url;
+    // Note: passing "noopener" to window.open always returns null, which used to trigger the same-tab fallback too.
+    const popup=window.open(url,"_blank");
+    if(popup) { try { popup.opener=null; } catch(e) {} } else window.location.href=url;
     if(status) status.textContent=cfg.successMessage||"Thanks. Your enquiry is ready to send on WhatsApp.";
     form.reset(); renderFormConfig();
   });
