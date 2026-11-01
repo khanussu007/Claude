@@ -61,9 +61,18 @@ p, li, blockquote { text-wrap: pretty; }
 @media (max-width: 960px) {
   html { scroll-padding-top: calc(var(--header-h) + 12px); }
 
+  /* Always-reachable header: position:FIXED (not sticky). Sticky silently stops working when an
+     ancestor is a scroll container -- style.css sets overflow-x:hidden on html AND body, and browsers
+     without overflow:clip (e.g. iOS Safari < 16) fall back to that, so the header scrolled away with
+     the page. A fixed header can't be broken by ancestor overflow. The body reserves the header's
+     height (measured by main.js, CSS fallback below) so the layout does not jump or shift. */
+  body { padding-top: var(--header-offset, calc(var(--header-h) + 1px)); }
+
   :root .site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    right: 0;
+    left: 0;
     border-bottom-color: var(--border);
     background: rgba(var(--bg-rgb), 0.94);
     -webkit-backdrop-filter: blur(14px);
@@ -92,13 +101,27 @@ p, li, blockquote { text-wrap: pretty; }
   .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
+  /* Scroll lock while the menu is open.
+     Root cause of "menu only works at the top": style.css sets body.menu-open { overflow: hidden }.
+     That makes <body> its own scroll container, so the sticky header loses the viewport as its
+     scrollport, scrolls away with the page (and the scroll position jumps). Lock the viewport
+     (<html>) instead and keep <body> a plain box so the header stays pinned. */
+  html.menu-open { overflow: hidden; scrollbar-gutter: stable; }
+  body.menu-open { overflow: visible; }
+
   /* Dim the page behind the open menu (click on it closes the menu — main.js). */
+  /* iOS Safari only dispatches "click" on non-interactive areas (this overlay is body::before) when the
+     element looks clickable, so mark body clickable while the menu is open and reset its children.
+     The tap lands on the overlay itself, so it closes the menu without reaching the page underneath. */
+  body.menu-open { cursor: pointer; }
+  body.menu-open > * { cursor: auto; }
   body.menu-open::before {
     position: fixed;
     z-index: 90;
     inset: 0;
     background: rgba(17, 27, 38, 0.42);
     content: "";
+    touch-action: none; /* keeps iOS from scrolling the page through the overlay */
   }
 
   /* Menu panel */
