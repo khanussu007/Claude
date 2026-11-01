@@ -269,7 +269,7 @@
         const key = Site.socialKey(social);
         const label = Site.clean(social.label) || Site.clean(social.platform) || key;
         const link = document.createElement("a");
-        link.href = Site.clean(social.url);
+        link.href = Site.safeHref(Site.clean(social.url), "#");
         link.target = "_blank";
         link.rel = "noopener noreferrer";
         link.title = label;
