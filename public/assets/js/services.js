@@ -34,8 +34,8 @@
         <h3>${Site.escapeHTML(service.name)}</h3>
         ${service.image ? `<div class="service-detail-image"><img src="${Site.escapeHTML(Site.safeImage(service.image, ""))}" alt="${Site.escapeHTML(service.name)}" loading="lazy"></div>` : ""}
         <p>${Site.escapeHTML(service.description)}</p>
-        ${(service.price || service.pricing) ? `<p class="service-price">${Site.escapeHTML(service.price || service.pricing)}${service.priceSuffix ? ` ${Site.escapeHTML(service.priceSuffix)}` : ""}</p>` : ""}
-        <div class="service-tags" aria-label="${Site.escapeHTML(service.name)} features">${(service.features || service.tags || []).map((tag) => `<span>${Site.escapeHTML(tag)}</span>`).join("")}</div>
+        ${Site.clean(service.price || service.pricing) ? `<p class="service-price">${Site.escapeHTML(Site.clean(service.price || service.pricing))}${Site.clean(service.priceSuffix) ? ` ${Site.escapeHTML(Site.clean(service.priceSuffix))}` : ""}</p>` : ""}
+        ${(service.features || service.tags || []).map(Site.clean).filter(Boolean).length ? `<div class="service-tags" aria-label="${Site.escapeHTML(service.name)} features">${(service.features || service.tags || []).map(Site.clean).filter(Boolean).map((tag) => `<span>${Site.escapeHTML(tag)}</span>`).join("")}</div>` : ""}
         <a class="service-quote-link" href="${Site.safeHref(service.ctaUrl, `contact.html?project=${encodeURIComponent(service.id)}`)}">${Site.escapeHTML(service.cta || service.ctaText || "Discuss Your Project")} ${arrow}</a>
       </article>`).join("");
     if (update) Site.forceVisible(document);
