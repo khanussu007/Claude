@@ -18,6 +18,15 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
   })[character]);
 
+  // Normalises any CMS value to a trimmed string. null, undefined, whitespace-only
+  // and the literal strings "undefined"/"null" all become "" so renderers can
+  // simply test the result for truthiness.
+  Site.clean = (value) => {
+    if (value === null || value === undefined) return "";
+    const text = String(value).trim();
+    return /^(undefined|null)$/i.test(text) ? "" : text;
+  };
+
   Site.safeHref = (value, fallback = "#") => {
     const href = String(value || "").trim();
     if (/^(https?:\/\/|mailto:|tel:|#|[a-z0-9-]+\.html(?:[?#]|$)|\/?assets\/|\/(?!\/))/i.test(href)) return href;
@@ -89,6 +98,24 @@
     return Site.icon("link");
   };
 
+  // Resolve which icon a social profile should use. The Admin Panel saves
+  // `icon` and `platform`; older data may carry `key`. Fall back to the URL host.
+  Site.socialKey = (social = {}) => {
+    const known = ["linkedin", "instagram", "youtube", "facebook", "x"];
+    for (const candidate of [social.icon, social.platform, social.key]) {
+      const value = Site.clean(candidate).toLowerCase();
+      if (value === "twitter") return "x";
+      if (known.includes(value)) return value;
+    }
+    const host = Site.clean(social.url).toLowerCase().replace(/^https?:\/\/(www\.)?/, "");
+    if (/^linkedin\.com/.test(host)) return "linkedin";
+    if (/^instagram\.com/.test(host)) return "instagram";
+    if (/^(youtube\.com|youtu\.be)/.test(host)) return "youtube";
+    if (/^(facebook\.com|fb\.com)/.test(host)) return "facebook";
+    if (/^(x\.com|twitter\.com)/.test(host)) return "x";
+    return "link";
+  };
+
   Site.forceVisible = (container = document) => {
     container.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-visible"));
     container.querySelectorAll(".reveal-child").forEach((element) => element.classList.remove("reveal-child"));
@@ -129,7 +156,11 @@
       element.textContent = global.footerText || "";
       element.style.whiteSpace = "pre-line";
     });
-    document.querySelectorAll("[data-footer-bottom]").forEach((element) => { element.textContent = global.footerBottom || ""; });
+    document.querySelectorAll("[data-footer-bottom]").forEach((element) => {
+      const text = Site.clean(global.footerBottom);
+      element.textContent = text;
+      element.hidden = !text;
+    });
     document.querySelectorAll("[data-footer-social-title]").forEach((element) => { element.textContent = global.footerSocialTitle || ""; });
     document.querySelectorAll("[data-footer-social-description]").forEach((element) => { element.textContent = global.footerSocialDescription || ""; });
 
@@ -155,21 +186,31 @@
       });
     });
 
+    const toggle = (link, show) => { link.hidden = !show; link.style.display = show ? "" : "none"; };
     document.querySelectorAll("[data-footer-email]").forEach((link) => {
-      link.textContent = contact.email || "";
-      link.href = contact.email ? `mailto:${contact.email}` : "#";
+      const email = Site.clean(contact.email);
+      link.textContent = email;
+      link.href = email ? `mailto:${email}` : "#";
+      toggle(link, Boolean(email));
     });
     document.querySelectorAll("[data-footer-website]").forEach((link) => {
-      const website = String(contact.website || "").trim();
-      link.textContent = website.replace(/^https?:\/\//i, "").replace(/\/$/, "") || "Website";
+      const website = Site.clean(contact.website);
+      link.textContent = website.replace(/^https?:\/\//i, "").replace(/\/$/, "");
       link.href = Site.safeHref(website, "#");
       if (/^https?:\/\//i.test(website)) { link.target = "_blank"; link.rel = "noopener noreferrer"; }
+      toggle(link, Boolean(website));
     });
     document.querySelectorAll("[data-footer-whatsapp]").forEach((link) => {
-      const digits = String(contact.whatsappNumber || "").replace(/\D/g, "");
-      link.href = digits ? `https://wa.me/${digits}` : "contact.html";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
+      const digits = Site.clean(contact.whatsappNumber).replace(/\D/g, "");
+      if (digits) {
+        link.href = `https://wa.me/${digits}`;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      toggle(link, Boolean(digits));
+    });
+    document.querySelectorAll("[data-site-name]").forEach((node) => {
+      node.textContent = Site.clean(global.websiteName) || node.textContent;
     });
 
     const navItems = Array.isArray(global.navigationItems) ? [...global.navigationItems].filter((item) => item.visible !== false).sort((a,b) => (Number(a.order)||0)-(Number(b.order)||0)) : [];
@@ -203,29 +244,40 @@
       Site.setButtonText(button, global.headerCtaText || global.defaultCtaText || "Let’s Work Together");
       button.href = Site.safeHref(global.headerCtaLink || global.defaultCtaLink, "contact.html");
     });
+    // Mobile menu CTA: the header button is hidden below 960px, so mirror it inside the menu (hidden on desktop via CSS).
+    const headerCtaSource = document.querySelector(".header-cta");
+    if (navContainer && headerCtaSource && !navContainer.querySelector(".nav-cta")) {
+      const menuCta = document.createElement("a");
+      menuCta.className = "button button--primary nav-cta";
+      menuCta.href = headerCtaSource.getAttribute("href") || "contact.html";
+      menuCta.textContent = headerCtaSource.textContent.trim();
+      navContainer.appendChild(menuCta);
+    }
     document.querySelectorAll("a[href^='mailto:']").forEach((link) => {
       if (!link.hasAttribute("data-contact-link")) link.href = `mailto:${contact.email}`;
     });
 
+    // Only profiles with a valid, absolute http(s) URL are shown.
     const socials = Array.isArray(contact.socialLinks)
-      ? [...contact.socialLinks].filter((item) => item.visible !== false && item.label && item.url).sort((a,b) => (Number(a.order)||0)-(Number(b.order)||0))
+      ? [...contact.socialLinks]
+          .filter((item) => item && item.visible !== false && /^https?:\/\/\S+$/i.test(Site.clean(item.url)))
+          .sort((a,b) => (Number(a.order)||0)-(Number(b.order)||0))
       : [];
     document.querySelectorAll("[data-footer-social-links], .footer-social .social-links").forEach((container) => {
       container.replaceChildren();
       socials.forEach((social) => {
+        const key = Site.socialKey(social);
+        const label = Site.clean(social.label) || Site.clean(social.platform) || key;
         const link = document.createElement("a");
-        const configured = /^https?:\/\//i.test(String(social.url || ""));
-        link.href = configured ? social.url : "contact.html#social";
-        link.setAttribute("aria-label", social.label);
-        if (configured) {
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-        } else if (document.body.classList.contains("contact-page")) {
-          link.dataset.contactLink = social.key;
-        }
-        link.innerHTML = Site.socialIcon(social.key);
+        link.href = Site.clean(social.url);
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.title = label;
+        link.setAttribute("aria-label", label);
+        link.innerHTML = Site.socialIcon(key);
         container.appendChild(link);
       });
+      container.hidden = socials.length === 0;
     });
   }
 
