@@ -321,6 +321,57 @@ p, li, blockquote { text-wrap: pretty; }
   :root .slider-controls { margin-top: 20px; }
 }
 
+/* Testimonial layout: large customer photo gets priority, smaller review text.
+   Applies automatically to any testimonial that has an uploaded photo. */
+:root .testimonial-card blockquote { font-size: clamp(0.95rem, 1.3vw, 1.06rem); line-height: 1.65; letter-spacing: -0.01em; }
+:root .client-row strong { font-size: 1.05rem; line-height: 1.3; }
+:root .client-row > div span { font-size: 0.875rem; }
+:root .client-row > div small { font-size: 0.8rem; }
+:root .client-stars { font-size: 0.9rem; }
+:root .testimonial-card:has(.client-avatar-image) {
+  display: grid;
+  grid-template-columns: clamp(190px, 28%, 280px) minmax(0, 1fr);
+  grid-template-areas:
+    "photo label"
+    "photo quote"
+    "photo person"
+    "photo stars";
+  grid-template-rows: auto 1fr auto auto;
+  column-gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+}
+:root .testimonial-card:has(.client-avatar-image) .client-row { display: contents; }
+:root .testimonial-card:has(.client-avatar-image) .placeholder-label { grid-area: label; justify-self: start; }
+:root .testimonial-card:has(.client-avatar-image) blockquote { grid-area: quote; align-self: center; margin-top: 18px; max-width: none; }
+:root .testimonial-card:has(.client-avatar-image) .client-avatar-image {
+  grid-area: photo;
+  align-self: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 18px;
+}
+:root .testimonial-card:has(.client-avatar-image) .client-row > div { grid-area: person; margin-top: 22px; min-width: 0; }
+:root .testimonial-card:has(.client-avatar-image) .client-stars { grid-area: stars; margin: 10px 0 0; justify-self: start; display: block; }
+@media (max-width: 760px) {
+  :root .testimonial-card:has(.client-avatar-image) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "photo" "label" "quote" "person" "stars";
+    grid-template-rows: none;
+    justify-items: center;
+    text-align: center;
+  }
+  :root .testimonial-card:has(.client-avatar-image) .client-avatar-image { width: min(78%, 260px); margin: 4px auto 0; }
+  :root .testimonial-card:has(.client-avatar-image) .placeholder-label { justify-self: center; margin-top: 16px; }
+  :root .testimonial-card:has(.client-avatar-image) blockquote { margin-top: 16px; font-size: 0.95rem; }
+  :root .testimonial-card:has(.client-avatar-image) .client-row > div { align-items: center; margin-top: 16px; }
+  :root .testimonial-card:has(.client-avatar-image) .client-stars { justify-self: center; }
+}
+@media (min-width: 761px) and (max-width: 1024px) {
+  :root .testimonial-card:has(.client-avatar-image) { grid-template-columns: clamp(170px, 30%, 220px) minmax(0, 1fr); }
+}
+
 :root .brands-section { padding: clamp(32px, 5vw, 56px) 0 clamp(28px, 5vw, 56px); }
 :root .brand-logo { width: auto; min-width: 180px; flex: 0 0 auto; padding: 0 24px; white-space: nowrap; }
 :root .brands-heading { align-items: center; justify-content: space-between; gap: 6px 24px; }
