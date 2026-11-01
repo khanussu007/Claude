@@ -28,23 +28,35 @@
     const achievements = content.achievements.filter((achievement) => achievement.enabled);
     timeline.innerHTML = achievements.map((achievement, index) => {
       const image = achievement.image ? Site.safeImage(achievement.image, "") : "";
+      // Trim every optional value; null, undefined, "" and whitespace-only all become "".
+      const title = Site.clean(achievement.title);
+      const recognition = Site.clean(achievement.recognition);
+      const year = Site.clean(achievement.year);
+      const category = Site.clean(achievement.category);
+      const organization = Site.clean(achievement.organization);
+      const description = Site.clean(achievement.description);
+      const metaItems = [
+        year ? `<span><small>Year / Period</small>${Site.escapeHTML(year)}</span>` : "",
+        category ? `<span><small>Category</small>${Site.escapeHTML(category)}</span>` : "",
+        organization ? `<span><small>Organization</small>${Site.escapeHTML(organization)}</span>` : ""
+      ].filter(Boolean);
+      const badge = achievement.featured
+        ? `<span class="achievement-badge">Featured recognition</span>`
+        : (category ? `<span class="achievement-stage">${Site.escapeHTML(category)}</span>` : "");
+      const heading = recognition || title;
       return `
         <article class="achievement-item ${achievement.featured ? "achievement-item--featured" : ""} reveal" id="${Site.escapeHTML(achievement.id)}">
           <span class="achievement-marker" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
           <div class="achievement-card">
             <div class="achievement-card-top">
               <span class="achievement-icon ${index % 2 ? "achievement-icon--blue" : "achievement-icon--orange"}" aria-hidden="true">${Site.icon(achievement.icon)}</span>
-              <span class="${achievement.featured ? "achievement-badge" : "achievement-stage"}">${achievement.featured ? "Featured recognition" : Site.escapeHTML(achievement.category || "Career milestone")}</span>
+              ${badge}
             </div>
-            <p class="achievement-kicker">${Site.escapeHTML(achievement.title)}</p>
-            <h3>${Site.escapeHTML(achievement.recognition || achievement.title)}</h3>
-            <div class="achievement-meta">
-              <span><small>Year / Period</small>${Site.escapeHTML(achievement.year || "Career milestone")}</span>
-              <span><small>Category</small>${Site.escapeHTML(achievement.category || "Professional journey")}</span>
-              ${achievement.organization ? `<span><small>Organization</small>${Site.escapeHTML(achievement.organization)}</span>` : ""}
-            </div>
-            <p class="achievement-description">${Site.escapeHTML(achievement.description)}</p>
-            ${image ? `<a class="achievement-certificate" href="${Site.escapeHTML(image)}" target="_blank" rel="noopener noreferrer"><img src="${Site.escapeHTML(image)}" alt="${Site.escapeHTML(achievement.title)} certificate or achievement image" loading="lazy"><span>View image / certificate</span></a>` : ""}
+            ${title ? `<p class="achievement-kicker">${Site.escapeHTML(title)}</p>` : ""}
+            ${heading ? `<h3>${Site.escapeHTML(heading)}</h3>` : ""}
+            ${metaItems.length ? `<div class="achievement-meta">${metaItems.join("")}</div>` : ""}
+            ${description ? `<p class="achievement-description">${Site.escapeHTML(description)}</p>` : ""}
+            ${image ? `<a class="achievement-certificate" href="${Site.escapeHTML(image)}" target="_blank" rel="noopener noreferrer"><img src="${Site.escapeHTML(image)}" alt="${Site.escapeHTML(title || recognition || "Achievement")} certificate or achievement image" loading="lazy"><span>View image / certificate</span></a>` : ""}
           </div>
         </article>`;
     }).join("");
