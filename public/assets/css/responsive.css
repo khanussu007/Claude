@@ -1,0 +1,383 @@
+/* =====================================================================
+   PHASE 2 — RESPONSIVE & VISUAL CONSISTENCY LAYER
+   Loaded LAST on every public page (after style.css, page CSS, themes.css).
+   It refines spacing, layout and touch behaviour only. Brand colours,
+   fonts and content all still come from style.css / themes.css (CMS themes).
+
+   Breakpoints used (mobile-first thinking, written as max-width overrides):
+     <= 1180  laptop / small desktop
+     <=  960  tablet  (hamburger menu, 2-col hero)
+     <=  640  large mobile -> single column
+     <=  480  mobile (stats become a list, buttons full width)
+     <=  360  small mobile
+   ===================================================================== */
+
+:root {
+  --gutter: clamp(16px, 4.6vw, 32px);
+  --section-y: clamp(56px, 8vw, 104px);
+  --header-h: 64px;
+  --radius-card: 18px;
+  --radius-btn: 12px;
+  --card-shadow: 0 1px 2px rgba(17, 27, 38, 0.04), 0 8px 24px rgba(17, 27, 38, 0.06);
+  /* Fluid type — one place to tune. h1 is handled per-layout below. */
+  --fs-h2: clamp(1.65rem, 1.15rem + 2vw, 2.5rem);
+  --fs-h3: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
+}
+
+/* ---------- Global safety ---------- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* overflow-x:hidden on html/body makes body a scroll container and silently breaks position:sticky.
+   `clip` still prevents sideways scroll without that side effect. */
+@supports (overflow: clip) {
+  html, body { overflow-x: clip; }
+}
+body { overflow-wrap: break-word; }
+img, svg, video, canvas, iframe { max-width: 100%; }
+img { height: auto; }
+h1, h2, h3 { text-wrap: balance; }
+p, li, blockquote { text-wrap: pretty; }
+
+:root .container { width: min(var(--container), calc(100% - (var(--gutter) * 2))); }
+
+/* Clip decorative glows so they can never create sideways scroll. */
+.contact-card, .hero, .about-hero, .perspective-card { overflow-x: clip; }
+.contact-orb, .perspective-glow, .profile-halo { max-width: 100vw; }
+
+/* Comfortable, consistent tap targets. */
+.button { min-height: 48px; border-radius: var(--radius-btn); }
+@media (hover: none) {
+  .project-card:hover, .service-card:hover, a.tool-chip:hover { transform: none; }
+}
+
+/* =====================================================================
+   HEADER + MOBILE NAVIGATION  (<= 960px)
+   Root cause of the big gap: style.css made the header position:relative
+   below 960px (so it takes 75px of normal flow) while .hero kept the
+   118–150px padding-top that was written for a *fixed* header.
+   Fix: sticky header + a hero that only needs normal breathing room.
+   ===================================================================== */
+.nav-cta { display: none; }
+
+@media (max-width: 960px) {
+  html { scroll-padding-top: calc(var(--header-h) + 12px); }
+
+  :root .site-header {
+    position: sticky;
+    top: 0;
+    border-bottom-color: var(--border);
+    background: rgba(var(--bg-rgb), 0.94);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  :root .header-inner { min-height: var(--header-h); gap: 12px; }
+
+  /* Logo: never push the toggle off-screen. */
+  .brand { min-width: 0; gap: 10px; }
+  .brand-name { min-width: 0; font-size: 13px; line-height: 1.25; }
+  .brand-name small { font-size: 10px; }
+  :root .brand-mark { width: 40px; height: 40px; border-radius: 11px; font-size: 15px; }
+
+  /* Hamburger */
+  .menu-toggle {
+    display: grid;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    place-content: center;
+    padding: 0;
+    border-radius: 12px;
+    background: var(--surface-raised);
+  }
+  .menu-toggle span { width: 20px; margin: 2.5px 0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Dim the page behind the open menu (click on it closes the menu — main.js). */
+  body.menu-open::before {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    background: rgba(17, 27, 38, 0.42);
+    content: "";
+  }
+
+  /* Menu panel */
+  :root .primary-nav {
+    top: calc(100% + 8px);
+    max-height: calc(100vh - var(--header-h) - 28px);
+    max-height: calc(100dvh - var(--header-h) - 28px);
+    gap: 2px;
+    padding: 10px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 16px;
+    background: var(--surface-raised);
+    box-shadow: 0 20px 50px rgba(17, 27, 38, 0.22);
+  }
+  :root .nav-link {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    padding: 0 14px 0 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  :root .nav-link::before { left: 6px; width: 6px; height: 6px; }
+  :root .nav-link:hover, :root .nav-link.is-active { background: rgba(var(--accent-rgb), 0.14); }
+  .nav-cta { display: inline-flex; width: 100%; margin-top: 8px; }
+}
+
+/* =====================================================================
+   HERO
+   ===================================================================== */
+@media (max-width: 960px) {
+  :root .hero { min-height: 0; padding: clamp(28px, 5vw, 48px) 0 clamp(44px, 7vw, 64px); }
+  :root .hero-grid { gap: clamp(28px, 5vw, 40px); }
+  :root .hero-eyebrow { margin-bottom: 14px; }
+  :root .hero-role { margin-top: 12px; }
+  :root .hero-tagline { margin-top: 16px; }
+  :root .hero-description { margin-top: 10px; max-width: 56ch; }
+  :root .hero-actions { margin-top: 24px; }
+  :root .hero-support { margin-top: 18px; line-height: 1.9; }
+}
+
+@media (max-width: 960px) {
+  /* "Supported by" row: label on its own line, badges as tidy chips (separator dots hidden). */
+  :root .hero-support { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  :root .hero-support b { display: none; }
+  :root .hero-support span { display: inline-flex; margin: 0; padding: 5px 11px; border: 1px solid var(--border); border-radius: 999px; background: rgba(var(--surface-rgb), 0.7); font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  :root .hero-support span:first-child { flex: 0 0 100%; padding: 0; border: 0; background: none; margin-bottom: -2px; }
+
+}
+
+/* Tablet: text and photo side by side instead of one huge stacked photo. */
+@media (min-width: 641px) and (max-width: 960px) {
+  :root .hero-grid { grid-template-columns: minmax(0, 1.4fr) minmax(200px, 0.6fr); align-items: center; }
+  :root .hero-actions { display: flex; flex-wrap: wrap; gap: 12px 14px; }
+  :root .hero-actions .button { white-space: nowrap; }
+  :root .hero-experience { flex: 1 1 100%; }
+  :root .hero h1 { font-size: clamp(2.6rem, 6.2vw, 3.5rem); }
+  :root .profile-visual { width: 100%; max-width: 340px; justify-self: end; }
+  :root .profile-chip { display: none; }
+  :root .profile-frame { border-radius: 24px; }
+  :root .profile-caption { right: 10px; bottom: 10px; left: 10px; padding: 10px 12px; }
+}
+
+@media (max-width: 640px) {
+  :root .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  :root .hero h1 { font-size: clamp(2.2rem, 11vw, 3rem); letter-spacing: -0.05em; }
+  :root .hero-role { font-size: clamp(1.05rem, 4.6vw, 1.3rem); }
+  :root .hero-tagline { font-size: 1.05rem; }
+  :root .hero-description { font-size: 0.9375rem; line-height: 1.75; }
+
+  /* Buttons side by side when there is room, experience badge underneath. */
+  :root .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 10px 12px;
+  }
+  :root .hero-actions .button { width: 100%; padding-inline: 12px; }
+  :root .hero-experience { grid-column: 1 / -1; padding-top: 6px; }
+  :root .hero-experience span br { display: none; }
+
+  :root .profile-visual { width: min(100%, 380px); justify-self: center; }
+  :root .profile-frame { aspect-ratio: 1 / 1.08; border-radius: 22px; }
+  :root .profile-frame > img { object-position: center 22%; }
+}
+
+@media (max-width: 380px) {
+  :root .hero-actions { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* =====================================================================
+   SECTIONS — spacing, headings, vertical rhythm
+   ===================================================================== */
+:root .section { padding: var(--section-y) 0; }
+:root .services-section { padding-bottom: var(--section-y); }
+
+@media (max-width: 760px) {
+  :root .section { padding: var(--section-y) 0; }
+  :root .section-heading { gap: 12px; margin-bottom: 28px; align-items: flex-start; }
+  :root .section-heading .eyebrow { margin-bottom: 10px; }
+  :root .section-heading h2 { font-size: var(--fs-h2); line-height: 1.18; }
+  :root .section-intro { max-width: 60ch; padding-bottom: 0; line-height: 1.7; }
+  :root .section-heading--center { align-items: center; }
+}
+
+@media (min-width: 761px) and (max-width: 960px) {
+  :root .section-heading { align-items: flex-start; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+  :root .section-heading--center { align-items: center; }
+  :root .section-intro { max-width: 62ch; padding-bottom: 0; }
+}
+
+/* =====================================================================
+   STATS  ("Website Projects Done" etc.)
+   >=641  three equal columns
+   481–640 three compact columns, centred
+   <=480  a tidy list: big number left, label right — no 400px-tall stack
+   ===================================================================== */
+:root .stats-section { padding-top: 0; margin-top: 20px; }
+:root .stats-panel { border-radius: var(--radius-card); box-shadow: var(--card-shadow); }
+:root .stat-number { font-size: clamp(2.25rem, 1.4rem + 3vw, 3.5rem); }
+:root .stat-number sup { font-size: clamp(1.1rem, 0.9rem + 1vw, 1.5rem); }
+:root .stat p { max-width: 22ch; text-wrap: balance; }
+
+@media (max-width: 960px) {
+  :root .stat { min-height: 0; padding: 26px clamp(16px, 3vw, 28px); }
+  :root .stat + .stat::before { top: 24px; bottom: 24px; }
+}
+
+@media (max-width: 760px) {
+  :root .stats-panel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :root .stat { align-items: center; padding: 22px 10px; text-align: center; }
+  :root .stat + .stat::before { top: 22px; right: auto; bottom: 22px; left: 0; width: 1px; height: auto; }
+  :root .stat p { margin-top: 8px; font-size: 0.75rem; line-height: 1.4; }
+  :root .stat-number { font-size: clamp(2rem, 8vw, 2.6rem); }
+}
+
+@media (max-width: 480px) {
+  :root .stats-panel { grid-template-columns: minmax(0, 1fr); }
+  :root .stat {
+    display: grid;
+    grid-template-columns: minmax(84px, 30%) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 16px;
+    padding: 16px 20px;
+    text-align: left;
+  }
+  :root .stat + .stat::before { top: 0; right: 20px; bottom: auto; left: 20px; width: auto; height: 1px; }
+  :root .stat-number { justify-content: flex-start; font-size: 2.25rem; }
+  :root .stat p { max-width: none; margin-top: 0; font-size: 0.8125rem; line-height: 1.45; }
+}
+
+/* =====================================================================
+   SERVICES
+   ===================================================================== */
+:root .service-card { border-radius: var(--radius-card); }
+@media (max-width: 1180px) and (min-width: 961px) {
+  :root .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :root .service-card { min-height: 0; }
+}
+@media (max-width: 960px) {
+  :root .services-grid { gap: 14px; }
+  :root .service-card { min-height: 0; padding: 22px; }
+  :root .service-card h3 { margin-top: 22px; }
+}
+@media (max-width: 640px) {
+  :root .services-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  :root .service-card { padding: 20px; }
+  :root .service-card h3 { margin-top: 18px; }
+  :root .services-action, :root .work-action { margin-top: 24px; }
+  :root .services-action .button, :root .work-action .button { width: 100%; }
+}
+
+/* =====================================================================
+   PROJECTS
+   ===================================================================== */
+:root .project-card { border-radius: var(--radius-card); box-shadow: var(--card-shadow); }
+@media (max-width: 960px) {
+  :root .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  :root .project-media { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 599px) {
+  :root .project-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  :root .project-info { padding: 16px; }
+}
+
+/* =====================================================================
+   TESTIMONIALS + TRUSTED BY / BRANDS / TOOLS
+   ===================================================================== */
+:root .testimonial-card { min-height: 0; border-radius: var(--radius-card); }
+@media (max-width: 760px) {
+  :root .testimonial-card { min-height: 0; padding: 28px 22px 24px; }
+  :root .quote-mark { right: 16px; font-size: 80px; }
+  :root .client-row { margin-top: 20px; gap: 12px; }
+  :root .slider-controls { margin-top: 20px; }
+}
+
+:root .brands-section { padding: clamp(32px, 5vw, 56px) 0 clamp(28px, 5vw, 56px); }
+:root .brand-logo { width: auto; min-width: 180px; flex: 0 0 auto; padding: 0 24px; white-space: nowrap; }
+:root .brands-heading { align-items: center; justify-content: space-between; gap: 6px 24px; }
+:root .brand-logo { border-radius: 14px; }
+@media (max-width: 760px) {
+  :root .brands-section, :root .tools-section { padding-top: 28px; padding-bottom: 8px; }
+  :root .brands-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  :root .brands-heading .section-intro:empty { display: none; }
+  :root .brand-marquee { margin-top: 16px; }
+  :root .brand-logo { width: auto; min-width: 150px; height: 60px; flex: 0 0 auto; padding: 0 20px; font-size: 11px; letter-spacing: 0.08em; white-space: nowrap; }
+  :root .brand-group { gap: 10px; padding-right: 10px; }
+  :root .tool-chip { height: 48px; }
+}
+
+/* Keep long brand/tool strips scrollable by hand if animation is off. */
+@media (prefers-reduced-motion: reduce) {
+  :root .brand-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+}
+
+/* =====================================================================
+   CTA CARD
+   ===================================================================== */
+:root .contact-section { padding-top: clamp(12px, 3vw, 32px); }
+@media (max-width: 960px) {
+  :root .contact-card { align-items: flex-start; flex-direction: column; gap: 24px; padding: 40px 32px; border-radius: 22px; }
+  :root .contact-orb { top: -190px; right: -120px; width: 340px; height: 340px; }
+}
+@media (max-width: 640px) {
+  :root .contact-card { gap: 20px; padding: 28px 20px; border-radius: 20px; }
+  :root .contact-card h2 { font-size: clamp(1.55rem, 7.2vw, 2rem); }
+  :root .contact-card p:not(.eyebrow) { margin-top: 12px; font-size: 0.9375rem; line-height: 1.7; }
+  :root .contact-card .button { width: 100%; }
+}
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+@media (max-width: 760px) {
+  :root .site-footer { padding-top: 40px; }
+  :root .footer-main { gap: 28px; }
+  :root .footer-bottom { gap: 10px; margin-top: 28px; }
+}
+@media (max-width: 480px) {
+  /* Quick Links + Services sit side by side; long service names may wrap. */
+  :root .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+  :root .footer-link-group nav a { padding: 6px 0; }
+}
+@media (max-width: 340px) {
+  :root .footer-links { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* =====================================================================
+   LARGE SCREENS — stop content floating in a sea of space
+   ===================================================================== */
+@media (min-width: 1600px) {
+  :root { --container: 1280px; }
+}
+
+/* Uppercase micro-labels: keep word gaps readable. */
+:root .hero-experience span { word-spacing: 0.12em; }
+
+/* Laptop (961–1180): keep hero buttons on one line and trim the oversized top gap. */
+@media (min-width: 961px) and (max-width: 1180px) {
+  :root .hero { padding: 120px 0 84px; }
+  :root .hero-grid { grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr); gap: 40px; }
+  :root .hero-actions { flex-wrap: wrap; gap: 14px 20px; }
+  :root .hero-actions .button { white-space: nowrap; }
+  :root .hero-experience { flex: 1 1 100%; }
+}
+
+/* Contact hero tags had no styles at all (rendered as run-together text). Match the other pages' tag pills. */
+:root .contact-hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+:root .contact-hero-tags span {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(var(--surface-rgb), 0.7);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+@media (max-width: 640px) { :root .contact-hero-tags { justify-content: center; } }
