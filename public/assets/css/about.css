@@ -178,7 +178,7 @@
 }
 
 .perspective-card blockquote strong {
-  color: var(--orange-light);
+  color: var(--accent-text, var(--orange-light));
   font-weight: 550;
 }
 
