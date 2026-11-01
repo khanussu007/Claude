@@ -341,7 +341,9 @@
 
 @media (max-width: 960px) {
   .services-hero {
-    min-height: 610px;
+    /* Header is sticky (in normal flow) at <=960px, so the fixed-header offset is no longer needed. */
+    min-height: 0;
+    padding-top: clamp(28px, 5vw, 48px);
   }
 
   .service-approach {
@@ -367,7 +369,7 @@
 @media (max-width: 760px) {
   .services-hero {
     min-height: auto;
-    padding: 145px 0 78px;
+    padding: clamp(28px, 5vw, 48px) 0 78px;
   }
 
   .services-hero h1 {
@@ -404,7 +406,7 @@
 
 @media (max-width: 580px) {
   .services-hero {
-    padding: 128px 0 70px;
+    padding: clamp(28px, 5vw, 48px) 0 70px;
   }
 
   .services-hero .hero-eyebrow {
