@@ -91,7 +91,7 @@
     fields.type.textContent = project.type;
     fields.description.textContent = project.description;
     fields.focus.textContent = project.focus;
-    if (fields.placeholder) fields.placeholder.textContent = project.badge || "";
+    if (fields.placeholder) { fields.placeholder.textContent = ""; fields.placeholder.style.display = "none"; }
     if (fields.projectLink) { const url=Site.safeHref(project.ctaUrl || project.projectUrl, ""); fields.projectLink.hidden=!url; if(url){fields.projectLink.href=url;fields.projectLink.textContent=project.cta||"View Project";} }
     lightbox.hidden = false;
     document.body.classList.add("lightbox-open");
@@ -165,7 +165,6 @@
       <button type="button" class="portfolio-card reveal-child" data-project-id="${Site.escapeHTML(project.id)}" data-category="${Site.escapeHTML(project.category)}" aria-haspopup="dialog" aria-label="View ${Site.escapeHTML(project.title)} project details">
         <span class="portfolio-card-media">
           <img src="${Site.escapeHTML(Site.safeImage(project.image, "assets/projects/nexa-properties.svg"))}" width="1200" height="800" loading="lazy" decoding="async" alt="${Site.escapeHTML(project.alt || project.title)}">
-          ${Site.clean(project.badge) ? `<span class="portfolio-badge">${Site.escapeHTML(Site.clean(project.badge))}</span>` : ""}
           <span class="portfolio-open" aria-hidden="true">${arrowIcon}</span>
         </span>
         <span class="portfolio-card-content">
