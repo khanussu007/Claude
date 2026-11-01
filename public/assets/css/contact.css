@@ -551,7 +551,9 @@
 
 @media (max-width: 960px) {
   .contact-hero {
-    min-height: 640px;
+    /* Header is sticky (in normal flow) at <=960px, so the fixed-header offset is no longer needed. */
+    min-height: 0;
+    padding-top: clamp(28px, 5vw, 48px);
   }
 
   .contact-layout {
@@ -583,7 +585,7 @@
 @media (max-width: 760px) {
   .contact-hero {
     min-height: auto;
-    padding: 142px 0 72px;
+    padding: clamp(28px, 5vw, 48px) 0 72px;
   }
 
   .contact-hero h1 {
@@ -625,7 +627,7 @@
 
 @media (max-width: 580px) {
   .contact-hero {
-    padding: 126px 0 65px;
+    padding: clamp(28px, 5vw, 48px) 0 65px;
   }
 
   .contact-hero .hero-eyebrow {
