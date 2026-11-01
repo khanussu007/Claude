@@ -596,8 +596,9 @@
 
 @media (max-width: 960px) {
   .about-hero {
-    min-height: auto;
-    padding: 150px 0 100px;
+    /* Header is sticky (in normal flow) at <=960px, so the fixed-header offset is no longer needed. */
+    min-height: 0;
+    padding: clamp(28px, 5vw, 48px) 0 100px;
   }
 
   .about-hero-grid {
@@ -675,7 +676,7 @@
 
 @media (max-width: 580px) {
   .about-hero {
-    padding: 126px 0 80px;
+    padding: clamp(28px, 5vw, 48px) 0 80px;
   }
 
   .about-hero-grid {
