@@ -11,6 +11,16 @@
     node.textContent = new Date().getFullYear();
   });
 
+  // Keep the page offset equal to the real header height (the header is position:fixed on mobile,
+  // see responsive.css), so large text / zoom / wrapped brand text never hide content under it.
+  const syncHeaderOffset = () => {
+    if (!header) return;
+    document.documentElement.style.setProperty("--header-offset", header.offsetHeight + "px");
+  };
+  syncHeaderOffset();
+  window.addEventListener("resize", syncHeaderOffset, { passive: true });
+  if (header && "ResizeObserver" in window) new ResizeObserver(syncHeaderOffset).observe(header);
+
   // Header state and mobile navigation
   const updateHeader = () => {
     if (header) header.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -23,6 +33,7 @@
     nav.classList.remove("is-open");
     header?.classList.remove("is-menu-open");
     document.body.classList.remove("menu-open");
+    document.documentElement.classList.remove("menu-open");
   };
 
   const openMenu = () => {
@@ -32,6 +43,7 @@
     nav.classList.add("is-open");
     header?.classList.add("is-menu-open");
     document.body.classList.add("menu-open");
+    document.documentElement.classList.add("menu-open");
   };
 
   menuToggle?.addEventListener("click", () => {
