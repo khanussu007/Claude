@@ -149,7 +149,6 @@
       <article class="project-card reveal-child">
         <div class="project-media">
           <img src="${Site.escapeHTML(Site.safeImage(project.image, "assets/projects/nexa-properties.svg"))}" width="1200" height="800" loading="lazy" alt="${Site.escapeHTML(project.alt || project.title)}">
-          ${Site.clean(project.badge || home.featuredBadge) ? `<span class="project-badge">${Site.escapeHTML(Site.clean(project.badge || home.featuredBadge))}</span>` : ""}
         </div>
         <div class="project-info">
           <div>${Site.clean(project.type) ? `<p>${Site.escapeHTML(Site.clean(project.type))}</p>` : ""}<h3>${Site.escapeHTML(project.title)}</h3></div>
