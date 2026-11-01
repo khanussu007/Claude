@@ -136,7 +136,7 @@
 .journey-steps li > span {
   display: block;
   margin-bottom: 9px;
-  color: var(--orange);
+  color: var(--accent-text, var(--orange));
   font-family: var(--font-display);
   font-size: 9px;
   font-weight: 650;
