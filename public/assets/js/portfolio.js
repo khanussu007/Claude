@@ -165,13 +165,13 @@
       <button type="button" class="portfolio-card reveal-child" data-project-id="${Site.escapeHTML(project.id)}" data-category="${Site.escapeHTML(project.category)}" aria-haspopup="dialog" aria-label="View ${Site.escapeHTML(project.title)} project details">
         <span class="portfolio-card-media">
           <img src="${Site.escapeHTML(Site.safeImage(project.image, "assets/projects/nexa-properties.svg"))}" width="1200" height="800" loading="lazy" decoding="async" alt="${Site.escapeHTML(project.alt || project.title)}">
-          <span class="portfolio-badge">${Site.escapeHTML(project.badge || "Project")}</span>
+          ${Site.clean(project.badge) ? `<span class="portfolio-badge">${Site.escapeHTML(Site.clean(project.badge))}</span>` : ""}
           <span class="portfolio-open" aria-hidden="true">${arrowIcon}</span>
         </span>
         <span class="portfolio-card-content">
-          <span class="portfolio-card-category">${Site.escapeHTML(project.type)}</span>
+          ${Site.clean(project.type) ? `<span class="portfolio-card-category">${Site.escapeHTML(Site.clean(project.type))}</span>` : ""}
           <strong class="portfolio-card-title">${Site.escapeHTML(project.title)}</strong>
-          <span class="portfolio-card-description">${Site.escapeHTML(project.shortDescription)}</span>
+          ${Site.clean(project.shortDescription) ? `<span class="portfolio-card-description">${Site.escapeHTML(Site.clean(project.shortDescription))}</span>` : ""}
           <span class="portfolio-card-action">${Site.escapeHTML(project.cta || "View project")} <span aria-hidden="true">→</span></span>
         </span>
       </button>`).join("");
