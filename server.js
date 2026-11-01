@@ -23,6 +23,7 @@ const UPLOAD_DIR = path.join(PUBLIC_DIR, "assets", "uploads");
 const PORT = Number(process.env.PORT || 8000);
 const HOST = process.env.HOST || "0.0.0.0";
 const SESSION_MS = Math.max(1, Number(process.env.SESSION_HOURS || 12)) * 60 * 60 * 1000;
+const IDLE_MS = Math.max(5, Number(process.env.ADMIN_IDLE_SECONDS || 1800)) * 1000; // 30 min inactivity (env override is for dev testing only)
 const ADMIN_PREVIEW = process.argv.includes("--admin-preview");
 const sessions = new Map();
 const loginAttempts = new Map();
@@ -153,13 +154,18 @@ function getSession(req) {
     sessions.delete(token);
     return null;
   }
-  session.expiresAt = Date.now() + SESSION_MS;
   return { token, ...session };
+}
+
+// Only genuine admin actions call this; plain reads and background requests never extend a session.
+function touchSession(session) {
+  const stored = sessions.get(session.token);
+  if (stored) stored.expiresAt = session.expiresAt = Date.now() + IDLE_MS;
 }
 
 function createSession(username) {
   const token = crypto.randomBytes(32).toString("hex");
-  const session = { username, expiresAt: Date.now() + SESSION_MS };
+  const session = { username, expiresAt: Date.now() + IDLE_MS };
   sessions.set(token, session);
   return { token, ...session };
 }
@@ -172,9 +178,12 @@ function sessionCookie(req, token, maxAgeSeconds) {
 function requireApiAuth(req, res) {
   const session = getSession(req);
   if (!session) {
-    json(res, 401, { ok: false, error: "Authentication required." });
+    const stale = Boolean(parseCookies(req).usman_admin);
+    if (stale) res.setHeader("Set-Cookie", sessionCookie(req, "", 0));
+    json(res, 401, { ok: false, error: "Authentication required.", code: stale ? "session_expired" : "unauthenticated" });
     return null;
   }
+  if (req.method !== "GET") touchSession(session);
   return session;
 }
 
@@ -314,8 +323,16 @@ async function handleApi(req, res, pathname) {
       ok: true,
       user: { username: session.username },
       defaultPassword: adminAccount.defaultPassword,
-      expiresAt: new Date(session.expiresAt).toISOString()
+      expiresAt: new Date(session.expiresAt).toISOString(),
+      idleTimeoutMs: IDLE_MS,
+      idleRemainingMs: Math.max(0, session.expiresAt - Date.now())
     });
+  }
+
+  if (pathname === "/api/admin/activity" && req.method === "POST") {
+    const session = requireApiAuth(req, res);
+    if (!session || !requireWriteProtection(req, res)) return;
+    return json(res, 200, { ok: true, idleTimeoutMs: IDLE_MS, idleRemainingMs: IDLE_MS });
   }
 
   if (pathname === "/api/admin/logout" && req.method === "POST") {
@@ -459,7 +476,11 @@ async function requestHandler(req, res) {
       if (getSession(req)) return redirect(res, "/admin");
       return serveHtml(res, path.join(PUBLIC_DIR, "admin", "login.html"), false, req.method === "HEAD");
     }
-    if (!getSession(req)) return redirect(res, "/admin/login");
+    if (!getSession(req)) {
+      const stale = Boolean(parseCookies(req).usman_admin);
+      if (stale) res.setHeader("Set-Cookie", sessionCookie(req, "", 0));
+      return redirect(res, stale ? "/admin/login?expired=1" : "/admin/login");
+    }
     if (pathname === "/admin" || pathname === "/admin/index.html" || !path.extname(pathname)) {
       return serveHtml(res, path.join(PUBLIC_DIR, "admin", "index.html"), false, req.method === "HEAD");
     }
