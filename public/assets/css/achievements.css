@@ -455,7 +455,9 @@
 
 @media (max-width: 960px) {
   .achievements-hero {
-    min-height: 640px;
+    /* Header is sticky (in normal flow) at <=960px, so the fixed-header offset is no longer needed. */
+    min-height: 0;
+    padding-top: clamp(28px, 5vw, 48px);
   }
 
   .career-journey {
@@ -482,7 +484,7 @@
 @media (max-width: 760px) {
   .achievements-hero {
     min-height: auto;
-    padding: 145px 0 78px;
+    padding: clamp(28px, 5vw, 48px) 0 78px;
   }
 
   .achievements-hero h1 {
@@ -515,7 +517,7 @@
 
 @media (max-width: 580px) {
   .achievements-hero {
-    padding: 128px 0 70px;
+    padding: clamp(28px, 5vw, 48px) 0 70px;
   }
 
   .achievements-hero .hero-eyebrow {
