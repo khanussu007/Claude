@@ -30,8 +30,27 @@ function headersBase() {
     "X-Frame-Options": "DENY",
     "Strict-Transport-Security": "max-age=31536000",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-origin"
   };
+}
+
+// CSP. Admin pages have no inline scripts, so they get a strict policy. Public pages need inline scripts
+// (injected site content); when the owner has added tracking code, third-party https hosts are allowed too.
+const CSP_BASE = "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'";
+const CSP_ADMIN = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; ${CSP_BASE}`;
+function cspPublic(hasTracking) {
+  return hasTracking
+    ? `default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https: data:; connect-src 'self' https:; frame-src https:; ${CSP_BASE}`
+    : `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; ${CSP_BASE}`;
+}
+
+// Same-origin check for state-changing requests (defence in depth on top of SameSite=Strict + X-Requested-With).
+function sameOrigin(request) {
+  const origin = request.headers.get("Origin");
+  if (origin && origin !== new URL(request.url).origin) return false;
+  return request.headers.get("Sec-Fetch-Site") !== "cross-site";
 }
 
 function json(data, status = 200, extra = {}) {
@@ -151,6 +170,16 @@ async function init(env) {
   }
 }
 
+const DUMMY_HASH = "pbkdf2$100000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+async function recordFailure(env, ip, attempt) {
+  const fresh = !attempt || attempt.reset_at <= Date.now();
+  const failures = fresh ? 1 : attempt.failures + 1;
+  const reset = fresh ? Date.now() + 15 * 60 * 1000 : attempt.reset_at;
+  await env.DB.prepare("INSERT INTO login_attempts (ip_hash,failures,reset_at) VALUES (?,?,?) ON CONFLICT(ip_hash) DO UPDATE SET failures=excluded.failures, reset_at=excluded.reset_at")
+    .bind(ip, failures, reset).run();
+}
+
 async function getContent(env) {
   const row = await env.DB.prepare("SELECT content_json FROM site_content WHERE id=1").first();
   return normalizeContent(row ? JSON.parse(row.content_json) : structuredClone(initialContent));
@@ -261,13 +290,18 @@ async function serveStatic(request, env, pathname, content = null) {
       headers: {
         ...headersBase(),
         "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "no-store"
+        "Cache-Control": "no-store",
+        "Content-Security-Policy": cspPublic(Boolean(content.global?.tracking && TRACKING_FIELDS.some((k) => String(content.global.tracking[k] || "").trim())))
       }
     });
   }
 
   const headers = new Headers(response.headers);
   Object.entries(headersBase()).forEach(([k, v]) => headers.set(k, v));
+  if (pathname.startsWith("/admin/")) {
+    headers.set("Cache-Control", "no-store");
+    headers.set("Content-Security-Policy", CSP_ADMIN);
+  }
   if (pathname.startsWith("/assets/")) {
     headers.set("Cache-Control", /\.(css|js)$/.test(pathname) ? "public, max-age=0, must-revalidate" : "public, max-age=604800");
   }
@@ -288,6 +322,7 @@ async function handleApi(request, env, pathname) {
   }
 
   if (pathname === "/api/admin/login" && request.method === "POST") {
+    if (!sameOrigin(request)) return json({ ok: false, error: "Request blocked." }, 403);
     const body = await readJson(request, 32768);
     const ip = await sha256(request.headers.get("CF-Connecting-IP") || "unknown");
     const attempt = await env.DB.prepare("SELECT failures,reset_at FROM login_attempts WHERE ip_hash=?").bind(ip).first();
@@ -299,13 +334,12 @@ async function handleApi(request, env, pathname) {
     const admin = await getAdmin(env);
     const username = String(body.username || "").trim();
     const password = String(body.password || "");
-    const valid = admin && username === admin.username && await verifyPassword(password, admin.password_hash);
+    // Always run the password check so response time does not reveal whether the username exists.
+    const passwordOk = await verifyPassword(password, admin ? admin.password_hash : DUMMY_HASH);
+    const valid = Boolean(admin) && username === admin.username && passwordOk;
 
     if (!valid) {
-      const failures = !attempt || attempt.reset_at <= Date.now() ? 1 : attempt.failures + 1;
-      const reset = !attempt || attempt.reset_at <= Date.now() ? Date.now() + 15 * 60 * 1000 : attempt.reset_at;
-      await env.DB.prepare("INSERT INTO login_attempts (ip_hash,failures,reset_at) VALUES (?,?,?) ON CONFLICT(ip_hash) DO UPDATE SET failures=excluded.failures, reset_at=excluded.reset_at")
-        .bind(ip, failures, reset).run();
+      await recordFailure(env, ip, attempt);
       return json({ ok: false, error: "Invalid username or password." }, 401);
     }
 
@@ -347,11 +381,19 @@ async function handleApi(request, env, pathname) {
       });
     }
 
-    if (request.headers.get("X-Requested-With") !== "XMLHttpRequest") {
+    if (request.headers.get("X-Requested-With") !== "XMLHttpRequest" || !sameOrigin(request)) {
       return json({ ok: false, error: "Write request protection failed." }, 403);
     }
 
     if (request.method !== "GET") await touchSession(env, session);
+
+    // The publicly known default password must be changed before the account can modify the site.
+    if (request.method !== "GET" && !["/api/admin/credentials", "/api/admin/activity"].includes(pathname)) {
+      const acct = await getAdmin(env);
+      if (acct && acct.default_password) {
+        return json({ ok: false, code: "password_change_required", error: "Change the default admin password (Settings → Credentials) before making other changes." }, 403);
+      }
+    }
 
     if (pathname === "/api/admin/activity" && request.method === "POST") {
       return json({ ok: true, idleTimeoutMs: idleMs(env), idleRemainingMs: idleMs(env) });
@@ -395,14 +437,20 @@ async function handleApi(request, env, pathname) {
       const match = String(body.data || body.dataUrl || "").match(/^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/);
       if (!match) return json({ ok: false, error: "Upload a PNG, JPEG or WebP image." }, 400);
 
-      const binary = atob(match[2]);
-      const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+      let bytes;
+      try { bytes = Uint8Array.from(atob(match[2]), c => c.charCodeAt(0)); } catch { return json({ ok: false, error: "Invalid image data." }, 400); }
       if (!bytes.length || bytes.length > 7 * 1024 * 1024) return json({ ok: false, error: "Optimized image must be smaller than 7 MB." }, 413);
 
-      const ext = match[1] === "jpeg" ? "jpg" : match[1] === "svg+xml" ? "svg" : match[1];
+      const sig = (...b) => b.every((v, i) => bytes[i] === v);
+      const okSignature = match[1] === "png" ? sig(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)
+        : match[1] === "jpeg" ? sig(0xff, 0xd8, 0xff)
+        : bytes.length > 12 && sig(0x52, 0x49, 0x46, 0x46) && bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50;
+      if (!okSignature) return json({ ok: false, error: "File content does not match a PNG, JPEG or WebP image." }, 400);
+
+      const ext = match[1] === "jpeg" ? "jpg" : match[1];
       const filename = `${Date.now()}-${b64url(crypto.getRandomValues(new Uint8Array(9))).replace(/[^a-zA-Z0-9]/g, "")}.${ext}`;
       const key = `assets/uploads/${filename}`;
-      const types = { png: "image/png", jpg: "image/jpeg", webp: "image/webp", svg: "image/svg+xml" };
+      const types = { png: "image/png", jpg: "image/jpeg", webp: "image/webp" };
 
       await env.UPLOADS.put(key, JSON.stringify({ type: types[ext], data: match[2] }));
 
@@ -434,7 +482,13 @@ async function handleApi(request, env, pathname) {
       const body = await readJson(request, 32768);
       const admin = await getAdmin(env);
 
+      const ip = await sha256(request.headers.get("CF-Connecting-IP") || "unknown");
+      const attempt = await env.DB.prepare("SELECT failures,reset_at FROM login_attempts WHERE ip_hash=?").bind(ip).first();
+      if (attempt && attempt.reset_at > Date.now() && attempt.failures >= 8) {
+        return json({ ok: false, error: "Too many attempts. Please wait 15 minutes and try again." }, 429);
+      }
       if (!admin || !(await verifyPassword(String(body.currentPassword || ""), admin.password_hash))) {
+        await recordFailure(env, ip, attempt);
         return json({ ok: false, error: "Current password is incorrect." }, 401);
       }
 
@@ -548,7 +602,8 @@ export default {
       return text("Page not found", 404);
     } catch (error) {
       console.error(error);
-      return json({ ok: false, error: error?.message || "Server error. Please try again." }, 500);
+      const status = Number.isInteger(error?.status) && error.status >= 400 && error.status < 500 ? error.status : 500;
+      return json({ ok: false, error: status < 500 ? error.message : "Server error. Please try again." }, status);
     }
   }
 };
