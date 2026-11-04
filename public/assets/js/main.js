@@ -248,10 +248,6 @@
     upd();
   }
 
-  // 3. Lead-generation funnel graphic in the contact call-to-action
-  const cc = document.querySelector(".contact-card");
-  if (cc && !cc.querySelector(".fx-funnel")) cc.appendChild(el(G.lead, "fx-funnel"));
-
   // 4. Card graphics + spotlight/ripple layers
   const CARD = ".service-card, .service-detail-card, .project-card, .portfolio-card";
   const pick = (t) => {
