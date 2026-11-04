@@ -39,7 +39,8 @@ const PUBLIC_PAGES = new Map([
   ["/about.html", "about.html"],
   ["/services.html", "services.html"],
   ["/achievements.html", "achievements.html"],
-  ["/contact.html", "contact.html"]
+  ["/contact.html", "contact.html"],
+  ["/help.html", "help.html"]
 ]);
 
 const MIME = {
