@@ -8,7 +8,8 @@
     const value = String(Site.content.contact.whatsappNumber || "").trim();
     if (!value) return "";
     if (/^https?:\/\//i.test(value)) return `${value}${value.includes("?") ? "&" : "?"}text=${encodeURIComponent(message)}`;
-    const number = value.replace(/\D/g, "");
+    let number = value.replace(/\D/g, "").replace(/^0+/, "");
+    if (number.length === 10) number = "91" + number; // add India country code when missing
     return number ? `https://wa.me/${number}?text=${encodeURIComponent(message)}` : "";
   }
 

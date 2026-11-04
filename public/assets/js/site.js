@@ -201,7 +201,8 @@
       toggle(link, Boolean(website));
     });
     document.querySelectorAll("[data-footer-whatsapp]").forEach((link) => {
-      const digits = Site.clean(contact.whatsappNumber).replace(/\D/g, "");
+      let digits = Site.clean(contact.whatsappNumber).replace(/\D/g, "").replace(/^0+/, "");
+      if (digits.length === 10) digits = "91" + digits; // add India country code when missing
       if (digits) {
         link.href = `https://wa.me/${digits}`;
         link.target = "_blank";
