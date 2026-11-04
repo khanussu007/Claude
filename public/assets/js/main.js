@@ -307,3 +307,19 @@
     }
   }, { passive: true });
 })();
+
+/* Floating WhatsApp chat button on every public page */
+(() => {
+  const add = () => {
+    if (document.querySelector(".fx-wa, .help-wa")) return;
+    const f = document.querySelector("[data-footer-whatsapp]");
+    const fromFooter = f && /^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(f.getAttribute("href") || "") ? f.getAttribute("href") : "";
+    const a = document.createElement("a");
+    a.className = "fx-wa";
+    a.href = fromFooter || "https://wa.me/918980694208?text=Hi%2C%20I%20need%20help%20with%20my%20website";
+    a.target = "_blank"; a.rel = "noopener"; a.setAttribute("aria-label", "Chat on WhatsApp");
+    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Chat with Us</span>';
+    document.body.appendChild(a);
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", add); else add();
+})();
