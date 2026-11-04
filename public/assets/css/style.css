@@ -2076,3 +2076,83 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
   .hero-role { font-size: 1rem; }
   .footer-main { gap: 28px; }
 }
+
+/* ==========================================================
+   Visual enhancement layer: graphics, motion, hover & touch
+   (additive only; no existing rule is changed)
+   ========================================================== */
+.fx-host { position: relative; overflow-x: clip; }
+.fx-host > .container { position: relative; z-index: 1; }
+
+/* Scroll progress bar */
+.fx-progress {
+  position: fixed; top: 0; left: 0; z-index: 9999; width: 100%; height: 3px;
+  pointer-events: none; transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+  box-shadow: 0 0 12px rgba(var(--accent-rgb, 255, 122, 26), 0.55);
+}
+
+/* Card icon graphic watermark */
+.fx-gfx {
+  position: absolute; top: 14px; right: 14px; width: 74px; height: 56px; opacity: .22; pointer-events: none;
+  transition: opacity .4s ease, transform .5s var(--ease);
+}
+.fx-gfx svg { width: 100%; height: 100%; }
+.fx-has-gfx:hover .fx-gfx { opacity: .6; transform: translateY(-3px) scale(1.08); }
+
+/* Pointer spotlight + ripple layer */
+.fx-spot {
+  position: absolute; inset: 0; z-index: 0; border-radius: inherit; overflow: hidden; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--accent-rgb, 255, 122, 26), .13), transparent 62%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.fx-fx:hover > .fx-spot, .fx-fx.fx-touch > .fx-spot { opacity: 1; }
+.fx-ripple {
+  position: absolute; left: var(--rx); top: var(--ry); width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  background: rgba(255, 255, 255, .28); transform: scale(0); animation: fx-ripple .7s ease-out forwards;
+}
+@keyframes fx-ripple { to { transform: scale(var(--rs, 18)); opacity: 0; } }
+
+/* Hover / touch feedback (individual props, so existing transforms still work) */
+@media (hover: hover) {
+  .service-card:hover, .service-detail-card:hover, .project-card:hover, .portfolio-card:hover { translate: 0 -6px; box-shadow: 0 26px 60px rgba(0, 0, 0, .34), 0 0 0 1px rgba(var(--accent-rgb, 255, 122, 26), .22); }
+  .service-card:hover .service-icon, .service-detail-card:hover .service-detail-icon { scale: 1.1; rotate: -4deg; }
+  .button:hover { translate: 0 -2px; }
+  .project-media img, .portfolio-card-media img, .project-media, .portfolio-card-media { transition: transform .8s var(--ease), filter .5s ease; }
+  .project-card:hover .project-media img, .portfolio-card:hover .portfolio-card-media img { scale: 1.06; }
+}
+.service-card, .service-detail-card, .project-card, .portfolio-card, .button { transition-property: transform, translate, scale, rotate, border-color, background-color, box-shadow, color; }
+.service-icon, .service-detail-icon { transition: scale .4s var(--ease), rotate .4s var(--ease); }
+.service-card:active, .service-detail-card:active, .project-card:active, .portfolio-card:active { scale: .98; }
+.button:active { scale: .96; }
+.button { position: relative; overflow: hidden; }
+.button--primary { background-size: 220% 100%; }
+.button--primary::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .28) 50%, transparent 70%);
+  animation: fx-sheen 4.5s ease-in-out 1.5s infinite;
+}
+@keyframes fx-sheen { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+
+/* Stats / eyebrow / contact subtle life */
+.eyebrow-dot { animation: fx-pulse 2.4s ease-in-out infinite; }
+.contact-orb { animation: fx-drift 12s ease-in-out infinite alternate; }
+.contact-card .fx-funnel { position: absolute; right: 4%; bottom: 10%; width: 190px; opacity: .3; pointer-events: none; z-index: 0; }
+.contact-card .fx-funnel svg { width: 100%; height: auto; display: block; }
+.contact-card .contact-content { position: relative; z-index: 1; }
+
+/* Section heading underline sweep when revealed */
+.js .section-heading.is-visible h2 span { background-size: 100% 100%; }
+
+/* Smaller screens: keep graphics very subtle so text stays clear */
+@media (max-width: 1100px) {
+  .contact-card .fx-funnel { width: 130px; opacity: .18; }
+}
+@media (max-width: 640px) {
+  .fx-gfx { width: 58px; height: 44px; top: 10px; right: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-bar, .fx-draw, .fx-drop, .fx-pulse, .fx-ripple, .contact-orb, .eyebrow-dot, .button--primary::after { animation: none !important; }
+  .fx-draw { stroke-dashoffset: 0; }
+  .fx-progress { display: none; }
+}
