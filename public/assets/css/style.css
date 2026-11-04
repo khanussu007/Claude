@@ -2153,3 +2153,26 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
   .fx-draw { stroke-dashoffset: 0; }
   .fx-progress { display: none; }
 }
+
+/* Floating WhatsApp chat button (all pages) */
+.fx-wa {
+  position: fixed; right: 20px; bottom: 20px; z-index: 900; display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 20px; border-radius: 999px; background: #25d366; color: #fff; font-weight: 700; font-size: .95rem; text-decoration: none;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s ease;
+  animation: fx-wa-in .7s cubic-bezier(.22, 1, .36, 1) 1.2s both;
+}
+.fx-wa::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgba(37, 211, 102, .6);
+  animation: fx-wa-ring 2.8s ease-out 2s infinite; pointer-events: none;
+}
+.fx-wa svg { width: 22px; height: 22px; flex: none; }
+.fx-wa:hover { transform: translateY(-3px); box-shadow: 0 16px 32px rgba(37, 211, 102, .35); }
+.fx-wa:active { transform: scale(.96); }
+@keyframes fx-wa-in { from { opacity: 0; transform: translateY(20px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes fx-wa-ring { 0% { transform: scale(1); opacity: .9; } 70%, 100% { transform: scale(1.35); opacity: 0; } }
+@media (max-width: 640px) {
+  .fx-wa { right: 14px; bottom: 14px; padding: 14px; }
+  .fx-wa span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .fx-wa, .fx-wa::before { animation: none; } }
