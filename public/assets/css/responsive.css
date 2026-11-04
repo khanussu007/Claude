@@ -455,22 +455,22 @@ p, li, blockquote { text-wrap: pretty; }
   letter-spacing: 0.03em;
 }
 
-/* Feedback section: compact, simple and sober on laptop/desktop */
+/* Feedback section: balanced, simple and sober on laptop/desktop */
 @media (min-width: 761px) {
-  :root .testimonial-slider { max-width: 780px; }
-  :root .testimonial-card { padding: 28px 34px; border-radius: 18px; box-shadow: none; }
+  :root .testimonial-slider { max-width: 900px; }
+  :root .testimonial-card { padding: 44px 48px; border-radius: 22px; }
   :root .quote-mark { display: none; }
-  :root .testimonial-card blockquote { margin-top: 14px; font-size: 1rem; line-height: 1.6; }
-  :root .client-row { margin-top: 18px; }
-  :root .client-row strong { font-size: 0.95rem; }
-  :root .client-row > div span { font-size: 0.8rem; }
+  :root .testimonial-card blockquote { margin-top: 18px; font-size: 1.1rem; line-height: 1.7; }
+  :root .client-row { margin-top: 24px; }
+  :root .client-row strong { font-size: 1rem; }
+  :root .client-row > div span { font-size: 0.85rem; }
   :root .testimonial-card:has(.client-avatar-image) {
-    grid-template-columns: 96px minmax(0, 1fr);
-    column-gap: 26px;
+    grid-template-columns: 170px minmax(0, 1fr);
+    column-gap: 40px;
     align-items: center;
   }
   :root .testimonial-card:has(.client-avatar-image) .client-avatar-image {
-    grid-area: photo; align-self: start; width: 96px; height: 96px; aspect-ratio: 1 / 1; border-radius: 50%;
+    grid-area: photo; align-self: center; width: 170px; height: 170px; aspect-ratio: 1 / 1; border-radius: 20px;
   }
-  :root .testimonial-card:has(.client-avatar-image) .client-row > div { margin-top: 14px; }
+  :root .testimonial-card:has(.client-avatar-image) .client-row > div { margin-top: 18px; }
 }
