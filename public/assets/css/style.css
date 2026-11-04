@@ -2137,8 +2137,6 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
 /* Stats / eyebrow / contact subtle life */
 .eyebrow-dot { animation: fx-pulse 2.4s ease-in-out infinite; }
 .contact-orb { animation: fx-drift 12s ease-in-out infinite alternate; }
-.contact-card .fx-funnel { position: absolute; right: 4%; bottom: 10%; width: 190px; opacity: .3; pointer-events: none; z-index: 0; }
-.contact-card .fx-funnel svg { width: 100%; height: auto; display: block; }
 .contact-card .contact-content { position: relative; z-index: 1; }
 
 /* Section heading underline sweep when revealed */
@@ -2146,8 +2144,7 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
 
 /* Smaller screens: keep graphics very subtle so text stays clear */
 @media (max-width: 1100px) {
-  .contact-card .fx-funnel { width: 130px; opacity: .18; }
-}
+  }
 @media (max-width: 640px) {
   .fx-gfx { width: 58px; height: 44px; top: 10px; right: 10px; }
 }
