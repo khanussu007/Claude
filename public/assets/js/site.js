@@ -240,14 +240,28 @@
         const id = ytMatch[1];
         const frame = document.createElement("iframe");
         frame.className = "profile-video";
-        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0`;
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
         frame.style.setProperty("--yt-scale", /shorts\//.test(global.homeVideoUrl) ? "1.45" : "1.15");
         frame.tabIndex = -1;
         frame.setAttribute("aria-hidden", "true");
         frame.title = "Intro video";
         frame.allow = "autoplay; encrypted-media";
         frame.loading = "lazy";
+        const holder = image.parentElement;
         image.replaceWith(frame);
+        const sound = document.createElement("button");
+        sound.type = "button";
+        sound.className = "profile-sound";
+        let muted = true;
+        const paint = () => { sound.textContent = muted ? "🔇 Tap for sound" : "🔊 Sound on"; sound.setAttribute("aria-label", muted ? "Unmute video" : "Mute video"); };
+        const send = (func, args = "") => frame.contentWindow && frame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+        sound.addEventListener("click", () => {
+          muted = !muted;
+          if (muted) { send("mute"); } else { send("unMute"); send("setVolume", [100]); send("playVideo"); }
+          paint();
+        });
+        paint();
+        holder.appendChild(sound);
         return;
       } else {
         image.src = Site.safeImage(global.profilePhoto);
