@@ -2176,3 +2176,5 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
   .fx-wa span { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .fx-wa, .fx-wa::before { animation: none; } }
+
+.profile-frame > .profile-video { position:absolute; inset:0; width:100%; height:100%; border:0; object-fit:cover; z-index:1; }
