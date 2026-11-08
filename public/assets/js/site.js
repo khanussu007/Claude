@@ -230,9 +230,26 @@
       });
     }
 
+    const isAbout = /about\.html$/.test(location.pathname);
+    const ytMatch = String(global.homeVideoUrl || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
     document.querySelectorAll("img[data-profile-image], img[src*='usman-headshot-placeholder']").forEach((image) => {
       image.dataset.profileImage = "true";
-      image.src = Site.safeImage(global.profilePhoto);
+      if (isAbout) {
+        image.src = Site.safeImage(global.aboutPhoto || global.profilePhoto);
+      } else if (ytMatch && global.homeMediaType === "video") {
+        const id = ytMatch[1];
+        const frame = document.createElement("iframe");
+        frame.className = "profile-video";
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0`;
+        frame.title = "Intro video";
+        frame.allow = "autoplay; encrypted-media; picture-in-picture";
+        frame.allowFullscreen = true;
+        frame.loading = "lazy";
+        image.replaceWith(frame);
+        return;
+      } else {
+        image.src = Site.safeImage(global.profilePhoto);
+      }
       image.alt = `${global.websiteName} — professional profile`;
     });
 

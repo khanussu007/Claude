@@ -164,7 +164,10 @@
         ${field("Logo accent character", "global.logoAccent", content.global.logoAccent)}
         ${field("Brand subtitle", "global.brandSubtitle", content.global.brandSubtitle)}
         ${field("Positioning statement", "global.positioning", content.global.positioning, { full: true, help: "Separate each role with the | character." })}
-        ${imageField("Profile photo", "global.profilePhoto", content.global.profilePhoto, "global.profilePhoto")}
+        ${imageField("Profile photo (fallback)", "global.profilePhoto", content.global.profilePhoto, "global.profilePhoto")}
+        ${field("Home page shows", "global.homeMediaType", content.global.homeMediaType || "photo", { options: [["photo", "Photo"], ["video", "Video (YouTube link)"]], help: "Choose Photo or Video for the Home page." })}
+        ${field("Home page video (YouTube link)", "global.homeVideoUrl", content.global.homeVideoUrl || "", { full: true, help: "Used only when \"Home page shows\" is set to Video." })}
+        ${imageField("About Us photo", "global.aboutPhoto", content.global.aboutPhoto || "", "global.aboutPhoto", true)}
         ${imageField("Logo image", "global.logoImage", content.global.logoImage || "", "global.logoImage", true)}
       </div>`)}
       ${panel("Site identity", "Browser title, favicon and default social sharing image.", `<div class="form-grid">${field("Site title", "global.siteTitle", content.global.siteTitle)}${field("Browser title", "global.browserTitle", content.global.browserTitle)}${imageField("Favicon", "global.favicon", content.global.favicon, "global.favicon")}${imageField("Default social sharing image", "global.ogImage", content.global.ogImage, "global.ogImage")}</div>`)}
