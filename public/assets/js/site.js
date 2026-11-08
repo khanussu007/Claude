@@ -236,14 +236,16 @@
       image.dataset.profileImage = "true";
       if (isAbout) {
         image.src = Site.safeImage(global.aboutPhoto || global.profilePhoto);
-      } else if (ytMatch && global.homeMediaType === "video") {
+      } else if (ytMatch && global.homeMediaType !== "photo") {
         const id = ytMatch[1];
         const frame = document.createElement("iframe");
         frame.className = "profile-video";
-        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0`;
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0`;
+        frame.style.setProperty("--yt-scale", /shorts\//.test(global.homeVideoUrl) ? "1.45" : "1.15");
+        frame.tabIndex = -1;
+        frame.setAttribute("aria-hidden", "true");
         frame.title = "Intro video";
-        frame.allow = "autoplay; encrypted-media; picture-in-picture";
-        frame.allowFullscreen = true;
+        frame.allow = "autoplay; encrypted-media";
         frame.loading = "lazy";
         image.replaceWith(frame);
         return;
