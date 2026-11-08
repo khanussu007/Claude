@@ -167,6 +167,8 @@
         ${imageField("Profile photo (fallback)", "global.profilePhoto", content.global.profilePhoto, "global.profilePhoto")}
         ${field("Home page shows", "global.homeMediaType", content.global.homeMediaType || "photo", { options: [["photo", "Photo"], ["video", "Video (YouTube link)"]], help: "Choose Photo or Video for the Home page." })}
         ${field("Home page video (YouTube link)", "global.homeVideoUrl", content.global.homeVideoUrl || "", { full: true, help: "Used only when \"Home page shows\" is set to Video." })}
+        ${field("About Us shows", "global.aboutMediaType", content.global.aboutMediaType || "photo", { options: [["photo", "Photo"], ["video", "Video (YouTube link)"]], help: "Choose Photo or Video for the About Us page." })}
+        ${field("About Us video (YouTube link)", "global.aboutVideoUrl", content.global.aboutVideoUrl || "", { full: true, help: "Used only when \"About Us shows\" is set to Video." })}
         ${imageField("About Us photo", "global.aboutPhoto", content.global.aboutPhoto || "", "global.aboutPhoto", true)}
         ${imageField("Logo image", "global.logoImage", content.global.logoImage || "", "global.logoImage", true)}
       </div>`)}

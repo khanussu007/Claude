@@ -231,41 +231,41 @@
     }
 
     const isAbout = /about\.html$/.test(location.pathname);
-    const ytMatch = String(global.homeVideoUrl || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
+    const ytId = (url) => { const m = String(url || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/); return m ? m[1] : ""; };
+    const mountVideo = (image, url) => {
+      const id = ytId(url);
+      const frame = document.createElement("iframe");
+      frame.className = "profile-video";
+      frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
+      frame.style.setProperty("--yt-scale", /shorts\//.test(url) ? "1.45" : "1.15");
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      frame.title = "Intro video";
+      frame.allow = "autoplay; encrypted-media";
+      frame.loading = "lazy";
+      const holder = image.parentElement;
+      image.replaceWith(frame);
+      const sound = document.createElement("button");
+      sound.type = "button";
+      sound.className = "profile-sound";
+      let muted = true;
+      const paint = () => { sound.textContent = muted ? "🔇 Tap for sound" : "🔊 Sound on"; sound.setAttribute("aria-label", muted ? "Unmute video" : "Mute video"); };
+      const send = (func, args = "") => frame.contentWindow && frame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+      sound.addEventListener("click", () => {
+        muted = !muted;
+        if (muted) { send("mute"); } else { send("unMute"); send("setVolume", [100]); send("playVideo"); }
+        paint();
+      });
+      paint();
+      holder.appendChild(sound);
+    };
     document.querySelectorAll("img[data-profile-image], img[src*='usman-headshot-placeholder']").forEach((image) => {
       image.dataset.profileImage = "true";
-      if (isAbout) {
-        image.src = Site.safeImage(global.aboutPhoto || global.profilePhoto);
-      } else if (ytMatch && global.homeMediaType !== "photo") {
-        const id = ytMatch[1];
-        const frame = document.createElement("iframe");
-        frame.className = "profile-video";
-        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
-        frame.style.setProperty("--yt-scale", /shorts\//.test(global.homeVideoUrl) ? "1.45" : "1.15");
-        frame.tabIndex = -1;
-        frame.setAttribute("aria-hidden", "true");
-        frame.title = "Intro video";
-        frame.allow = "autoplay; encrypted-media";
-        frame.loading = "lazy";
-        const holder = image.parentElement;
-        image.replaceWith(frame);
-        const sound = document.createElement("button");
-        sound.type = "button";
-        sound.className = "profile-sound";
-        let muted = true;
-        const paint = () => { sound.textContent = muted ? "🔇 Tap for sound" : "🔊 Sound on"; sound.setAttribute("aria-label", muted ? "Unmute video" : "Mute video"); };
-        const send = (func, args = "") => frame.contentWindow && frame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "*");
-        sound.addEventListener("click", () => {
-          muted = !muted;
-          if (muted) { send("mute"); } else { send("unMute"); send("setVolume", [100]); send("playVideo"); }
-          paint();
-        });
-        paint();
-        holder.appendChild(sound);
-        return;
-      } else {
-        image.src = Site.safeImage(global.profilePhoto);
-      }
+      const wantsVideo = isAbout
+        ? global.aboutMediaType === "video" && ytId(global.aboutVideoUrl)
+        : global.homeMediaType !== "photo" && ytId(global.homeVideoUrl);
+      if (wantsVideo) { mountVideo(image, isAbout ? global.aboutVideoUrl : global.homeVideoUrl); return; }
+      image.src = Site.safeImage(isAbout ? (global.aboutPhoto || global.profilePhoto) : global.profilePhoto);
       image.alt = `${global.websiteName} — professional profile`;
     });
 
