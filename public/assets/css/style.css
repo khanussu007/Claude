@@ -2177,4 +2177,4 @@ button, .button, .nav-link { -webkit-tap-highlight-color: transparent; }
 }
 @media (prefers-reduced-motion: reduce) { .fx-wa, .fx-wa::before { animation: none; } }
 
-.profile-frame > .profile-video { position:absolute; inset:0; width:100%; height:100%; border:0; object-fit:cover; z-index:1; }
+.profile-frame > .profile-video { position:absolute; inset:0; width:100%; height:100%; border:0; z-index:1; pointer-events:none; transform:scale(var(--yt-scale,1.15)); transform-origin:center; }
