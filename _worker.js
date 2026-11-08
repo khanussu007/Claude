@@ -43,7 +43,7 @@ function headersBase() {
 const CSP_BASE = "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'";
 const CSP_ADMIN = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; ${CSP_BASE}`;
 function cspPublic(hasTracking) {
-  const FRAMES = " frame-src https://docs.google.com https://accounts.google.com https://*.google.com;";
+  const FRAMES = " frame-src https://docs.google.com https://accounts.google.com https://*.google.com https://www.youtube-nocookie.com https://www.youtube.com;";
   return hasTracking
     ? `default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https: data:; connect-src 'self' https:; frame-src https:; ${CSP_BASE};${FRAMES}`
     : `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; ${CSP_BASE};${FRAMES}`;
